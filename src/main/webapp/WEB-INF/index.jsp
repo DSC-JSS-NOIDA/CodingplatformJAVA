@@ -8,7 +8,5 @@
 </head>
 <body>
 <h1>Yeah</h1>
-<%= session.getServletContext().getMajorVersion() %>.
-<%= session.getServletContext().getMinorVersion() %>
 </body>
 </html>
