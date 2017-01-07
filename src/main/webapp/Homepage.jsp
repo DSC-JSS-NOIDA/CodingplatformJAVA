@@ -16,7 +16,7 @@ function onSignIn(googleUser) {
   console.log('Name: ' + profile.getName());
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail());
-  var redirectUrl = 'login';
+  var redirectUrl = 'Login';
   var form = $('<form action="' + redirectUrl + '" method="post">' +
                       '<input type="text" name="t2" value="' +
                        googleUser.getAuthResponse().id_token + '"  hidden />' +
