@@ -24,7 +24,13 @@ classpath:/org/springframework/aop/config/spring-aop-3.0.xsd
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
-	</bean>
+	</bean> 
+	
+
+    <bean id="Login" class="org.springframework.orm.jdo.PersistenceManagerFactoryUtils    ">
+        <property name="persistenceManagerFactory" ref="myPmf"/>
+    </bean>
+
 
 	<context:component-scan base-package="org.gdgjss.codingplatform"></context:component-scan>
 
