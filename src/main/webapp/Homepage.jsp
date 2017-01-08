@@ -9,12 +9,32 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <script>
-var tokenid;
+var tokenid,profile;
 function onSignIn(googleUser) {
    tokenid = googleUser.getAuthResponse().id_token;
-  document.getElementById("loginform").innerHTML =document.getElementById("detailform").innerHTML;
-  	  var tokenbox = document.getElementById('tokenbox');
-  	tokenbox.value=tokenid;
+   profile = googleUser.getBasicProfile();
+   $.ajax({
+	   		type: 'POST',
+	   		
+	    		url: 'loginverifier', 
+	   		
+	   		
+	   		
+	    		data: {
+	    	
+	    			'user_email':profile.getEmail(),
+	    			
+	    			
+	    		},
+	   		success: function(data){
+	   			           console.log(data); 		   			   		
+                                   	}
+	    	error: function(){
+	    		document.getElementById("loginform").innerHTML =document.getElementById("detailform").innerHTML;
+  	            var tokenbox = document.getElementById('tokenbox');
+  	               tokenbox.value=tokenid;
+	    	}	
+	   		});
 }
 
 
