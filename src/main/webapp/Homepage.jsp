@@ -26,14 +26,14 @@ function onSignIn(googleUser) {
 	    			
 	    			
 	    		},
-	   		success: function(data){
+	   		success: function(data){ 
 	   			           console.log(data); 		   			   		
-                                   	}
+                                   	},
 	    	error: function(){
 	    		document.getElementById("loginform").innerHTML =document.getElementById("detailform").innerHTML;
   	            var tokenbox = document.getElementById('tokenbox');
   	               tokenbox.value=tokenid;
-	    	}	
+	    	}, 	
 	   		});
 }
 
