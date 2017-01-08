@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.gdgjss.codingplatform.models.Userdet;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -19,10 +20,14 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 
 @Controller
 public class Login {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		GoogleIdToken.Payload payLoad;
+		
 		 String auth_token= requestParams.get("auth_token");
 		 String branch=requestParams.get("branch");
 		 String year=requestParams.get("year");
@@ -40,11 +45,20 @@ public class Login {
 		        System.out.println("branch :" + branch);
 		        System.out.println("year :" + year);
 		        System.out.println("admission no :" + admno);
+		        Userdet userdetail=new Userdet
+		        		(email,avatar,year,branch,name,admno);
+		        Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				session.save(userdetail);
+				session.getTransaction().commit();
+				session.close();
+		        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		}
-       
+		
+		
 		
 	} 
 
