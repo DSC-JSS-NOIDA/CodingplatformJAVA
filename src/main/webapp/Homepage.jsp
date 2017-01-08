@@ -47,12 +47,12 @@ function onSignIn(googleUser) {
 <a href="#" onclick="signOut();">Sign out</a>
 <h1>ENTER YOUR DETAILS</h1>
 <form action="login" method="post" >
-Enter Admission no:<input type=text name=t1 ><br><br> 
+Enter Admission no:<input type=text name=admno  ><br><br> 
 
-Enter YEAR:<input type=text name=t2 id="p1"  ><br>
+Enter YEAR:<input type=text name=year id="p1"  ><br>
 <input type=text name=auth_token id="textbox3" hidden >
 <br>
-ENTER BRANCH:<input type=text name=t3 id="p2" ><br><br><br>
+ENTER BRANCH:<input type=text name=branch id="p2" ><br><br><br>
 <input type=submit value="submit"  ><br>
 
 </div>
