@@ -27,7 +27,7 @@ public class Login {
 		        String avatar= (String) payLoad.get("picture");
 		        System.out.println("User name: " + name);
 		        System.out.println("User email: " + email);
-		        System.out.println("avatar" + avatar);
+		        System.out.println("avatar :" + avatar);
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -35,7 +35,7 @@ public class Login {
 		}
        
 		
-	}
+	} 
 
 
 } 

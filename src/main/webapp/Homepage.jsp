@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,46 +9,56 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <script>
-var profile="";
+var tokenid;
 function onSignIn(googleUser) {
-  profile = googleUser.getBasicProfile();
-  console.log(profile);
+  var profile = googleUser.getBasicProfile();
   console.log('ID: ' + profile.getId());
+  // Do not send to your backend! Use an ID token instead.
   console.log('Name: ' + profile.getName());
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail());
-  $.ajax({
-		type: 'POST',
-		headers: {
- 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		},
-		url: 'login',
-		data: {
-			'auth_token':googleUser.getAuthResponse().id_token
-		} /* ,
-		success: function(){
-			console.log("yes");
-			alert("done");
-			redirect: true,
-			  redirectURL = "/hello" 
-				
-		}  */
-	});
- 
+   tokenid = googleUser.getAuthResponse().id_token;
+  console.log(tokenid);
+  	    document.getElementById("demo").innerHTML =document.getElementById("demo1").innerHTML;
+  	  var textbox3 = document.getElementById('textbox3');
+  	 textbox3.value=tokenid;
+  	document.getElementById("textbox3").innerHTML =document.getElementById("textbox3a").innerHTML;
 }
+
+
 </script>
 <body>
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
-<a href="#" onclick="signOut();">Sign out</a>
+<div id=demo  >
+<div class="g-signin2" data-onsuccess="onSignIn"  ></div>
+</div>
+
+
 <script>
   function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-    	alert('signed out success');
       console.log('User signed out.');
     });
   }
 </script>
+<br>
+<div id=demo1 hidden>
+<a href="#" onclick="signOut();">Sign out</a>
+<h1>ENTER YOUR DETAILS</h1>
+<form action="login" method="post" >
+Enter Admission no:<input type=text name=t1 ><br><br> 
+
+Enter YEAR:<input type=text name=t2 id="p1"  ><br>
+<input type=text name=auth_token id="textbox3" hidden >
+<br>
+ENTER BRANCH:<input type=text name=t3 id="p2" ><br><br><br>
+<input type=submit value="submit"  ><br>
+
+</div>
+<input type=text name=auth_token id="textbox3a" hidden>
 </body>
+
+
+
 </html>
