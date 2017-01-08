@@ -1,10 +1,9 @@
-package org.gdgjss.codingplatform.Dao;
-
+package org.gdgjss.codingplatform.service;
 
 import org.gdgjss.codingplatform.models.Userdet;
 
-
-public interface Login {
+public interface LoginService {
 	public void add(Userdet Userdet);
 	
+
 }

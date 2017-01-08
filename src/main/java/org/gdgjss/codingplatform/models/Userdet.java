@@ -14,6 +14,20 @@ public class Userdet {
 		private String branch;
 		private String name;
 		private String admno;
+		public Userdet(){}
+		public Userdet(String emailid,String avatar,String year,String branch,String name,String admno)
+		        { 
+			super();
+			this.emailid=emailid;
+			this.avatar=avatar;
+			this.year=year;
+			this.branch=branch;
+			this.name=name;
+			this.admno=admno;
+			
+			
+		         }
+		
 		public String getName() {
 			return name;
 		}
