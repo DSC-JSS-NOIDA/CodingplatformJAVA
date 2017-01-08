@@ -28,10 +28,10 @@ classpath:/org/springframework/aop/config/spring-aop-3.0.xsd
 	
 
    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-       <!-- <property name="driverClassName" value="org.h2.Driver" /> -->
-         <property name="url" value="jdbc:mysql://localhost:3306/codingplatform" />
+       <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+         <property name="url" value="jdbc:mysql://localhost:3306/codingplatform?createDatabaseIfNotExist=true" />
          <property name="username" value="root" />
-        <property name="password" value="sar115" />
+        <property name="password" value="tilhari" />
      </bean>
  
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -43,7 +43,7 @@ classpath:/org/springframework/aop/config/spring-aop-3.0.xsd
                  <prop key="hibernate.current_session_context_class">thread</prop>
                  <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
                  <prop key="hibernate.show_sql">true</prop>
-                 <prop key="hibernate.hbm2ddl.auto">create</prop>
+                 <prop key="hibernate.hbm2ddl.auto">update</prop>
              </props>
          </property>
      </bean>
