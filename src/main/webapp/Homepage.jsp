@@ -27,12 +27,13 @@ function onSignIn(googleUser) {
 	    			
 	    		},
 	   		success: function(data){ 
-	   			           console.log(data); 		   			   		
+	   			           console.log(data); 	
+	   			        document.getElementById("loginform").innerHTML =document.getElementById("detailform").innerHTML;
+	   	  	            var tokenbox = document.getElementById('tokenbox');
+	   	  	               tokenbox.value=tokenid;
                                    	},
 	    	error: function(){
-	    		document.getElementById("loginform").innerHTML =document.getElementById("detailform").innerHTML;
-  	            var tokenbox = document.getElementById('tokenbox');
-  	               tokenbox.value=tokenid;
+	    		console.log('record found') 
 	    	}, 	
 	   		});
 }

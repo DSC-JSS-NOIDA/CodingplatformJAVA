@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.gdgjss.codingplatform.models.Userdet;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -61,6 +62,30 @@ public class Login {
 		
 		
 	} 
+	@RequestMapping(value = "/loginverifier", method = RequestMethod.POST)
+	public void loginverify(HttpSession httpSession, @RequestParam Map<String,String> requestParams){
+		String user_email=requestParams.get("user_email");
+		Session session =	sessionFactory.openSession();
+	         session.beginTransaction();
+	       Query queryResult = session.createQuery("from Userdet");
+      java.util.List allUsers;
+      String em;
+      
+      allUsers = queryResult.list();
+      
+      for (int i = 0; i < allUsers.size(); i++) {
+       Userdet user = (Userdet) allUsers.get(i);
+       em=user.getEmailid();
+         if(user_email.equals(em)){
+        
+        	 System.out.println("record found");
+         }
+         else {
+             throw new IllegalArgumentException("duplicate"); 
+            
+         }
+      }		 
+	}
 
 
 } 
