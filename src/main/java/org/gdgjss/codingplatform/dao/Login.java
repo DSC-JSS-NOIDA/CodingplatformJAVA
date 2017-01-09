@@ -10,10 +10,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -24,11 +26,12 @@ public class Login {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+	Userdet  userdet;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		GoogleIdToken.Payload payLoad;
-		
+		ModelAndView indexpage=new ModelAndView("index");
 		 String auth_token= requestParams.get("auth_token");
 		 String branch=requestParams.get("branch");
 		 String year=requestParams.get("year");
@@ -46,11 +49,11 @@ public class Login {
 		        System.out.println("branch :" + branch);
 		        System.out.println("year :" + year);
 		        System.out.println("admission no :" + admno);
-		        Userdet userdetail=new Userdet
+		        userdet=new Userdet
 		        		(email,avatar,year,branch,name,admno);
 		        Session session = sessionFactory.openSession();
 				session.beginTransaction();
-				session.save(userdetail);
+				session.save(userdet);
 				session.getTransaction().commit();
 				session.close();
 		        
@@ -59,35 +62,34 @@ public class Login {
 			e.printStackTrace();
 		}
 		
-		
+		return indexpage;
 		
 	} 
-	@RequestMapping(value = "/loginverifier", method = RequestMethod.POST)
-	public void loginverify(HttpSession httpSession, @RequestParam Map<String,String> requestParams){
-		String user_email=requestParams.get("user_email");
-		Session session =	sessionFactory.openSession();
-	         session.beginTransaction();
-	       Query queryResult = session.createQuery("from Userdet");
-      java.util.List allUsers;
-      String em;
-      
-      allUsers = queryResult.list();
-      
-      for (int i = 0; i < allUsers.size(); i++) {
-       Userdet user = (Userdet) allUsers.get(i);
-       em=user.getEmailid();
-         if(user_email.equals(em)){
-        
-        	 System.out.println("record found");
-         }
-         else {
-             throw new IllegalArgumentException("duplicate"); 
-            
-         }
-      }		 
+	
+	/*MediaType.APPLICATION_JSON_VALUE return string*/
+	@RequestMapping(value = "/loginverifier", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String loginverify(HttpSession httpSession, @RequestParam ("user_email") String email){
+	Session session =sessionFactory.openSession();
+	session.beginTransaction();
+	userdet = (Userdet) session.get(Userdet.class, email);
+	session.close();
+	if(userdet != null)
+	{
+		return "registered";
 	}
-
+	       
+	else 
+		return "new_user";
 
 } 
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
+		System.out.println("SUYASH SUYASH TILHJARI");
+		httpSession.setAttribute("loggedinuser",email);
+		ModelAndView indexpage=new ModelAndView("index");//generating session for the logged in user
+		return indexpage;
+	
+	}
+}
 	 
 
