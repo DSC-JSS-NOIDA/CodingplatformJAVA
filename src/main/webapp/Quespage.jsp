@@ -73,10 +73,10 @@ select ques no
 	</div>
 </div>
 <br>
-<form method="post" action="#" >
+<form method="post" action="submission" >
 
 
- <select class="language" name=t1>
+ <select class="language" name=lang>
   <option value="Select">Select</option>
   <option value="C">C</option>
   <option value="C++">C++</option>
@@ -89,7 +89,7 @@ select ques no
 <br>
 
 
-<textarea id="editor2" name="t2"></textarea>
+<textarea id="editor2" name="code"></textarea>
 
 
 <!-- load ace -->
@@ -107,7 +107,7 @@ select ques no
     editor2.setOption("maxLines", 16);
     editor2.setOption("minLines", 8);
 
-   
+    
     
 </script>
 

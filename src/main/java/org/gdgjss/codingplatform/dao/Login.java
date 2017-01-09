@@ -90,6 +90,13 @@ public class Login {
 		return indexpage;
 	
 	}
-}
+	@RequestMapping(value = "/submission", method = RequestMethod.POST)
+	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+		String language = requestParams.get("lang");
+        String code = requestParams.get("code");
+        System.out.println(language);
+        System.out.println(code);
+	} 
+} 
 	 
 
