@@ -8,5 +8,6 @@
 </head>
 <body>
 <h1>Yeah....!! you are registered and logged in !!!</h1>
+<% response.sendRedirect("Quespage.jsp"); %>  
 </body>
 </html>
