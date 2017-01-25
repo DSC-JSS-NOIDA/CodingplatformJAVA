@@ -81,7 +81,7 @@ public class Login {
 	else 
 		return "new_user";
 
-} 
+}  
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
 		System.out.println("SUYASH SUYASH TILHJARI");
@@ -93,7 +93,7 @@ public class Login {
 	@RequestMapping(value = "/submission", method = RequestMethod.POST)
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		String language = requestParams.get("lang");
-        String code = requestParams.get("code");
+        String code = requestParams.get("source");
         System.out.println(language);
         System.out.println(code);
 	} 
