@@ -71,13 +71,15 @@ public class Login {
 	public @ResponseBody String loginverify(HttpSession httpSession, @RequestParam ("user_email") String email){
 	Session session =sessionFactory.openSession();
 	session.beginTransaction();
+
 	userdet = (Userdet) session.get(Userdet.class, email);
+
 	session.close();
 	if(userdet != null)
 	{
 		return "registered";
 	}
-	       
+	
 	else 
 		return "new_user";
 
