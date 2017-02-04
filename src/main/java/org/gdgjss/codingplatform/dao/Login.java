@@ -100,6 +100,29 @@ public class Login {
         System.out.println(code);
 	} 
 	
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public ModelAndView admin(HttpSession httpSession) {
+		ModelAndView model= new ModelAndView("admin");
+		return model;
+		
+	} 
+	
+	@RequestMapping(value = "/adminverify", method = RequestMethod.POST)
+	public ModelAndView adminverify(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+		ModelAndView model;
+	
+		
+		String id = requestParams.get("id");
+        String pass = requestParams.get("pass");
+        if(id.equals("gdg") && pass.equals("gdg")){
+        model= new ModelAndView("adminpannel");
+             	model.addObject("name",id);
+        	        }
+        else {
+        	return new ModelAndView("err");
+	}
+        return model;
+	}
 	
 }
 	 
