@@ -15,6 +15,17 @@ public class Submissions {
  private String Status;
  private String admno;
  private String name;
+ public Submissions(){};
+ public Submissions(int userid, int quesid, String Status, String admno,String name ){
+	 super();
+	 this.userid=userid;
+	 this.quesid=quesid;
+	 this.Status=Status;
+	 this.admno=admno;
+	 this.name=name; 
+	 
+	 
+ }
  public String getAdmno() {
 	return admno;
 }
