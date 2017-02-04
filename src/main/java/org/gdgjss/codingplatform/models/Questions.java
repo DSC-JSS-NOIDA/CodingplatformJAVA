@@ -8,10 +8,8 @@ import javax.persistence.Lob;
 public class Questions {
 	@Id @GeneratedValue
 	int quesid;
-	public int getQuesid() {
-		return quesid;
+	 
 	
-	}
 	private String title;
 	@Lob
 	private String detail;
@@ -24,6 +22,23 @@ public class Questions {
 	private String inputtestcase;
 	@Lob
 	private String outputtestcase;
+	private String path;
+	
+	public Questions(){}	
+	public Questions(String title,String detail,String constraints,String inputformat,String sampletestcase,String inputtestcase,String outputtestcase,String path){
+		super();
+	
+		this.title=title;
+		this.detail=detail;
+		this.constraints=constraints;
+		this.inputformat=inputformat;
+		this.sampletestcase=sampletestcase;
+		this.inputtestcase=inputtestcase;
+		this.outputtestcase=outputtestcase;
+		this.path=path;
+			}
+	
+	
 	public String getTitle() {
 		return title;
 	}
@@ -66,8 +81,20 @@ public class Questions {
 	public void setOutputtestcase(String outputtestcase) {
 		this.outputtestcase = outputtestcase;
 	}
-	
-	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public int getQuesid() {
+		return quesid;
+	}
+
+
+	public void setQuesid(int quesid) {
+		this.quesid = quesid;
+	}
 	
 	
 }
