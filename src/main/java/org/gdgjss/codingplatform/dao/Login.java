@@ -71,17 +71,19 @@ public class Login {
 	public @ResponseBody String loginverify(HttpSession httpSession, @RequestParam ("user_email") String email){
 	Session session =sessionFactory.openSession();
 	session.beginTransaction();
+
 	userdet = (Userdet) session.get(Userdet.class, email);
+
 	session.close();
 	if(userdet != null)
 	{
 		return "registered";
 	}
-	       
+	
 	else 
 		return "new_user";
 
-} 
+}  
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
 		System.out.println("SUYASH SUYASH TILHJARI");
@@ -93,10 +95,35 @@ public class Login {
 	@RequestMapping(value = "/submission", method = RequestMethod.POST)
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		String language = requestParams.get("lang");
-        String code = requestParams.get("code");
+        String code = requestParams.get("source");
         System.out.println(language);
         System.out.println(code);
 	} 
-} 
+	
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public ModelAndView admin(HttpSession httpSession) {
+		ModelAndView model= new ModelAndView("admin");
+		return model;
+		
+	} 
+	
+	@RequestMapping(value = "/adminverify", method = RequestMethod.POST)
+	public ModelAndView adminverify(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+		ModelAndView model;
+	
+		
+		String id = requestParams.get("id");
+        String pass = requestParams.get("pass");
+        if(id.equals("gdg") && pass.equals("gdg")){
+        model= new ModelAndView("adminpannel");
+             	model.addObject("name",id);
+        	        }
+        else {
+        	return new ModelAndView("err");
+	}
+        return model;
+	}
+	
+}
 	 
 

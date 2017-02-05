@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <meta charset="UTF-8">
   <title>quespage</title>
   <style type="text/css" media="screen">
@@ -88,15 +89,17 @@ select ques no
 <br>
 <br>
 
-
+<input type="text" name="source" class="source" value="" id="source" /><br>
 <textarea id="editor2" name="code"></textarea>
 
 
 <!-- load ace -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
 <script>
     // trigger extension
-    
+     
 
  
 
@@ -106,6 +109,12 @@ select ques no
     editor2.setAutoScrollEditorIntoView(true);
     editor2.setOption("maxLines", 16);
     editor2.setOption("minLines", 8);
+    var source = $("#editor2").val();
+    $("#source").val('source');	
+    editor2.getSession().on("change", function () {
+        $("#source").val(editor2.getSession().getValue());
+      });
+    
 
     
     
@@ -116,7 +125,7 @@ select ques no
 
 
 <input type="submit"  >
-<script src="resources/src/show_own_source.js "></script>
+
 
 </form>
 </body>
