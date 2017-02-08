@@ -1,5 +1,10 @@
 package org.gdgjss.codingplatform.dao;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -27,6 +32,7 @@ public class Login {
 	@Autowired
 	private SessionFactory sessionFactory;
 	Userdet  userdet;
+	String avatar;
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
@@ -42,7 +48,7 @@ public class Login {
 			payLoad = IdTokenVerifierAndParser.getPayload(auth_token);
 				String name = (String) payLoad.get("name");
 		        String email = payLoad.getEmail();
-		        String avatar= (String) payLoad.get("picture");
+		        avatar= (String) payLoad.get("picture");
 		        System.out.println("User name: " + name);
 		        System.out.println("User email: " + email);
 		        System.out.println("avatar :" + avatar);
@@ -53,9 +59,12 @@ public class Login {
 		        		(email,avatar,year,branch,name,admno);
 		        Session session = sessionFactory.openSession();
 				session.beginTransaction();
+				
 				session.save(userdet);
 				session.getTransaction().commit();
 				session.close();
+				indexpage.addObject("name",name);
+				indexpage.addObject("avatar",avatar);
 		        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block 
@@ -89,6 +98,13 @@ public class Login {
 		System.out.println("SUYASH SUYASH TILHJARI");
 		httpSession.setAttribute("loggedinuser",email);
 		ModelAndView indexpage=new ModelAndView("index");//generating session for the logged in user
+		Session session =sessionFactory.openSession();
+		session.beginTransaction();
+		userdet = (Userdet) session.get(Userdet.class, email);
+		String name=userdet.getName();
+		String avatar=userdet.getAvatar();
+		indexpage.addObject("name",name);
+		indexpage.addObject("avatar",avatar);
 		return indexpage;
 	
 	}
@@ -97,7 +113,47 @@ public class Login {
 		String language = requestParams.get("lang");
         String code = requestParams.get("source");
         System.out.println(language);
+        
         System.out.println(code);
+        //bug in hackerrank api
+        /*
+        String url = "http://api.hackerrank.com/checker/submission.json";
+	        URL obj = new URL(url);
+	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+	        //add request header
+	        con.setRequestMethod("POST");
+	     con.setRequestProperty("User-Agent","chrome");
+	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+	        String urlParameters = "source=print 1&lang=5&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
+
+	        // Send post request
+	        con.setDoOutput(true);
+	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+	        wr.writeBytes(urlParameters);
+	        wr.flush();
+	        wr.close();
+
+	        int responseCode = con.getResponseCode();
+	        System.out.println("\nSending 'POST' request to URL : " + url);
+	        System.out.println("Post parameters : " + urlParameters);
+	        System.out.println("Response Code : " + responseCode);
+
+	          BufferedReader in = new BufferedReader(
+	               new InputStreamReader(con.getInputStream()));
+	        String inputLine;
+	        StringBuffer responses = new StringBuffer();
+
+	        while ((inputLine = in.readLine()) != null) {
+	            responses.append(inputLine);
+	        }
+	        in.close();
+
+	        //print result
+	        System.out.println(responses.toString());
+**/
+
 	} 
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
