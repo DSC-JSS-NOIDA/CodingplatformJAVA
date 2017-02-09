@@ -3,6 +3,7 @@ package org.gdgjss.codingplatform.dao;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -108,15 +109,15 @@ public class Login {
 		return indexpage;
 	
 	}
-	@RequestMapping(value = "/submission", method = RequestMethod.POST)
-	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+	@RequestMapping(value = "/api", method = RequestMethod.GET)
+	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException {
 		String language = requestParams.get("lang");
         String code = requestParams.get("source");
         System.out.println(language);
         
         System.out.println(code);
         //bug in hackerrank api
-        /*
+        
         String url = "http://api.hackerrank.com/checker/submission.json";
 	        URL obj = new URL(url);
 	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -152,7 +153,7 @@ public class Login {
 
 	        //print result
 	        System.out.println(responses.toString());
-**/
+
 
 	} 
 	
