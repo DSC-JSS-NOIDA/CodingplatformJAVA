@@ -74,7 +74,7 @@ select ques no
 	</div>
 </div>
 <br>
-<form method="post" action="submission" >
+<form method="post" action="api" >
 
 
  <select class="language" name=lang>
@@ -102,7 +102,7 @@ select ques no
      
 
  
-
+ 
     var editor2 = ace.edit("editor2");
     editor2.setTheme("ace/theme/tomorrow_night_blue"); 
     editor2.session.setMode("ace/mode/html");

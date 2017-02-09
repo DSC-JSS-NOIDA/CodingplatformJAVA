@@ -109,7 +109,7 @@ public class Login {
 		return indexpage;
 	
 	}
-	@RequestMapping(value = "/api", method = RequestMethod.GET)
+	@RequestMapping(value = "/api", method = RequestMethod.POST)
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException {
 		String language = requestParams.get("lang");
         String code = requestParams.get("source");
@@ -127,7 +127,7 @@ public class Login {
 	     con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-	        String urlParameters = "source=print 1&lang=5&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
+	        String urlParameters = "source="+code+"&lang=5&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
 
 	        // Send post request
 	        con.setDoOutput(true);
@@ -164,6 +164,12 @@ public class Login {
 		
 	} 
 	
+	@RequestMapping(value = "/ques", method = RequestMethod.GET)
+	public ModelAndView ques(HttpSession httpSession) {
+		ModelAndView model= new ModelAndView("Quespage");
+		return model;
+		
+	} 
 	@RequestMapping(value = "/adminverify", method = RequestMethod.POST)
 	public ModelAndView adminverify(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		ModelAndView model;
