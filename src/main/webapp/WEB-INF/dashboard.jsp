@@ -6,7 +6,8 @@
 <meta name="google-signin-client_id" content="30081514308-nsdkis6qpuda4f9vr2mb2d3aeg0otqgq.apps.googleusercontent.com">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-       
+       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
      
 <script>
 function onSignIn(googleUser) {
@@ -26,7 +27,7 @@ function onSignIn(googleUser) {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
-      window.location="index.jsp";
+      window.location="Homepage.jsp";
     });
   }
 </script>
@@ -34,10 +35,11 @@ function onSignIn(googleUser) {
 </head>
 <body>
 <!--Import jQuery before materialize.js-->
-    
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
     
 <nav>
-    <div >
+    <div class="nav-wrapper">
       <a href="#" class="brand-logo">Dashboard</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
       
@@ -50,5 +52,19 @@ function onSignIn(googleUser) {
       </ul>
     </div>
   </nav>
+  <br>
+  <h1>questions</h1>
+  <br>
+  <table>
+  <tr>
+  <th>id</th>
+  <th>title</th>
+</tr>
+<tr>
+<td>${id}</td>
+<td><a href="/ques?=${id}">${title}</a>
+</td>
+</tr>
+  </table>
   </body>
   </html>

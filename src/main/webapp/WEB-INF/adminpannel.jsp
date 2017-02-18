@@ -79,15 +79,15 @@ welcome ${name}<br>
 </div>
 <div hidden id=adduser>
 <h1>add user</h1>
-<form name=userctrl action=adduser method=post>
-enter new user email<input type=text name=email><br>
-enter name<input type=text name=name><br>
-enter admno<input type=text name=admno><br>
-enter year<input type=text name=year><br>
-enter branch<input type=text name=branch><br>
-<input type=submit>
+               <form name=userctrl action=adduser method=post>
+                enter new user email<input type=text name=email><br>
+                 enter name<input type=text name=name><br>
+                enter admno<input type=text name=admno><br>
+				enter year<input type=text name=year><br>
+				enter branch<input type=text name=branch><br>
+				<input type=submit>
 
-</form>
+				</form>
 </div>
 <div hidden id="edituser">
 <h1>edit user</h1>
@@ -99,15 +99,41 @@ enter admno<input type=text name=admno><br>
 
 </form>
 </div>
-<div hidden id="edituser">
-<h1>delete user</h1>
-<form name=userctrl action=deluser method=post>
+           <div hidden id="edituser">
+           <h1>delete user</h1>
+           <form name=userctrl action=deluser method=post>
+           enter email<input type=text name=email><br>
+           <input type=submit>
+           </form>
+           </div>
+<div>
+ADD QUESTIONS
 
-enter email<input type=text name=email><br>
 
-<input type=submit>
-
-</form>
+         <form name=frm action=addques method=post>
+          enter title<textarea name=title></textarea><br>
+          enter detail<textarea name=detail></textarea><br>
+          enter constraints<textarea name=const></textarea><br>
+          enter input  format<textarea name=inp_format></textarea><br>
+          enter output format<textarea name=op_format></textarea><br>
+          enter sampletestcase<textarea name=sample_testcase></textarea><br>
+          enter input test case<textarea name=inp_testcase></textarea><br>
+          enter output test case<textarea name=op_testcase></textarea><br>
+          upload test case file<input type=file name=file>
+           <br>
+         <input type=submit>
+          </form>
 </div>
+
+<div>
+EDIT QUESTION
+<br>
+       <form name=frm3 action=edit_ques method=post>
+        enter ques id<input type=text name=id>
+          <br>
+          <input type=submit>
+       </form>
+</div>
+
 </body>
 </html>

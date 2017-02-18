@@ -38,7 +38,7 @@ public class Login {
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		GoogleIdToken.Payload payLoad;
-		ModelAndView indexpage=new ModelAndView("index");
+		ModelAndView indexpage=new ModelAndView("dashboard");
 		 String auth_token= requestParams.get("auth_token");
 		 String branch=requestParams.get("branch");
 		 String year=requestParams.get("year");
@@ -98,7 +98,7 @@ public class Login {
 	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
 		System.out.println("SUYASH SUYASH TILHJARI");
 		httpSession.setAttribute("loggedinuser",email);
-		ModelAndView indexpage=new ModelAndView("index");//generating session for the logged in user
+		ModelAndView indexpage=new ModelAndView("dashboard");//generating session for the logged in user
 		Session session =sessionFactory.openSession();
 		session.beginTransaction();
 		userdet = (Userdet) session.get(Userdet.class, email);

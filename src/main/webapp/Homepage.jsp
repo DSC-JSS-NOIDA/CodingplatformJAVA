@@ -19,7 +19,7 @@
 <br>
 <div id=detailform hidden>
 <h1>ENTER YOUR DETAILS</h1>
-<form action="registration" method="post" >
+<form action="login" method="post" >
 Enter Admission no:<input type=text name=admno><br><br> 
 Enter YEAR:<input type=text name=year id="p1"  ><br>
 <br>
@@ -30,7 +30,7 @@ ENTER BRANCH:<input type=text name=branch id="p2" ><br>
 
 <div >
 <form id="submitform" action="login" method="post">
-<input type=text name=email value="" id="email">
+<input type=text name=email  id="email">
 <input type="submit" value="Submit" name="Submit" />
 </form>
 </div>
@@ -51,7 +51,7 @@ function onSignIn(googleUser) {
 	    	data: { 'user_email':profile.getEmail()},
 	   		success: function(data){
 	   					console.log(data);
-	   					if(data==="new_user")
+	   					if(data=="new_user")
 	   						{
 	   			       		document.getElementById("loginform").innerHTML =document.getElementById("detailform").innerHTML;
 	   	  	            	var tokenbox = document.getElementById('tokenbox');
