@@ -79,13 +79,13 @@ select ques no
 
  <select class="language" name=lang>
   <option value="Select">Select</option>
-  <option value="C">C</option>
-  <option value="C++">C++</option>
-  <option value="Java">Java</option>
-  <option value="Python">Python</option>
+  <option value="1">C</option>
+  <option value="2">C++</option>
+  <option value="3">Java</option>
+  <option value="5">Python</option>
 </select> <br>
 <br>
-
+ 
 <br>
 <br>
 
