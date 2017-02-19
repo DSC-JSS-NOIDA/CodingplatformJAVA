@@ -81,11 +81,7 @@ welcome ${name}<br>
 <h1>add user</h1>
                <form name=userctrl action=adduser method=post>
                 enter new user email<input type=text name=email><br>
-                 enter name<input type=text name=name><br>
-                enter admno<input type=text name=admno><br>
-				enter year<input type=text name=year><br>
-				enter branch<input type=text name=branch><br>
-				<input type=submit>
+                				<input type=submit>
 
 				</form>
 </div>

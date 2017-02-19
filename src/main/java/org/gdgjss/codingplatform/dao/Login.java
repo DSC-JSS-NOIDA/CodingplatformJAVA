@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.gdgjss.codingplatform.models.Userdet;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -186,6 +187,55 @@ public class Login {
 	}
         return model;
 	}
+	//adding new user from admin pannel
+	@RequestMapping(value = "/add_user", method = RequestMethod.POST)
+	public ModelAndView adduser(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+		String email=requestParams.get("email");
+	
+		 Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+	       
+	      ModelAndView model = new ModelAndView("add");
+	         
+	       Query queryResult = session.createQuery("from Userdet");
+	       java.util.List allUsers;
+	       String email_id;
+	       email_id=null;
+	       
+	       allUsers = queryResult.list();
+	       int f;
+	       f=0;
+	       for (int i = 0; i < allUsers.size(); i++) {
+	    	  Userdet user = (Userdet) allUsers.get(i);
+	        email_id=user.getEmailid();
+		      
+	        if(email.equals(email_id)){
+	         f=1;
+	     
+	        break; 
+	   
+	        
+	         }
+	        }
+	         
+	           if(f!=1){
+	        	   Userdet user= new   Userdet();  
+	               user.setEmailid(email);
+	               	session.save(user);
+	               	session.getTransaction().commit();
+	   
+	               	session.close(); 
+	               	user=null;
+	               	System.out.println(email);
+	               	model.addObject("add","record added");
+	      	           } 
+	           else
+	           {   System.out.println("duplicate");
+	           model.addObject("dup","duplicate record"); 
+	           }
+	           return model;  
+		
+	} 
 	
 }
 	 
