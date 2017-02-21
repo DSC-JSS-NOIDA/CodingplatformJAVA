@@ -77,7 +77,7 @@ select ques no
 <form method="post" action="api" >
 
 
- <select class="language" name=lang>
+ <select class="language" name=lang >
   <option value="Select">Select</option>
   <option value="1">C</option>
   <option value="2">C++</option>
@@ -87,10 +87,19 @@ select ques no
 <br>
  
 <br>
-<br>
+<br>choose language for editor
+<div id="editor_lang">
+                <select class="language" id="editor_select" name="editor_lang">
+                    <option value="">Select</option>
+                    <option value="c_cpp">C</option>
+                    <option value="c_cpp">C++</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                </select>
 
-<input type="text" name="source" class="source" value="" id="source" /><br>
-<textarea id="editor2" name="code"></textarea>
+<input type="text" name="source" class="source" value="" id="source" hidden/><br>
+</div>
+<textarea id="editor2" name="code"></textarea> 
 
 
 <!-- load ace -->
@@ -101,7 +110,18 @@ select ques no
     // trigger extension
      
 
- 
+ var lang = "c_cpp";
+        $(document).ready(function(){
+            $("#editor_select").change(function(){
+              $("#editor_select option:selected").each(function(){
+                lang=$(this).attr('value');
+                console.log(lang);
+                editor2.session.setMode("ace/mode/"+lang);
+                // v: Date.now();  
+              });
+            });
+        });
+
  
     var editor2 = ace.edit("editor2");
     editor2.setTheme("ace/theme/tomorrow_night_blue"); 
