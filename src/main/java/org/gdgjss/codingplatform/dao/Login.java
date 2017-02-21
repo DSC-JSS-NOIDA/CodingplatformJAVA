@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.gdgjss.codingplatform.models.Questions;
 import org.gdgjss.codingplatform.models.Userdet;
 
 import org.hibernate.Query;
@@ -126,7 +127,7 @@ public class Login {
 	        //add request header
 	        con.setRequestMethod("POST");
 	     con.setRequestProperty("User-Agent","chrome");
-	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 
+	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 	
 
 	        String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
 
@@ -236,6 +237,69 @@ public class Login {
 	           return model;  
 		
 	} 
+	
+	// add new questions to db
+	@RequestMapping(value = "/addques", method = RequestMethod.POST)
+	public ModelAndView addques(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+		String title=requestParams.get("title");
+		String details=requestParams.get("detail");
+		String constraints=requestParams.get("const");
+		String inputformat=requestParams.get("inp_format");
+		String outpuformat=requestParams.get("op_format");
+		String inputtestcase=requestParams.get("inp_testcase");
+		String outputtestcase=requestParams.get("op_testcase");
+		String file=requestParams.get("file");
+		Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+	       
+	      ModelAndView model = new ModelAndView("addques");
+	         
+	       Query queryResult = session.createQuery("from Questions");
+	       java.util.List allUsers;
+	       String titl;
+	       titl=null;
+	       
+	       allUsers = queryResult.list();
+	       int f;
+	       f=0;
+	       for (int i = 0; i < allUsers.size(); i++) {
+	    	  Questions user = (Questions) allUsers.get(i);
+	        titl=user.getTitle();
+		      
+	        if(title.equals(titl)){
+	         f=1;
+	     
+	        break; 
+	   
+	        
+	         }
+	        }
+	         
+	           if(f!=1){
+	        	   Questions user= new   Questions();  
+	               user.setTitle(title);
+	               user.setDetail(details);
+	               user.setConstraints(constraints);
+	               user.setInputformat(inputformat);
+	               user.setInputtestcase(inputtestcase);
+	               user.setOutputtestcase(outputtestcase);
+	              // user.setPath(path);
+	               	session.save(user);
+	               	session.getTransaction().commit();
+	   
+	               	session.close(); 
+	               	user=null;
+	               	System.out.println(title);
+	               	model.addObject("add","record added");
+	      	           } 
+	           else
+	           {   System.out.println("duplicate");
+	           model.addObject("dup","duplicate record"); 
+	           }
+	           return model;  
+		
+	} 
+	
 	
 }
 	 

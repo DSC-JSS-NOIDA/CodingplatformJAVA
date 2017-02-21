@@ -111,7 +111,7 @@ ADD QUESTIONS
           enter detail<textarea name=detail></textarea><br>
           enter constraints<textarea name=const></textarea><br>
           enter input  format<textarea name=inp_format></textarea><br>
-          enter output format<textarea name=op_format></textarea><br>
+         
           enter sampletestcase<textarea name=sample_testcase></textarea><br>
           enter input test case<textarea name=inp_testcase></textarea><br>
           enter output test case<textarea name=op_testcase></textarea><br>
