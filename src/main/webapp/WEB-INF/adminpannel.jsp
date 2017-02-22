@@ -104,9 +104,9 @@ enter admno<input type=text name=admno><br>
            </div>
 <div>
 ADD QUESTIONS
+ 
 
-
-         <form name=frm action=addques method=post>
+         <form name=frm action=addques method=post enctype='multipart/form-data'>
           enter title<textarea name=title></textarea><br>
           enter detail<textarea name=detail></textarea><br>
           enter constraints<textarea name=const></textarea><br>

@@ -155,7 +155,7 @@ public class Login {
 
 	        //print result
 	        System.out.println(responses.toString());
-
+	        
 
 	} 
 	
@@ -299,6 +299,107 @@ public class Login {
 	           return model;  
 		
 	} 
+	// editing the exixting questions
+	@RequestMapping(value = "/ques_edit", method = RequestMethod.POST)
+	public ModelAndView quesedit(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+		String quesId = requestParams.get("id");
+		
+		 Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+	       
+	      ModelAndView model = new ModelAndView("quesedit");
+	         
+	       Query queryResult = session.createQuery("from Questions");
+	       java.util.List allUsers;
+	       String det,title,inp_format,cons,inp_case,op_case,path;
+	       int qid;
+	      qid=0;
+	     det=null;
+	      title=null;
+	      inp_format=null;
+	      cons=null;
+	      inp_case=null;
+	      op_case=null;
+	      path=null;
+	       allUsers = queryResult.list();
+	       int f;
+	       f=0;
+	       for (int i = 0; i < allUsers.size(); i++) {
+	    	   Questions user = (Questions) allUsers.get(i);
+	    	   qid=user.getQuesid();
+	    	   title=user.getTitle();
+	    	   cons=user.getConstraints();
+	    	   det=user.getDetail();
+	    	   inp_case=user.getInputtestcase();
+	    	   op_case=user.getOutputtestcase();
+	    	   path=user.getPath();
+	         
+	        		  
+	         if(quesId.equals(qid) ){
+		         f=1;
+		         break;
+	        
+	        }
+	         	         
+	       }
+	       if(f==1){
+		         model.addObject("qid",qid); 
+		         model.addObject("title",title); 
+		         model.addObject("detail",det); 
+		         model.addObject("constraints",cons); 
+		         model.addObject("inputcase",inp_case); 
+		         model.addObject("outputcase",op_case); 
+		         model.addObject("path",path); 
+		        
+	        }
+	         else
+	         {
+	        	  model.addObject("norec","no record found");  
+	         }
+	         
+	       return model;
+		
+	} 
+	//modify questions
+	@RequestMapping(value = "/modifyque", method = RequestMethod.POST)
+	public ModelAndView modify(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+	    ModelAndView model = new ModelAndView("quesedit");
+					String quesid = requestParams.get("id");
+					String det,title,inp_format,cons,inp_case,op_case,path;
+					det=requestParams.get("detail");
+					title=requestParams.get("title");
+					cons=requestParams.get("cons");
+					inp_case=requestParams.get("inpcase");
+					op_case=requestParams.get("opcase");
+		 /*
+		  space for code for file upload
+		  after which path requsest parameter to be used
+		  
+		  */
+		// path=requestParams.get("");
+						Session session =	sessionFactory.openSession();
+						session.beginTransaction();
+	       
+	  
+	       Questions user= (Questions) session.get(Questions.class,quesid);
+	       				user.setQuesid(Integer.parseInt(quesid));
+	       				user.setDetail(det);
+	       				user.setConstraints(cons);
+	       				user.setInputtestcase(inp_case);
+	       				user.setOutputtestcase(op_case);
+	       				/*
+	       				 path to be set after the file upload code is written
+	       				 
+	       				   */
+	       				//user.setPath(path);
+	       					session.update(user);
+	       					session.getTransaction().commit();
+	       					session.close(); 
+	       						
+	       					
+	       					model.addObject("rec","record edited");
+	       					return model;
+	}
 	
 	
 }
