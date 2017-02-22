@@ -78,12 +78,12 @@ welcome ${name}<br>
 <div id=task_form>
 </div>
 <div hidden id=adduser> 
-<h1>add user</h1>
-               <form name=userctrl action=adduser method=post>
-                enter new user email<input type=text name=email><br>
+								<h1>add user</h1>
+               					<form name=userctrl action=adduser method=post>
+                				enter new user email<input type=text name=email><br>
                 				<input type=submit>
 
-				</form>
+								</form>
 </div>
 <div hidden id="edituser">
 <h1>edit user</h1>

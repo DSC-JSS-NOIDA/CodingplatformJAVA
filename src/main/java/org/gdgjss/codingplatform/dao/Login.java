@@ -16,7 +16,8 @@ import org.gdgjss.codingplatform.models.Userdet;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -112,7 +113,7 @@ public class Login {
 	
 	}
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
-	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException {
+	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
 		String language = requestParams.get("lang");
         String code = requestParams.get("source");
         System.out.println(language);
@@ -154,9 +155,19 @@ public class Login {
 	        in.close();
 
 	        //print result
+	        
 	        System.out.println(responses.toString());
 	        
-
+	        
+	       /* 	***********************************************************************************************************
+	        *   code for specific field from json using json dependency
+	        * 
+	        *  	JSONObject json= new JSONObject(responses);
+	        *	String res=json.getJSONObject("result").getString("message");
+	        *	System.out.println(res);
+	            ***********************************************************************************************************
+	        */
+ 
 	} 
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
