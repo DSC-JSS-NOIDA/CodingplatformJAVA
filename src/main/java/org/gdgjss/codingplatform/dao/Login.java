@@ -146,28 +146,25 @@ public class Login {
 
 	          BufferedReader in = new BufferedReader(
 	               new InputStreamReader(con.getInputStream()));
-	        String inputLine;
-	        StringBuffer responses = new StringBuffer();
-
-	        while ((inputLine = in.readLine()) != null) {
-	            responses.append(inputLine);
+	        String inputLine;	  
+	        inputLine=in.readLine();
+	        System.out.println(inputLine);
+	       //   code for specific field from json using json dependency
+	        String message="",stdOut="";
+	        try{
+	          	JSONObject json= new JSONObject(inputLine);	  
+	          	if(json.has("result")){
+	          	JSONObject resultObject=json.getJSONObject("result");
+	          	message=resultObject.getString("message");
+	          	stdOut=resultObject.getString("stdout");
+	          
+	          	}
+	        	System.out.println(message);
+	        	System.out.println(stdOut);
+	        }catch(Exception e){
+	        	
 	        }
-	        in.close();
-
-	        //print result
-	        
-	        System.out.println(responses.toString());
-	        
-	        
-	       /* 	***********************************************************************************************************
-	        *   code for specific field from json using json dependency
-	        * 
-	        *  	JSONObject json= new JSONObject(responses);
-	        *	String res=json.getJSONObject("result").getString("message");
-	        *	System.out.println(res);
-	            ***********************************************************************************************************
-	        */
- 
+	       
 	} 
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
