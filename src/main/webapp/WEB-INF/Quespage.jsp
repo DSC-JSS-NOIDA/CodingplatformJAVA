@@ -97,11 +97,11 @@ select ques no
                     <option value="python">Python</option>
                 </select>
 
-<input type="text" name="source" class="source" value="" id="source" hidden/><br>
+<textarea name="source" class="source" value="" id="source" hidden/></textarea><br>
 </div>
 <textarea id="editor2" name="code"></textarea> 
 
-
+ 
 <!-- load ace -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
