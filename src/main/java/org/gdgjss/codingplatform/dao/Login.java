@@ -2,6 +2,7 @@ package org.gdgjss.codingplatform.dao;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -116,11 +117,53 @@ public class Login {
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
 		String language = requestParams.get("lang");
         String code = requestParams.get("source");
-        System.out.println(language);
-        
-        System.out.println(code);
-        //bug in hackerrank api
-        
+        String qid = requestParams.get("qid");
+        	 System.out.println(language);        
+        	 System.out.println(code);
+        String path="";
+        /*
+         * ********code for path of test case file from db************************
+         */
+        Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+	      	       Query queryResult = session.createQuery("from Questions");
+	      	       java.util.List allUsers;
+	   
+	      	       int quesid;
+	     
+	      	       allUsers = queryResult.list();
+	       
+	      	       for (int i = 0; i < allUsers.size(); i++) {
+	      	    	   Questions user = (Questions) allUsers.get(i);
+	      	    	   quesid=user.getQuesid();
+	    	      				if(qid.equals(quesid) )
+	    	   					{
+	    	   						path=user.getPath();
+	    	   						break;
+	        
+	    	   					}     
+	       }
+	      
+	      	       
+	      	       /*
+	      	        * *********************************code to read the test case file**********************************8
+	      	        */
+	      	       
+	      	       
+	      	       	BufferedReader br = new BufferedReader(new FileReader(path));
+			
+	      	       				try {
+	      	       					String x;
+	      	       					while ( (x = br.readLine()) != null ) {
+	      	       						// Printing out each line in the file
+	      	       						System.out.println(x);
+	      	       							}
+	      	       					}
+	      	       				catch (IOException e) {
+	      	       					e.printStackTrace();
+	      	       					}
+       
+      //*********************************post req to api*******************  
         String url = "http://api.hackerrank.com/checker/submission.json";
 	        URL obj = new URL(url);
 	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -130,7 +173,7 @@ public class Login {
 	     con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 	
 
-	        String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
+	        String urlParameters = "source="+code+"&lang="+language+"&testcases=["+path+"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
 
 	        // Send post request
 	        con.setDoOutput(true);
@@ -164,6 +207,7 @@ public class Login {
 	        }catch(Exception e){
 	        	
 	        }
+	        
 	       
 	} 
 	
