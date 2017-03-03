@@ -32,17 +32,7 @@
 </nav>
 </div>
 <br>
-select ques no
-<form name=frm action="#" >
-<input type="submit" value="1" style="height:0.8cm;width:0.8cm" name=b1>
-<input type="button" value="2" style="height:0.8cm;width:0.8cm" name=b2>
-<input type="button" value="3" style="height:0.8cm;width:0.8cm" name=b3>
-<input type="button" value="4" style="height:0.8cm;width:0.8cm" name=b4><br>
-<input type="button" value="5" style="height:0.8cm;width:0.8cm" name=b5>
-<input type="button" value="6" style="height:0.8cm;width:0.8cm" name=b6>
-<input type="button" value="7" style="height:0.8cm;width:0.8cm" name=b7>
-<input type="button" value="8" style="height:0.8cm;width:0.8cm" name=b8><br>
-</form>
+
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
@@ -134,14 +124,14 @@ select ques no
     editor2.getSession().on("change", function () {
         $("#source").val(editor2.getSession().getValue());
       });
-    
+     
 
     
     
 </script>
 
     
-
+<input type=hidden value="${qid}" name=qid><br>
 
 
 <input type="submit"  >
