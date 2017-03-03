@@ -1,4 +1,4 @@
-package org.gdgjss.codingplatform.dao;
+package org.gdgjss.codingplatform.controller;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,26 +28,87 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-
+/**
+ * this class contains all view controllers, maps view to service layer 
+ * @author suyash
+ *
+ */
 
 @Controller
-public class Login {
+public class AllController {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-	Userdet  userdet;
-	String avatar;
+	private Userdet userdet;
+	private String avatar;
+	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+	
+	/**
+	 *for login verification through google API 
+	 * @param httpSession
+	 * @param email
+	 * @return String
+	 */
+	/*MediaType.APPLICATION_JSON_VALUE return string*/
+	@RequestMapping(value = "/loginverifier",
+			method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String loginverify(HttpSession httpSession,
+			@RequestParam ("user_email") String email){
+	Session session =sessionFactory.openSession();
+	session.beginTransaction();
 
+	userdet = (Userdet) session.get(Userdet.class, email);
+
+	session.close();
+	if(userdet != null)
+	{
+		return "registered";
+	}
+	
+	else 
+		return "new_user";
+
+	}  
+	
+	/**
+	 * Controller, after completion of registration or login verification
+	 * 
+	 * @param httpSession
+	 * @param email
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/dashboard", method = RequestMethod.POST)
+	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
+		httpSession.setAttribute("loggedinuser",email);
+		ModelAndView model=new ModelAndView("dashboard");//generating session for the logged in user
+		Session session =sessionFactory.openSession();
+		session.beginTransaction();
+		userdet = (Userdet) session.get(Userdet.class, email);
+		String name=userdet.getName();
+		String avatar=userdet.getAvatar();
+		model.addObject("name",name);
+		model.addObject("avatar",avatar);
+		return model;
+	
+	}
+	
+	/**
+	 * controller for first time logging user for registration
+	 * 
+	 * @param httpSession
+	 * @param requestParams
+	 * @return ModelAndView 
+	 */
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		GoogleIdToken.Payload payLoad;
-		ModelAndView indexpage=new ModelAndView("dashboard");
+		ModelAndView model=new ModelAndView("dashboard");
 		 String auth_token= requestParams.get("auth_token");
 		 String branch=requestParams.get("branch");
 		 String year=requestParams.get("year");
 		 String admno=requestParams.get("admno");
 		
-	
+		 // code for fetching user data from google api
 		try {
 			payLoad = IdTokenVerifierAndParser.getPayload(auth_token);
 				String name = (String) payLoad.get("name");
@@ -67,51 +128,20 @@ public class Login {
 				session.save(userdet);
 				session.getTransaction().commit();
 				session.close();
-				indexpage.addObject("name",name);
-				indexpage.addObject("avatar",avatar);
+				model.addObject("name",name);
+				model.addObject("avatar",avatar);
 		        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		}
 		
-		return indexpage;
+		return model;
 		
 	} 
 	
-	/*MediaType.APPLICATION_JSON_VALUE return string*/
-	@RequestMapping(value = "/loginverifier", method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String loginverify(HttpSession httpSession, @RequestParam ("user_email") String email){
-	Session session =sessionFactory.openSession();
-	session.beginTransaction();
 
-	userdet = (Userdet) session.get(Userdet.class, email);
-
-	session.close();
-	if(userdet != null)
-	{
-		return "registered";
-	}
 	
-	else 
-		return "new_user";
-
-}  
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
-		System.out.println("SUYASH SUYASH TILHJARI");
-		httpSession.setAttribute("loggedinuser",email);
-		ModelAndView indexpage=new ModelAndView("dashboard");//generating session for the logged in user
-		Session session =sessionFactory.openSession();
-		session.beginTransaction();
-		userdet = (Userdet) session.get(Userdet.class, email);
-		String name=userdet.getName();
-		String avatar=userdet.getAvatar();
-		indexpage.addObject("name",name);
-		indexpage.addObject("avatar",avatar);
-		return indexpage;
-	
-	}
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
 		String language = requestParams.get("lang");
@@ -127,10 +157,13 @@ public class Login {
 
 	        //add request header
 	        con.setRequestMethod("POST");
-	     con.setRequestProperty("User-Agent","chrome");
+	        con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 	
 
-	        String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
+	        String urlParameters = "source="+code
+	        						+"&lang="+language
+	        						+"&testcases=[\"1\"]"
+	        						+"&api_key="+HACKERRANK_API_CREDENTIALS;
 
 	        // Send post request
 	        con.setDoOutput(true);

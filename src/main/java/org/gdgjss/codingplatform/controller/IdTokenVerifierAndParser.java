@@ -1,4 +1,4 @@
-package org.gdgjss.codingplatform.dao;
+package org.gdgjss.codingplatform.controller;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;

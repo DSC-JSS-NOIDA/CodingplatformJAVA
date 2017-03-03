@@ -19,7 +19,7 @@
 <br>
 <div id=detailform hidden>
 <h1>ENTER YOUR DETAILS</h1>
-<form action="login" method="post" >
+<form action="dashboard" method="post" >
 Enter Admission no:<input type=text name=admno><br><br> 
 Enter YEAR:<input type=text name=year id="p1"  ><br>
 <br>
