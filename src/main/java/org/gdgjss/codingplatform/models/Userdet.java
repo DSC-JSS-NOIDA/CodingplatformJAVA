@@ -14,7 +14,7 @@ public class Userdet {
 		private String participant1_roll;
 		private String participant2_roll;
 		private String participant2_name;
-		private String contactno;
+		private String contactno;           //used as a password
 		public int getId() {
 			return id;
 		}

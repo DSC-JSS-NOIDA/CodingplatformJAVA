@@ -13,7 +13,7 @@
 
 <div>
 		<input type=button name=LOGIN value="LOGIN"><br>
-		<input type=text name="SIGNUP" value="SIGNUP"><BR>
+		<input type=button name="SIGNUP" value="SIGNUP"><BR>
 </div>
 	
 

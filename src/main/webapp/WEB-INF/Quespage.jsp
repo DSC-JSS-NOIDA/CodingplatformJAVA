@@ -20,6 +20,16 @@
         left: 0;
         right: 0;
     }
+    #editor_select {
+	background-color: #141414;
+    color: white;
+    border: 0px;
+}
+#editor_lang {
+	background-color: #141414;
+	border-radius: 4px;
+}
+
   </style>
 </head>
 <body>
@@ -64,21 +74,20 @@
 	</div>
 </div>
 <br>
+CHOOSE LANGUAGE
 <form method="post" action="api" >
+	 	<select class="language" name=lang >
+  			<option value="Select">Select</option>
+  			<option value="1">C</option>
+  			<option value="2">C++</option>
+  			<option value="3">Java</option>
+  			<option value="5">Python</option>
+		</select>
+ <br>
+<textarea name="source" class="source" value="" id="source" hidden/></textarea><br>
+				
+				<div id="editor_lang"> 
 
-
- <select class="language" name=lang >
-  <option value="Select">Select</option>
-  <option value="1">C</option>
-  <option value="2">C++</option>
-  <option value="3">Java</option>
-  <option value="5">Python</option>
-</select> <br>
-<br>
- 
-<br>
-<br>choose language for editor
-<div id="editor_lang">
                 <select class="language" id="editor_select" name="editor_lang">
                     <option value="">Select</option>
                     <option value="c_cpp">C</option>
@@ -87,11 +96,11 @@
                     <option value="python">Python</option>
                 </select>
 
-<textarea name="source" class="source" value="" id="source" hidden/></textarea><br>
-</div>
+
+
 <textarea id="editor2" name="code"></textarea> 
 
- 
+ </div>
 <!-- load ace -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -114,7 +123,7 @@
 
  
     var editor2 = ace.edit("editor2");
-    editor2.setTheme("ace/theme/tomorrow_night_blue"); 
+    editor2.setTheme("ace/theme/twilight"); 
     editor2.session.setMode("ace/mode/html");
     editor2.setAutoScrollEditorIntoView(true);
     editor2.setOption("maxLines", 16);

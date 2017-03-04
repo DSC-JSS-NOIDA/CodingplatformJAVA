@@ -179,7 +179,7 @@ public class AllController {
 	       System.out.println();
                      
 	        //String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"i am king\",\"123\" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
-	       String urlParameters = "source="+code+"&lang="+language+"&testcases=["+y+" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+	       String urlParameters = "source="+code+"&lang="+language+"&testcases=["+y+" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
 	        // Send post request
 	        con.setDoOutput(true);
 	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
