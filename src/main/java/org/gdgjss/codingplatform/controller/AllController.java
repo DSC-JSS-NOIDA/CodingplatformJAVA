@@ -76,7 +76,7 @@ public class AllController {
 				}
 				else
 				{
-					model=new ModelAndView("index.jsp");
+					model=new ModelAndView("index");
 					model.addObject("error","no record found");
 				}
 		
@@ -128,7 +128,7 @@ public class AllController {
 				
 				else
 				{
-					model=new ModelAndView("index.jsp");
+					model=new ModelAndView("index");
 					model.addObject("error","already registered go to login page");
 				}
 		

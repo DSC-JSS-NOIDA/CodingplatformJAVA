@@ -37,7 +37,7 @@ function myFunction() {
 </div>
 <div style="display:none" id="login_form"  margin-bottom:"3cm">
 <h1>LOGIN </h1>
-<form action="/login" method=post>
+<form action=login method=post>
 Enter emailid :<input type=text  name=email required><br><br> 
 Enter contact no :<input type=password name=contact required><br>
 <input type=submit><a href="#" onclick="myFunction2()"><font color=red>Not Registered. Click Here</font></a>
@@ -46,7 +46,7 @@ Enter contact no :<input type=password name=contact required><br>
 <div style="display:none" id=signup_form>
 
 <h1>SIGN UP</h1>
-<form action="/signup" method="post" >
+<form action=signup method="post" >
 Enter team name<input type=text name=team_name required><br><br> 
 Enter 1 participant name<input type=text name=name_1 required><br><br> 
 Enter 1 participant roll number<input type=text name=roll_1 required><br><br> 
