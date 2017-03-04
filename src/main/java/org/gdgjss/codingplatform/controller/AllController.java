@@ -52,11 +52,11 @@ public class AllController {
 	 */
 	/*MediaType.APPLICATION_JSON_VALUE return string*/
 	@RequestMapping(value = "/loginverifier",
-			method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+			method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE) 
 	public @ResponseBody String loginverify(HttpSession httpSession,
 			@RequestParam ("user_email") String email){
 	Session session =sessionFactory.openSession();
-	session.beginTransaction();
+	session.beginTransaction(); 
 
 	userdet = (Userdet) session.get(Userdet.class, email);
 
@@ -85,9 +85,9 @@ public class AllController {
 		Session session =sessionFactory.openSession();
 		session.beginTransaction();
 		userdet = (Userdet) session.get(Userdet.class, email);
-		String name=userdet.getName();
-		String avatar=userdet.getAvatar();
-		model.addObject("name",name);
+		//String name=userdet.getName();
+		//String avatar=userdet.getAvatar();
+		//model.addObject("name",name);
 		model.addObject("avatar",avatar);
 		return model;
 	
@@ -100,49 +100,18 @@ public class AllController {
 	 * @param requestParams
 	 * @return ModelAndView 
 	 */
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
-		GoogleIdToken.Payload payLoad;
-		ModelAndView model=new ModelAndView("dashboard");
-		 String auth_token= requestParams.get("auth_token");
-		 String branch=requestParams.get("branch");
-		 String year=requestParams.get("year");
-		 String admno=requestParams.get("admno");
-		
-		 // code for fetching user data from google api
-		try {
-			payLoad = IdTokenVerifierAndParser.getPayload(auth_token);
-				String name = (String) payLoad.get("name");
-		        String email = payLoad.getEmail();
-		        avatar= (String) payLoad.get("picture");
-		        System.out.println("User name: " + name);
-		        System.out.println("User email: " + email);
-		        System.out.println("avatar :" + avatar);
-		        System.out.println("branch :" + branch);
-		        System.out.println("year :" + year);
-		        System.out.println("admission no :" + admno);
-		        userdet=new Userdet
-		        		(email,avatar,year,branch,name,admno);
-		        Session session = sessionFactory.openSession();
-				session.beginTransaction();
-				
-				session.save(userdet);
-				session.getTransaction().commit();
-				session.close();
-				model.addObject("name",name);
-				model.addObject("avatar",avatar);
-		        
-		} catch (Exception e) {
-			// TODO Auto-generated catch block 
-			e.printStackTrace();
-		}
-		
-		return model;
-		
-	} 
 	
+	
+	 
 
-	
+
+	/**
+	 * 
+	 * @param httpSession
+	 * @param requestParams
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
 		String language = requestParams.get("lang");
@@ -152,6 +121,7 @@ public class AllController {
         	 System.out.println(code);
         String path="";
         String x="";
+        String y="";
         /*
          * ********code for path of test case file from db************************
          */
@@ -188,6 +158,10 @@ public class AllController {
 	      	       					while ( (x = br.readLine()) != null ) {
 	      	       						// Printing out each line in the file
 	      	       						System.out.println(x);
+	      	       						if(y!="")
+	      	       						y=y+" "+x;
+	      	       						else
+	      	       							y=y+x;
 	      	       							}
 	      	       					
        
@@ -201,10 +175,11 @@ public class AllController {
 
 	     con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 
-	       
-
-	        String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
- 
+	       String test="[ " +"'1'"+ "," + "'2'" +"]";
+	       System.out.println();
+                     
+	        //String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"i am king\",\"123\" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+	       String urlParameters = "source="+code+"&lang="+language+"&testcases=["+y+" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
 	        // Send post request
 	        con.setDoOutput(true);
 	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -224,20 +199,23 @@ public class AllController {
 	        System.out.println(inputLine);
 	       //   code for specific field from json using json dependency
 	        String message="",stdOut="";
-	        try{
+	        /*
+	         * use try catch in this code below 
+	         * to prevent the exception error
+	         * 
+	         */
+	        
 	          	JSONObject json= new JSONObject(inputLine);	  
 	          	if(json.has("result")){
 	          	JSONObject resultObject=json.getJSONObject("result");
 	          	message=resultObject.getString("message");
 	          	stdOut=resultObject.getString("stdout");
 	          
-	          	}
+	          	
 	        	System.out.println(message);
 	        	System.out.println(stdOut);
-	        }catch(Exception e){
-	        	
-	        }
-	        
+	       
+	          	}
 	       
 	} 
 	
@@ -485,5 +463,54 @@ public class AllController {
 	
 	
 }
+
+
+/*
+ * google login oauth comented for further use
+ * 
+ */
+
+
+//@RequestMapping(value = "/registration", method = RequestMethod.POST)
+//public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+//	GoogleIdToken.Payload payLoad;
+//	ModelAndView model=new ModelAndView("dashboard");
+//	 String auth_token= requestParams.get("auth_token");
+//	 String branch=requestParams.get("branch");
+//	 String year=requestParams.get("year");
+//	 String admno=requestParams.get("admno");
+//	
+//	 // code for fetching user data from google api
+//	try {
+//		payLoad = IdTokenVerifierAndParser.getPayload(auth_token);
+//			String name = (String) payLoad.get("name");
+//	        String email = payLoad.getEmail();
+//	        avatar= (String) payLoad.get("picture");
+//	        System.out.println("User name: " + name);
+//	        System.out.println("User email: " + email);
+//	        System.out.println("avatar :" + avatar);
+//	        System.out.println("branch :" + branch);
+//	        System.out.println("year :" + year);
+//	        System.out.println("admission no :" + admno);
+//	      userdet=new Userdet
+//	        		(email,avatar,year,branch,name,admno);
+//	        Session session = sessionFactory.openSession();
+//			session.beginTransaction();
+//			
+//			session.save(userdet);
+//			session.getTransaction().commit();
+//			session.close();
+//			model.addObject("name",name);
+//			model.addObject("avatar",avatar);
+//	        
+//	} catch (Exception e) {
+//		// TODO Auto-generated catch block 
+//		e.printStackTrace();
+//	}
+//	
+//	return model;
+//	
+//} 
+
 	 
 
