@@ -42,7 +42,7 @@ public class AllController {
 	private SessionFactory sessionFactory;
 	private Userdet userdet;
 	private String avatar;
-	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+//	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
 	
 	/**
 	 *for login verification through google API 
