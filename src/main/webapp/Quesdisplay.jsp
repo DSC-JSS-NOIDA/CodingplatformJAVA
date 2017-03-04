@@ -9,21 +9,20 @@
 </head>  
 <body>  
    
-<sql:setDataSource var="db" driver="com.mysql.jdbc.Driver"  
-     url="jdbc:mysql://localhost:8080/codingplatform"  
-     user="root"  password="Divy1996@"/>  
-  
+<sql:setDataSource var="db" driver="com.mysql.jdbc.Driver"
+     url="jdbc:mysql://localhost:3306/codingplatform"  
+     user="root"  password="Divy1996@" />
 <sql:query dataSource="${db}" var="rs">  
 SELECT * from questions;  
 </sql:query>  
    
 <table border="2" width="100%">  
 <tr>  
-<th>TITLES</th>
+<th><a href="#">TITLES</a></th>
 </tr>  
 <c:forEach var="question" items="${rs.rows}">  
 <tr>  
-<td><c:out value="${question.quesid}"/></td>   
+<td><a href="#"><c:out value="${question.title}"/></a></td>   
 </tr>  
 </c:forEach>  
 </table>  
