@@ -55,7 +55,7 @@ Enter 2 participant roll number<input type=text name=roll_2 required><br><br>
 Enter Email Id:<input type=text name=emailid required><br><br>
 Enter contact number:<input type=password name=contact required ><br><br> 
 
-<input type=submit value="submit" onclick="myFunction3()" >
+<input type=submit value="submit">
 </div>
 </body>
 </html>

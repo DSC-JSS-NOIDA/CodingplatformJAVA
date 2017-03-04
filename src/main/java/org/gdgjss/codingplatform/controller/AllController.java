@@ -41,7 +41,7 @@ public class AllController {
 	@Autowired
 	private SessionFactory sessionFactory;
 	private Userdet userdet;
-	private String avatar;
+	
 //	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
  
 	
@@ -63,26 +63,47 @@ public class AllController {
 		String email=requestParams.get("email");
 		String contact=requestParams.get("contact");
 		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
-		Session session =sessionFactory.openSession();
-		session.beginTransaction();
-			userdet = (Userdet) session.get(Userdet.class, email);
-				String emailid=userdet.getEmailid();
-				String contact_num=userdet.getContactno();
-				if(email.equals(emailid) && contact.equals(contact_num))
-				{     
-					 String team_name=userdet.getTeam_name();
-					 model=new ModelAndView("dashboard");	
-				     model.addObject("team",team_name);
-				}
-				else
-				{
-					model=new ModelAndView("index");
-					model.addObject("error","no record found");
-				}
-		
-		
-		return model;
-	
+		Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+	       Query queryResult = session.createQuery("from Userdet");
+	       java.util.List allUsers;
+	       String emailid,contactnum,teamname="";
+	       
+	       int f;
+	       f=0;
+	       
+	       allUsers = queryResult.list();
+	       System.out.println(allUsers.size());
+	       for (int i = 0; i < allUsers.size(); i++) {
+	        Userdet user = (Userdet) allUsers.get(i);
+	         emailid=user.getEmailid();
+	         contactnum=user.getContactno();
+	         
+	        
+	        if(emailid.equals(email) && contactnum.equals(contact))
+	        {
+	        	System.out.println("welcome");
+	        	teamname=user.getTeam_name();
+	            f=1;
+	        	
+	        	break; 
+	        }
+	              }
+	       
+	       if(f==1)
+	       {
+	    	   model= new ModelAndView("dashboard");
+	    	   model.addObject("team",teamname);
+	       }    	       
+	       else
+	       {
+	    	   model= new ModelAndView("index");
+	    	   model.addObject("msg","no rec found");
+	       }
+	       
+
+
+       return model;
 	}
 	
 	/*
@@ -112,28 +133,52 @@ public class AllController {
 		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
 		Session session =sessionFactory.openSession();
 		session.beginTransaction();
-			userdet = (Userdet) session.get(Userdet.class, email);
-			if(userdet == null)
-			{
-				   userdet.setEmailid(email);
-				   userdet.setTeam_name(team_name);
-				   userdet.setParticipant1_name(user_1);
-				   userdet.setParticipant1_roll(user1_roll);
-				   userdet.setParticipant2_name(user_2);
-				   userdet.setParticipant2_roll(user2_roll);
-				   userdet.setContactno(contact);
-				   model=new ModelAndView("dashboard");	
-				     model.addObject("team",team_name);
-			}
-				
-				else
-				{
-					model=new ModelAndView("index");
-					model.addObject("error","already registered go to login page");
-				}
-		
-		
-		return model;
+		Query queryResult = session.createQuery("from Userdet");
+	       java.util.List allUsers;
+	       String emailid,contactnum;
+	       
+	       allUsers = queryResult.list();
+	       int f;
+	       f=0;
+	       for (int i = 0; i < allUsers.size(); i++) {
+	        Userdet user = (Userdet) allUsers.get(i);
+	         	emailid=user.getEmailid();
+	         	contactnum=user.getContactno();
+	        if(emailid.equals(email)){
+	         f=1;
+	         break; 
+	         }
+	        }
+	         
+	           if(f!=1){
+	    Userdet user= new Userdet();  
+	       user.setEmailid(email);
+	       user.setTeam_name(team_name);
+	       user.setParticipant1_name(user_1);
+	       user.setParticipant1_roll(user1_roll);
+	       user.setParticipant2_name(user_2);
+	       user.setParticipant2_roll(user2_roll);
+	       user.setContactno(contact);
+	       
+	       
+	       
+	       session.save(user);
+	       session.getTransaction().commit();
+	       session.close(); 
+	       user=null;
+	          System.out.println(team_name);
+	          model=new ModelAndView("dashboard");
+	          model.addObject("team",team_name);
+	       
+
+	           } 
+	           else
+	           {   System.out.println("duplicate");
+	                model=new ModelAndView("index");
+	                model.addObject("msg","already exists go to login page");
+	           }
+	            
+	return model;
 	
 	}
 	

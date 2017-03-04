@@ -79,7 +79,7 @@ welcome ${name}<br>
 </div>
 <div hidden id=adduser> 
 								<h1>add user</h1>
-               					<form name=userctrl action=adduser method=post>
+               					<form name=userctrl action=add_user method=post>
                 				enter new user email<input type=text name=email><br>
                 				<input type=submit>
 

@@ -5,8 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 @Entity
 public class Userdet {
-	 @GeneratedValue
-		int id;
+	
 		 @Id
 		private String emailid;
 		private String team_name;
@@ -15,12 +14,7 @@ public class Userdet {
 		private String participant2_roll;
 		private String participant2_name;
 		private String contactno;           //used as a password
-		public int getId() {
-			return id;
-		}
-		public void setId(int id) {
-			this.id = id;
-		}
+		
 		public String getEmailid() {
 			return emailid;
 		}
