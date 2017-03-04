@@ -43,69 +43,102 @@ public class AllController {
 	private Userdet userdet;
 	private String avatar;
 //	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+ 
 	
-	/**
-	 *for login verification through google API 
-	 * @param httpSession
-	 * @param email
-	 * @return String
-	 */
-	/*MediaType.APPLICATION_JSON_VALUE return string*/
-	@RequestMapping(value = "/loginverifier",
-			method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE) 
-	public @ResponseBody String loginverify(HttpSession httpSession,
-			@RequestParam ("user_email") String email){
-	Session session =sessionFactory.openSession();
-	session.beginTransaction(); 
-
-	userdet = (Userdet) session.get(Userdet.class, email);
-
-	session.close();
-	if(userdet != null)
-	{
-		return "registered";
-	}
+ /*
+  * code for login of user
+  * without using g-api
+  * 
+  */
+    /**
+     * 
+     * @param httpSession
+     * @param requestParams
+     * @return
+     */
 	
-	else 
-		return "new_user";
-
-	}  
-	
-	/**
-	 * Controller, after completion of registration or login verification
-	 * 
-	 * @param httpSession
-	 * @param email
-	 * @return ModelAndView
-	 */
-	@RequestMapping(value = "/dashboard", method = RequestMethod.POST)
-	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
-		httpSession.setAttribute("loggedinuser",email);
-		ModelAndView model=new ModelAndView("dashboard");//generating session for the logged in user
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(HttpSession httpSession, Map<String,String> requestParams){
+		ModelAndView model=null;
+		String email=requestParams.get("email");
+		String contact=requestParams.get("contact");
+		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
 		Session session =sessionFactory.openSession();
 		session.beginTransaction();
-		userdet = (Userdet) session.get(Userdet.class, email);
-		//String name=userdet.getName();
-		//String avatar=userdet.getAvatar();
-		//model.addObject("name",name);
-		model.addObject("avatar",avatar);
+			userdet = (Userdet) session.get(Userdet.class, email);
+				String emailid=userdet.getEmailid();
+				String contact_num=userdet.getContactno();
+				if(email.equals(emailid) && contact.equals(contact_num))
+				{     
+					 String team_name=userdet.getTeam_name();
+					 model=new ModelAndView("dashboard");	
+				     model.addObject("team",team_name);
+				}
+				else
+				{
+					model=new ModelAndView("index.jsp");
+					model.addObject("error","no record found");
+				}
+		
+		
 		return model;
 	
 	}
 	
-	/**
-	 * controller for first time logging user for registration
+	/*
+	 * code registration of new user
 	 * 
-	 * @param httpSession
-	 * @param requestParams
-	 * @return ModelAndView 
 	 */
 	
 	
-	 
-
-
 	/**
+	 * 
+	 * @param httpSession
+	 * @param requestParams
+	 * @return
+	 */
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ModelAndView signup(HttpSession httpSession, Map<String,String> requestParams){
+		ModelAndView model=null;
+		String team_name=requestParams.get("team_name");
+		String user_1=requestParams.get("name_1");
+		String user1_roll=requestParams.get("roll_1");
+		String user_2=requestParams.get("name_2");
+		String user2_roll=requestParams.get("roll_2");
+		String email=requestParams.get("emailid");
+		String contact=requestParams.get("password");
+		
+		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
+		Session session =sessionFactory.openSession();
+		session.beginTransaction();
+			userdet = (Userdet) session.get(Userdet.class, email);
+			if(userdet == null)
+			{
+				   userdet.setEmailid(email);
+				   userdet.setTeam_name(team_name);
+				   userdet.setParticipant1_name(user_1);
+				   userdet.setParticipant1_roll(user1_roll);
+				   userdet.setParticipant2_name(user_2);
+				   userdet.setParticipant2_roll(user2_roll);
+				   userdet.setContactno(contact);
+				   model=new ModelAndView("dashboard");	
+				     model.addObject("team",team_name);
+			}
+				
+				else
+				{
+					model=new ModelAndView("index.jsp");
+					model.addObject("error","already registered go to login page");
+				}
+		
+		
+		return model;
+	
+	}
+	
+	
+		/**
 	 * 
 	 * @param httpSession
 	 * @param requestParams
@@ -511,6 +544,61 @@ public class AllController {
 //	return model;
 //	
 //} 
-
+/**
+// * Controller, after completion of registration or login verification
+// * 
+// * @param httpSession
+// * @param email
+// * @return ModelAndView
+// */
+//@RequestMapping(value = "/dashboard", method = RequestMethod.POST)
+//public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
+//	httpSession.setAttribute("loggedinuser",email);
+//	ModelAndView model=new ModelAndView("dashboard");//generating session for the logged in user
+//	Session session =sessionFactory.openSession();
+//	session.beginTransaction();
+//	userdet = (Userdet) session.get(Userdet.class, email);
+//	//String name=userdet.getName();
+//	//String avatar=userdet.getAvatar();
+//	//model.addObject("name",name);
+//	model.addObject("avatar",avatar);
+//	return model;
+//
+//}
+//
+///**
+// * controller for first time logging user for registration
+// * 
+// * @param httpSession
+// * @param requestParams
+// * @return ModelAndView 
+// */
+//
+/**
+// *for login verification through google API 
+// * @param httpSession
+// * @param email
+// * @return String
+// */
+///*MediaType.APPLICATION_JSON_VALUE return string*/
+//@RequestMapping(value = "/loginverifier",
+//		method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE) 
+//public @ResponseBody String loginverify(HttpSession httpSession,
+//		@RequestParam ("user_email") String email){
+//Session session =sessionFactory.openSession();
+//session.beginTransaction(); 
+//
+//userdet = (Userdet) session.get(Userdet.class, email);
+//
+//session.close();
+//if(userdet != null)
+//{
+//	return "registered";
+//}
+//
+//else 
+//	return "new_user";
+//
+//}  
 	 
 
