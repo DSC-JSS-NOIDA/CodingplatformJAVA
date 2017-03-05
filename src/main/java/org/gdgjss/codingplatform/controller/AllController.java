@@ -41,108 +41,155 @@ public class AllController {
 	@Autowired
 	private SessionFactory sessionFactory;
 	private Userdet userdet;
-	private String avatar;
+	
 //	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+ 
 	
-	/**
-	 *for login verification through google API 
-	 * @param httpSession
-	 * @param email
-	 * @return String
-	 */
-	/*MediaType.APPLICATION_JSON_VALUE return string*/
-	@RequestMapping(value = "/loginverifier",
-			method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String loginverify(HttpSession httpSession,
-			@RequestParam ("user_email") String email){
-	Session session =sessionFactory.openSession();
-	session.beginTransaction();
+ /*
+  * code for login of user
+  * without using g-api
+  * 
+  */
+    /**
+     * 
+     * @param httpSession
+     * @param requestParams
+     * @return
+     */
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(HttpSession httpSession, Map<String,String> requestParams){
+		ModelAndView model=null;
+		String email=requestParams.get("email");
+		String contact=requestParams.get("contact");
+		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
+		Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+	       Query queryResult = session.createQuery("from Userdet");
+	       java.util.List allUsers;
+	       String emailid,contactnum,teamname="";
+	       
+	       int f;
+	       f=0;
+	       
+	       allUsers = queryResult.list();
+	       System.out.println(allUsers.size());
+	       for (int i = 0; i < allUsers.size(); i++) {
+	        Userdet user = (Userdet) allUsers.get(i);
+	         emailid=user.getEmailid();
+	         contactnum=user.getContactno();
+	         
+	        
+	        if(emailid.equals(email) && contactnum.equals(contact))
+	        {
+	        	System.out.println("welcome");
+	        	teamname=user.getTeam_name();
+	            f=1;
+	        	
+	        	break; 
+	        }
+	              }
+	       
+	       if(f==1)
+	       {
+	    	   model= new ModelAndView("dashboard");
+	    	   model.addObject("team",teamname);
+	       }    	       
+	       else
+	       {
+	    	   model= new ModelAndView("index");
+	    	   model.addObject("msg","no rec found");
+	       }
+	       
 
-	userdet = (Userdet) session.get(Userdet.class, email);
 
-	session.close();
-	if(userdet != null)
-	{
-		return "registered";
+       return model;
 	}
 	
-	else 
-		return "new_user";
-
-	}  
-	
-	/**
-	 * Controller, after completion of registration or login verification
+	/*
+	 * code registration of new user
 	 * 
-	 * @param httpSession
-	 * @param email
-	 * @return ModelAndView
 	 */
-	@RequestMapping(value = "/dashboard", method = RequestMethod.POST)
-	public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
-		httpSession.setAttribute("loggedinuser",email);
-		ModelAndView model=new ModelAndView("dashboard");//generating session for the logged in user
-		Session session =sessionFactory.openSession();
-		session.beginTransaction();
-		userdet = (Userdet) session.get(Userdet.class, email);
-		String name=userdet.getName();
-		String avatar=userdet.getAvatar();
-		model.addObject("name",name);
-		model.addObject("avatar",avatar);
-		return model;
 	
-	}
 	
 	/**
-	 * controller for first time logging user for registration
 	 * 
 	 * @param httpSession
 	 * @param requestParams
-	 * @return ModelAndView 
+	 * @return
 	 */
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
-		GoogleIdToken.Payload payLoad;
-		ModelAndView model=new ModelAndView("dashboard");
-		 String auth_token= requestParams.get("auth_token");
-		 String branch=requestParams.get("branch");
-		 String year=requestParams.get("year");
-		 String admno=requestParams.get("admno");
-		
-		 // code for fetching user data from google api
-		try {
-			payLoad = IdTokenVerifierAndParser.getPayload(auth_token);
-				String name = (String) payLoad.get("name");
-		        String email = payLoad.getEmail();
-		        avatar= (String) payLoad.get("picture");
-		        System.out.println("User name: " + name);
-		        System.out.println("User email: " + email);
-		        System.out.println("avatar :" + avatar);
-		        System.out.println("branch :" + branch);
-		        System.out.println("year :" + year);
-		        System.out.println("admission no :" + admno);
-		        userdet=new Userdet
-		        		(email,avatar,year,branch,name,admno);
-		        Session session = sessionFactory.openSession();
-				session.beginTransaction();
-				
-				session.save(userdet);
-				session.getTransaction().commit();
-				session.close();
-				model.addObject("name",name);
-				model.addObject("avatar",avatar);
-		        
-		} catch (Exception e) {
-			// TODO Auto-generated catch block 
-			e.printStackTrace();
-		}
-		
-		return model;
-		
-	} 
 	
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ModelAndView signup(HttpSession httpSession, Map<String,String> requestParams){
+		ModelAndView model=null;
+		String team_name=requestParams.get("team_name");
+		String user_1=requestParams.get("name_1");
+		String user1_roll=requestParams.get("roll_1");
+		String user_2=requestParams.get("name_2");
+		String user2_roll=requestParams.get("roll_2");
+		String email=requestParams.get("emailid");
+		String contact=requestParams.get("password");
+		
+		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
+		Session session =sessionFactory.openSession();
+		session.beginTransaction();
+		Query queryResult = session.createQuery("from Userdet");
+	       java.util.List allUsers;
+	       String emailid,contactnum;
+	       
+	       allUsers = queryResult.list();
+	       int f;
+	       f=0;
+	       for (int i = 0; i < allUsers.size(); i++) {
+	        Userdet user = (Userdet) allUsers.get(i);
+	         	emailid=user.getEmailid();
+	         	contactnum=user.getContactno();
+	        if(emailid.equals(email)){
+	         f=1;
+	         break; 
+	         }
+	        }
+	         
+	           if(f!=1){
+	    Userdet user= new Userdet();  
+	       user.setEmailid(email);
+	       user.setTeam_name(team_name);
+	       user.setParticipant1_name(user_1);
+	       user.setParticipant1_roll(user1_roll);
+	       user.setParticipant2_name(user_2);
+	       user.setParticipant2_roll(user2_roll);
+	       user.setContactno(contact);
+	       
+	       
+	       
+	       session.save(user);
+	       session.getTransaction().commit();
+	       session.close(); 
+	       user=null;
+	          System.out.println(team_name);
+	          model=new ModelAndView("dashboard");
+	          model.addObject("team",team_name);
+	       
 
+	           } 
+	           else
+	           {   System.out.println("duplicate");
+	                model=new ModelAndView("index");
+	                model.addObject("msg","already exists go to login page");
+	           }
+	            
+	return model;
 	
+	}
+	
+	
+		/**
+	 * 
+	 * @param httpSession
+	 * @param requestParams
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
 		String language = requestParams.get("lang");
@@ -152,6 +199,7 @@ public class AllController {
         	 System.out.println(code);
         String path="";
         String x="";
+        String y="";
         /*
          * ********code for path of test case file from db************************
          */
@@ -188,6 +236,10 @@ public class AllController {
 	      	       					while ( (x = br.readLine()) != null ) {
 	      	       						// Printing out each line in the file
 	      	       						System.out.println(x);
+	      	       						if(y!="")
+	      	       						y=y+" "+x;
+	      	       						else
+	      	       							y=y+x;
 	      	       							}
 	      	       					
        
@@ -201,10 +253,11 @@ public class AllController {
 
 	     con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 
-	       
-
-	        String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"1\"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
- 
+	       String test="[ " +"'1'"+ "," + "'2'" +"]";
+	       System.out.println();
+                     
+	        //String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"i am king\",\"123\" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+	       String urlParameters = "source="+code+"&lang="+language+"&testcases=["+y+" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
 	        // Send post request
 	        con.setDoOutput(true);
 	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -224,20 +277,23 @@ public class AllController {
 	        System.out.println(inputLine);
 	       //   code for specific field from json using json dependency
 	        String message="",stdOut="";
-	        try{
+	        /*
+	         * use try catch in this code below 
+	         * to prevent the exception error
+	         * 
+	         */
+	        
 	          	JSONObject json= new JSONObject(inputLine);	  
 	          	if(json.has("result")){
 	          	JSONObject resultObject=json.getJSONObject("result");
 	          	message=resultObject.getString("message");
 	          	stdOut=resultObject.getString("stdout");
 	          
-	          	}
+	          	
 	        	System.out.println(message);
 	        	System.out.println(stdOut);
-	        }catch(Exception e){
-	        	
-	        }
-	        
+	       
+	          	}
 	       
 	} 
 	
@@ -485,5 +541,109 @@ public class AllController {
 	
 	
 }
+
+
+/*
+ * google login oauth comented for further use
+ * 
+ */
+
+
+//@RequestMapping(value = "/registration", method = RequestMethod.POST)
+//public ModelAndView registration(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+//	GoogleIdToken.Payload payLoad;
+//	ModelAndView model=new ModelAndView("dashboard");
+//	 String auth_token= requestParams.get("auth_token");
+//	 String branch=requestParams.get("branch");
+//	 String year=requestParams.get("year");
+//	 String admno=requestParams.get("admno");
+//	
+//	 // code for fetching user data from google api
+//	try {
+//		payLoad = IdTokenVerifierAndParser.getPayload(auth_token);
+//			String name = (String) payLoad.get("name");
+//	        String email = payLoad.getEmail();
+//	        avatar= (String) payLoad.get("picture");
+//	        System.out.println("User name: " + name);
+//	        System.out.println("User email: " + email);
+//	        System.out.println("avatar :" + avatar);
+//	        System.out.println("branch :" + branch);
+//	        System.out.println("year :" + year);
+//	        System.out.println("admission no :" + admno);
+//	      userdet=new Userdet
+//	        		(email,avatar,year,branch,name,admno);
+//	        Session session = sessionFactory.openSession();
+//			session.beginTransaction();
+//			
+//			session.save(userdet);
+//			session.getTransaction().commit();
+//			session.close();
+//			model.addObject("name",name);
+//			model.addObject("avatar",avatar);
+//	        
+//	} catch (Exception e) {
+//		// TODO Auto-generated catch block 
+//		e.printStackTrace();
+//	}
+//	
+//	return model;
+//	
+//} 
+/**
+// * Controller, after completion of registration or login verification
+// * 
+// * @param httpSession
+// * @param email
+// * @return ModelAndView
+// */
+//@RequestMapping(value = "/dashboard", method = RequestMethod.POST)
+//public ModelAndView login(HttpSession httpSession, @RequestParam ("email") String email){
+//	httpSession.setAttribute("loggedinuser",email);
+//	ModelAndView model=new ModelAndView("dashboard");//generating session for the logged in user
+//	Session session =sessionFactory.openSession();
+//	session.beginTransaction();
+//	userdet = (Userdet) session.get(Userdet.class, email);
+//	//String name=userdet.getName();
+//	//String avatar=userdet.getAvatar();
+//	//model.addObject("name",name);
+//	model.addObject("avatar",avatar);
+//	return model;
+//
+//}
+//
+///**
+// * controller for first time logging user for registration
+// * 
+// * @param httpSession
+// * @param requestParams
+// * @return ModelAndView 
+// */
+//
+/**
+// *for login verification through google API 
+// * @param httpSession
+// * @param email
+// * @return String
+// */
+///*MediaType.APPLICATION_JSON_VALUE return string*/
+//@RequestMapping(value = "/loginverifier",
+//		method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE) 
+//public @ResponseBody String loginverify(HttpSession httpSession,
+//		@RequestParam ("user_email") String email){
+//Session session =sessionFactory.openSession();
+//session.beginTransaction(); 
+//
+//userdet = (Userdet) session.get(Userdet.class, email);
+//
+//session.close();
+//if(userdet != null)
+//{
+//	return "registered";
+//}
+//
+//else 
+//	return "new_user";
+//
+//}  
 	 
 
