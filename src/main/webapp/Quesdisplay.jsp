@@ -26,6 +26,6 @@ SELECT * from questions;
 </tr>  
 </c:forEach>  
 </table>  
-  
+
 </body>  
 </html>  

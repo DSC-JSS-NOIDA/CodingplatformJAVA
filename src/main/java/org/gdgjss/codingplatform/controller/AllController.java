@@ -49,7 +49,7 @@ public class AllController {
 	
 	/**
 	 * simple boot controller for application
-	 * @author suyash
+	 * @author tilhari
 	 * @return
 	 */
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -60,6 +60,7 @@ public class AllController {
 	
 	/**
 	 * controller for user login
+	 * @author sarthak
 	 * @param httpSession
 	 * @param requestParams
 	 * @return
