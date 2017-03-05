@@ -78,7 +78,8 @@ public class AllController {
 		userdet = (Userdet) session.get(Userdet.class, emailid);
 		if (userdet != null) {
 			if (userdet.getPassword().equals(password)) {
-				httpSession.setAttribute("SESSION", userdet);
+				httpSession.setAttribute("SESSION", userdet.getEmailid());
+				httpSession.setAttribute("SESSION", userdet.getTeam_name());
 				userdet = (Userdet) httpSession.getAttribute("SESSION");
 				model = new ModelAndView("dashboard");
 				model.addObject("TeamName", userdet.getTeam_name());
