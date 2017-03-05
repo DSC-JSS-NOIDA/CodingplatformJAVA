@@ -277,8 +277,8 @@ public class AllController {
  					 * code to check the output of api with text file
  					 * 
  					 */
- 					if(y.equals(stdOut))
- 					{
+ 					if(c.equals(stdOut))
+ 					{ 
  						System.out.println("output matched");
  					}
  					else{
