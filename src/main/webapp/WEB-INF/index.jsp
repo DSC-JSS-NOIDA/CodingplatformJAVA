@@ -9,7 +9,7 @@
       <title>index</title>
 </head>
 <body>
-<h5 style="color: red;" class="left-align">${invalid}</h5>
+<h5 style="color: red;" class="left-align">${invalid}${norecord}</h5>
 <div id="login_form">
 	<h1>LOGIN </h1>
 	<form action="login" method="POST">
