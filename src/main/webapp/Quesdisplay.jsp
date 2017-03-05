@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>  
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
@@ -29,3 +30,5 @@ SELECT * from questions;
 
 </body>  
 </html>  
+=======
+>>>>>>> 5e9a92ab4902e0a1cd751973c56a09a1c6a7f6c7
