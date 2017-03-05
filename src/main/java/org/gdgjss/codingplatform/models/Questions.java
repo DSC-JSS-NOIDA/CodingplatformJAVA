@@ -9,7 +9,6 @@ public class Questions {
 	@Id @GeneratedValue
 	int quesid;
 	 
-	
 	private String title;
 	@Lob
 	private String detail;
@@ -22,17 +21,6 @@ public class Questions {
 	private String inputfilepath;
 	
 	public Questions(){}	
-	public Questions(String title,String detail,String constraints,String inputformat,String sampletestcase,String inputtestcase,String outputtestcase,String path){
-		super();
-	
-		this.title=title;
-		this.detail=detail;
-		this.constraints=constraints;
-		this.inputformat=inputformat;
-		this.sampletestcase=sampletestcase;
-		
-			}
-	
 	
 	public String getTitle() {
 		return title;
@@ -80,11 +68,19 @@ public class Questions {
 	public int getQuesid() {
 		return quesid;
 	}
-
-
 	public void setQuesid(int quesid) {
 		this.quesid = quesid;
 	}
 	
+	public Questions(String title,String detail,String constraints,String inputformat,String sampletestcase,String inputtestcase,String outputtestcase,String path){
+		super();
+	
+		this.title=title;
+		this.detail=detail;
+		this.constraints=constraints;
+		this.inputformat=inputformat;
+		this.sampletestcase=sampletestcase;
+		
+			}
 	
 }
