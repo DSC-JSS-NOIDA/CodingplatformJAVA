@@ -31,7 +31,7 @@ classpath:/org/springframework/aop/config/spring-aop-3.0.xsd
        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
          <property name="url" value="jdbc:mysql://localhost:3306/codingplatform?createDatabaseIfNotExist=true" />
          <property name="username" value="root" />
-        <property name="password" value="tilhari" />
+        <property name="password" value="Divy1996@" />
      </bean>
  
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

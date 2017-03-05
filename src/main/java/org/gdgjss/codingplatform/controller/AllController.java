@@ -268,9 +268,35 @@ public class AllController {
 	 * @return
 	 */
 	@RequestMapping(value = "/ques", method = RequestMethod.GET)
-	public ModelAndView ques(HttpSession httpSession) {
-		ModelAndView model= new ModelAndView("Quespage");
-		return model;
+	public ModelAndView ques(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
+		   Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+	       ModelAndView model= new ModelAndView("Quespage");
+	       String id="";
+	       String b="";
+	       String Question=""; 
+           String Constraint ="";
+           String InputFormat="";
+           String SampleTestCase="";
+	       id=requestParams.get("id");
+	       
+           List<Questions> ques = session.createCriteria(Questions.class).list();
+           for(Questions a:ques)
+   		{   
+   			b=b+a.getQuesid();
+   			if(b.equals(id)){
+   			    Question=a.getDetail(); 
+   	            Constraint =a.getConstraints();
+   	            InputFormat=a.getInputformat();
+   	            SampleTestCase=a.getSampletestcase();
+   			}
+   		}
+           
+           model.addObject("Question", Question);
+           model.addObject("Constraint", Constraint);
+           model.addObject("InputFormat", InputFormat);
+           model.addObject("SampleTestCase", SampleTestCase);
+		   return model;
 		
 	} 
 	@RequestMapping(value = "/adminverify", method = RequestMethod.POST)
