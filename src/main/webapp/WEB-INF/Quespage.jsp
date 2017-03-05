@@ -35,9 +35,9 @@
 <body>
 <div align=right>
 <nav>
-<a href="#">ques page</a>
 
-<a href=#>successful submission</a>
+
+<a href=#>leader board</a>
 <a href=#>logout</a>
 </nav>
 </div>
@@ -135,7 +135,7 @@ CHOOSE LANGUAGE
 </script>
 
     
-<input type=hidden value="${qid}" name=qid><br>
+<input type=hidden value="${quesid}" name=qid><br>
 
 
 <input type="submit"  >

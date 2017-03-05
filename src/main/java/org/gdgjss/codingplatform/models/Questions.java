@@ -9,6 +9,7 @@ public class Questions {
 	@Id @GeneratedValue
 	int quesid;
 	 
+	
 	private String title;
 	@Lob
 	private String detail;
@@ -17,11 +18,8 @@ public class Questions {
 	private String inputformat;
 	@Lob
 	private String sampletestcase;
-	@Lob
-	private String inputtestcase;
-	@Lob
-	private String outputtestcase;
-	private String path;
+	private String outputfilepath;
+	private String inputfilepath;
 	
 	public Questions(){}	
 	public Questions(String title,String detail,String constraints,String inputformat,String sampletestcase,String inputtestcase,String outputtestcase,String path){
@@ -32,9 +30,7 @@ public class Questions {
 		this.constraints=constraints;
 		this.inputformat=inputformat;
 		this.sampletestcase=sampletestcase;
-		this.inputtestcase=inputtestcase;
-		this.outputtestcase=outputtestcase;
-		this.path=path;
+		
 			}
 	
 	
@@ -68,23 +64,18 @@ public class Questions {
 	public void setSampletestcase(String sampletestcase) {
 		this.sampletestcase = sampletestcase;
 	}
-	public String getInputtestcase() {
-		return inputtestcase;
+	
+	public String getOutputfilepath() {
+		return outputfilepath;
 	}
-	public void setInputtestcase(String inputtestcase) {
-		this.inputtestcase = inputtestcase;
+	public void setOutputfilepath(String outputfilepath) {
+		this.outputfilepath = outputfilepath;
 	}
-	public String getOutputtestcase() {
-		return outputtestcase;
+	public String getInputfilepath() {
+		return inputfilepath;
 	}
-	public void setOutputtestcase(String outputtestcase) {
-		this.outputtestcase = outputtestcase;
-	}
-	public String getPath() {
-		return path;
-	}
-	public void setPath(String path) {
-		this.path = path;
+	public void setInputfilepath(String inputfilepath) {
+		this.inputfilepath = inputfilepath;
 	}
 	public int getQuesid() {
 		return quesid;

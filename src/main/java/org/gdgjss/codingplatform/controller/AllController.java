@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.gdgjss.codingplatform.models.Questions;
 import org.gdgjss.codingplatform.models.Userdet;
 
@@ -87,13 +88,16 @@ public class AllController {
 				
 				List<Questions> ques = session.createCriteria(Questions.class).list();
 			    model.addObject("ques", ques);
+			  
+				
 			  }
 			else
-				{
+			{
 				model=new ModelAndView("index");
 				model.addObject("invalid","invalid details");
-				}
-			} 
+			}
+		}
+		 
 		else
 		{
 			model= new ModelAndView("index");
@@ -146,39 +150,34 @@ public class AllController {
         String qid = requestParams.get("qid");
         	 System.out.println(language);        
         	 System.out.println(code);
-        String path="";
-        String x="";
+        String inputpath="",outputpath="";
+        String x="",z="",c="";
         String y="";
+        String b="";
         /*
          * ********code for path of test case file from db************************
          */
+               
         Session session =	sessionFactory.openSession();
 	       session.beginTransaction();
-	      	       Query queryResult = session.createQuery("from Questions");
-	      	       java.util.List allUsers;
-	   
-	      	       int quesid;
-	     
-	      	       allUsers = queryResult.list();
+	       List<Questions> ques = session.createCriteria(Questions.class).list();
 	       
-	      	       for (int i = 0; i < allUsers.size(); i++) {
-	      	    	   Questions user = (Questions) allUsers.get(i);
-	      	    	   quesid=user.getQuesid();
-	    	      				if(qid.equals(quesid) )
-	    	   					{
-	    	   						path=user.getPath();
-	    	   						break;
-	        
-	    	   					}     
-	       }
-	      
+	       
+           for(Questions a:ques)
+   				{   
+   						b=b+a.getQuesid();
+   						if(b.equals(qid)){
+   						inputpath=a.getInputfilepath();
+   			        }
+   			
+   				}
 	      	       
 	      	       /*
 	      	        * *********************************code to read the test case file**********************************8
 	      	        */
 	      	       
 	      	       //****************************************error in sending this file to api**************************
-	      	       	BufferedReader br = new BufferedReader(new FileReader("G:/GDG/file.txt"));
+	      	       	BufferedReader br = new BufferedReader(new FileReader(inputpath));
 			
 	      	       				
 	      	       					
@@ -241,7 +240,50 @@ public class AllController {
 	          	
 	        	System.out.println(message);
 	        	System.out.println(stdOut);
-	       
+	             /*
+	              * code to verify std output with output file 
+	              */
+	        	 List<Questions> output = session.createCriteria(Questions.class).list();
+	  	       
+	  	       
+	             for(Questions a:ques)
+	     				{   
+	     						b=b+a.getQuesid();
+	     						if(b.equals(qid)){
+	     						outputpath=a.getOutputfilepath();
+	     			        }
+     				}
+	             
+	             /*
+	              * code to read the output file from the path provided
+	              * from above code
+	              */
+	         	BufferedReader file = new BufferedReader(new FileReader(outputpath));
+				
+     				
+ 					
+ 					while ( (z = br.readLine()) != null ) {
+ 						// Printing out each line in the file
+ 						System.out.println(z);
+ 						if(c!="")
+ 						c=c+" "+z;
+ 						else
+ 							y=y+z;
+ 					}
+	        	
+ 					/*
+ 					 * code to check the output of api with text file
+ 					 * 
+ 					 */
+ 					if(y.equals(stdOut))
+ 					{
+ 						System.out.println("output matched");
+ 					}
+ 					else{
+ 						System.out.println("outputs not matched");
+ 					}
+ 					
+	        	
 	          	}
 	       
 	} 
@@ -266,7 +308,7 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/ques", method = RequestMethod.GET)
 	public ModelAndView ques(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
-		   Session session =sessionFactory.openSession();
+		   Session session =	sessionFactory.openSession();
 	       session.beginTransaction();
 	       ModelAndView model= new ModelAndView("Quespage");
 	       String id="";
@@ -279,16 +321,16 @@ public class AllController {
 	       String team_name=(String)httpSession.getAttribute("SESSION");
            List<Questions> ques = session.createCriteria(Questions.class).list();
            for(Questions a:ques)
-   			{   
-   				b=b+a.getQuesid();
-   				if(b.equals(id)){
-   					Question=a.getDetail(); 
-   					Constraint =a.getConstraints();
-   					InputFormat=a.getInputformat();
-   					SampleTestCase=a.getSampletestcase();
-   				}
+   		{   
+   			b=b+a.getQuesid();
+   			if(b.equals(id)){
+   			    Question=a.getDetail(); 
+   	            Constraint =a.getConstraints();
+   	            InputFormat=a.getInputformat();
+   	            SampleTestCase=a.getSampletestcase();
+   			}
    		}
-           
+           model.addObject("quesid",id);
            model.addObject("Question", Question);
            model.addObject("Constraint", Constraint);
            model.addObject("InputFormat", InputFormat);
@@ -362,172 +404,177 @@ public class AllController {
 	           return model;  
 		
 	} 
-	
-	// add new questions to db
-	@RequestMapping(value = "/addques", method = RequestMethod.POST)
-	public ModelAndView addques(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
-		String title=requestParams.get("title");
-		String details=requestParams.get("detail");
-		String constraints=requestParams.get("const");
-		String inputformat=requestParams.get("inp_format");
-		String outpuformat=requestParams.get("op_format");
-		String inputtestcase=requestParams.get("inp_testcase");
-		String outputtestcase=requestParams.get("op_testcase");
-		String file=requestParams.get("file");
-		Session session =	sessionFactory.openSession();
-	       session.beginTransaction();
-	       
-	      ModelAndView model = new ModelAndView("addques");
-	         
-	       Query queryResult = session.createQuery("from Questions");
-	       java.util.List allUsers;
-	       String titl;
-	       titl=null;
-	       
-	       allUsers = queryResult.list();
-	       int f;
-	       f=0;
-	       for (int i = 0; i < allUsers.size(); i++) {
-	    	  Questions user = (Questions) allUsers.get(i);
-	        titl=user.getTitle();
-		      
-	        if(title.equals(titl)){
-	         f=1;
-	     
-	        break; 
-	   
-	        
-	         }
-	        }
-	         
-	           if(f!=1){
-	        	   Questions user= new   Questions();  
-	               user.setTitle(title);
-	               user.setDetail(details);
-	               user.setConstraints(constraints);
-	               user.setInputformat(inputformat);
-	               user.setInputtestcase(inputtestcase);
-	               user.setOutputtestcase(outputtestcase);
-	              // user.setPath(path);
-	               	session.save(user);
-	               	session.getTransaction().commit();
-	   
-	               	session.close(); 
-	               	user=null;
-	               	System.out.println(title);
-	               	model.addObject("add","record added");
-	      	           } 
-	           else
-	           {   System.out.println("duplicate");
-	           model.addObject("dup","duplicate record"); 
-	           }
-	           return model;  
-		
-	} 
-	// editing the existing questions
-	@RequestMapping(value = "/ques_edit", method = RequestMethod.POST)
-	public ModelAndView quesedit(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
-		String quesId = requestParams.get("id");
-		
-		 Session session =	sessionFactory.openSession();
-	       session.beginTransaction();
-	       
-	      ModelAndView model = new ModelAndView("quesedit");
-	         
-	       Query queryResult = session.createQuery("from Questions");
-	       java.util.List allUsers;
-	       String det,title,inp_format,cons,inp_case,op_case,path;
-	       int qid;
-	      qid=0;
-	     det=null;
-	      title=null;
-	      inp_format=null;
-	      cons=null;
-	      inp_case=null;
-	      op_case=null;
-	      path=null;
-	       allUsers = queryResult.list();
-	       int f;
-	       f=0;
-	       for (int i = 0; i < allUsers.size(); i++) {
-	    	   Questions user = (Questions) allUsers.get(i);
-	    	   qid=user.getQuesid();
-	    	   title=user.getTitle();
-	    	   cons=user.getConstraints();
-	    	   det=user.getDetail();
-	    	   inp_case=user.getInputtestcase();
-	    	   op_case=user.getOutputtestcase();
-	    	   path=user.getPath();
-	         
-	        		  
-	         if(quesId.equals(qid) ){
-		         f=1;
-		         break;
-	        
-	        }
-	         	         
-	       }
-	       if(f==1){
-		         model.addObject("qid",qid); 
-		         model.addObject("title",title); 
-		         model.addObject("detail",det); 
-		         model.addObject("constraints",cons); 
-		         model.addObject("inputcase",inp_case); 
-		         model.addObject("outputcase",op_case); 
-		         model.addObject("path",path); 
-		        
-	        }
-	         else
-	         {
-	        	  model.addObject("norec","no record found");  
-	         }
-	         
-	       return model;
-		
-	} 
-	//modify questions
-	@RequestMapping(value = "/modifyque", method = RequestMethod.POST)
-	public ModelAndView modify(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
-	    ModelAndView model = new ModelAndView("quesedit");
-					String quesid = requestParams.get("id");
-					String det,title,inp_format,cons,inp_case,op_case,path;
-					det=requestParams.get("detail");
-					title=requestParams.get("title");
-					cons=requestParams.get("cons");
-					inp_case=requestParams.get("inpcase");
-					op_case=requestParams.get("opcase");
-		 /*
-		  space for code for file upload
-		  after which path requsest parameter to be used
-		  
-		  */
-		// path=requestParams.get("");
-						Session session =	sessionFactory.openSession();
-						session.beginTransaction();
-	       
-	  
-	       Questions user= (Questions) session.get(Questions.class,quesid);
-	       				user.setQuesid(Integer.parseInt(quesid));
-	       				user.setDetail(det);
-	       				user.setConstraints(cons);
-	       				user.setInputtestcase(inp_case);
-	       				user.setOutputtestcase(op_case);
-	       				/*
-	       				 path to be set after the file upload code is written
-	       				 
-	       				   */
-	       				//user.setPath(path);
-	       					session.update(user);
-	       					session.getTransaction().commit();
-	       					session.close(); 
-	       						
-	       					
-	       					model.addObject("rec","record edited");
-	       					return model;
-	}
-	
-	
 }
+	
+/*
+ * code for admin pannel operations commented for further use
+ * 
+ */
+//	// add new questions to db
+//	@RequestMapping(value = "/addques", method = RequestMethod.POST)
+//	public ModelAndView addques(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+//		String title=requestParams.get("title");
+//		String details=requestParams.get("detail");
+//		String constraints=requestParams.get("const");
+//		String inputformat=requestParams.get("inp_format");
+//		String outpuformat=requestParams.get("op_format");
+//		String inputtestcase=requestParams.get("inp_testcase");
+//		String outputtestcase=requestParams.get("op_testcase");
+//		String file=requestParams.get("file");
+//		Session session =	sessionFactory.openSession();
+//	       session.beginTransaction();
+//	       
+//	      ModelAndView model = new ModelAndView("addques");
+//	         
+//	       Query queryResult = session.createQuery("from Questions");
+//	       java.util.List allUsers;
+//	       String titl;
+//	       titl=null;
+//	       
+//	       allUsers = queryResult.list();
+//	       int f;
+//	       f=0;
+//	       for (int i = 0; i < allUsers.size(); i++) {
+//	    	  Questions user = (Questions) allUsers.get(i);
+//	        titl=user.getTitle();
+//		      
+//	        if(title.equals(titl)){
+//	         f=1;
+//	     
+//	        break; 
+//	   
+//	        
+//	         }
+//	        }
+//	         
+//	           if(f!=1){
+//	        	   Questions user= new   Questions();  
+//	               user.setTitle(title);
+//	               user.setDetail(details);
+//	               user.setConstraints(constraints);
+//	               user.setInputformat(inputformat);
+//	               user.setInputtestcase(inputtestcase);
+//	               user.setOutputtestcase(outputtestcase);
+//	              // user.setPath(path);
+//	               	session.save(user);
+//	               	session.getTransaction().commit();
+//	   
+//	               	session.close(); 
+//	               	user=null;
+//	               	System.out.println(title);
+//	               	model.addObject("add","record added");
+//	      	           } 
+//	           else
+//	           {   System.out.println("duplicate");
+//	           model.addObject("dup","duplicate record"); 
+//	           }
+//	           return model;  
+//		
+//	} 
+//	// editing the existing questions
+//	@RequestMapping(value = "/ques_edit", method = RequestMethod.POST)
+//	public ModelAndView quesedit(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+//		String quesId = requestParams.get("id");
+//		
+//		 Session session =	sessionFactory.openSession();
+//	       session.beginTransaction();
+//	       
+//	      ModelAndView model = new ModelAndView("quesedit");
+//	         
+//	       Query queryResult = session.createQuery("from Questions");
+//	       java.util.List allUsers;
+//	       String det,title,inp_format,cons,inp_case,op_case,path;
+//	       int qid;
+//	      qid=0;
+//	     det=null;
+//	      title=null;
+//	      inp_format=null;
+//	      cons=null;
+//	      inp_case=null;
+//	      op_case=null;
+//	      path=null;
+//	       allUsers = queryResult.list();
+//	       int f;
+//	       f=0;
+//	       for (int i = 0; i < allUsers.size(); i++) {
+//	    	   Questions user = (Questions) allUsers.get(i);
+//	    	   qid=user.getQuesid();
+//	    	   title=user.getTitle();
+//	    	   cons=user.getConstraints();
+//	    	   det=user.getDetail();
+//	    	   inp_case=user.getInputtestcase();
+//	    	   op_case=user.getOutputtestcase();
+//	    	   path=user.getPath();
+//	         
+//	        		  
+//	         if(quesId.equals(qid) ){
+//		         f=1;
+//		         break;
+//	        
+//	        }
+//	         	         
+//	       }
+//	       if(f==1){
+//		         model.addObject("qid",qid); 
+//		         model.addObject("title",title); 
+//		         model.addObject("detail",det); 
+//		         model.addObject("constraints",cons); 
+//		         model.addObject("inputcase",inp_case); 
+//		         model.addObject("outputcase",op_case); 
+//		         model.addObject("path",path); 
+//		        
+//	        }
+//	         else
+//	         {
+//	        	  model.addObject("norec","no record found");  
+//	         }
+//	         
+//	       return model;
+//		
+//	} 
+//	//modify questions
+//	@RequestMapping(value = "/modifyque", method = RequestMethod.POST)
+//	public ModelAndView modify(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
+//	    ModelAndView model = new ModelAndView("quesedit");
+//					String quesid = requestParams.get("id");
+//					String det,title,inp_format,cons,inp_case,op_case,path;
+//					det=requestParams.get("detail");
+//					title=requestParams.get("title");
+//					cons=requestParams.get("cons");
+//					inp_case=requestParams.get("inpcase");
+//					op_case=requestParams.get("opcase");
+//		 /*
+//		  space for code for file upload
+//		  after which path requsest parameter to be used
+//		  
+//		  */
+//		// path=requestParams.get("");
+//						Session session =	sessionFactory.openSession();
+//						session.beginTransaction();
+//	       
+//	  
+//	       Questions user= (Questions) session.get(Questions.class,quesid);
+//	       				user.setQuesid(Integer.parseInt(quesid));
+//	       				user.setDetail(det);
+//	       				user.setConstraints(cons);
+//	       				user.setInputtestcase(inp_case);
+//	       				user.setOutputtestcase(op_case);
+//	       				/*
+//	       				 path to be set after the file upload code is written
+//	       				 
+//	       				   */
+//	       				//user.setPath(path);
+//	       					session.update(user);
+//	       					session.getTransaction().commit();
+//	       					session.close(); 
+//	       						
+//	       					
+//	       					model.addObject("rec","record edited");
+//	       					return model;
+//	}
+//	
+//	
+//}
 
 
 /*
