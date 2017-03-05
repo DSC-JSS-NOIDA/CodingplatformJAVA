@@ -9,7 +9,6 @@ public class Questions {
 	@Id @GeneratedValue
 	int quesid;
 	 
-	
 	private String title;
 	@Lob
 	private String detail;

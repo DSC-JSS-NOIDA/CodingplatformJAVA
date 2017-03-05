@@ -87,16 +87,13 @@ public class AllController {
 				
 				List<Questions> ques = session.createCriteria(Questions.class).list();
 			    model.addObject("ques", ques);
-			  
-				
 			  }
 			else
-			{
+				{
 				model=new ModelAndView("index");
 				model.addObject("invalid","invalid details");
-			}
-		}
-		 
+				}
+			} 
 		else
 		{
 			model= new ModelAndView("index");
@@ -269,7 +266,7 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/ques", method = RequestMethod.GET)
 	public ModelAndView ques(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
-		   Session session =	sessionFactory.openSession();
+		   Session session =sessionFactory.openSession();
 	       session.beginTransaction();
 	       ModelAndView model= new ModelAndView("Quespage");
 	       String id="";
@@ -282,14 +279,14 @@ public class AllController {
 	       String team_name=(String)httpSession.getAttribute("SESSION");
            List<Questions> ques = session.createCriteria(Questions.class).list();
            for(Questions a:ques)
-   		{   
-   			b=b+a.getQuesid();
-   			if(b.equals(id)){
-   			    Question=a.getDetail(); 
-   	            Constraint =a.getConstraints();
-   	            InputFormat=a.getInputformat();
-   	            SampleTestCase=a.getSampletestcase();
-   			}
+   			{   
+   				b=b+a.getQuesid();
+   				if(b.equals(id)){
+   					Question=a.getDetail(); 
+   					Constraint =a.getConstraints();
+   					InputFormat=a.getInputformat();
+   					SampleTestCase=a.getSampletestcase();
+   				}
    		}
            
            model.addObject("Question", Question);
