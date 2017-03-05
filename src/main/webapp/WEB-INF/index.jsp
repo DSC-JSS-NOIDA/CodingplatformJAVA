@@ -37,7 +37,7 @@
 	Enter 1 participant roll number<br><input type="text" name="participant1_roll" required><br> 
 	Enter 2 participant name<br><input type="text" name="participant2_name" required><br> 
 	Enter 2 participant roll number<br><input type="text" name="participant2_roll" required><br> 
-	Enter Email Id:<br><input type="text" name="emailid" required><br>
+	Enter Email Id:<br><input type="email" name="emailid" required><br>
 	Enter contact number:<br><input type="text" name="contactno" required><br>
 	Enter password:<br><input type="password" name="password" required>
 	<br> 
