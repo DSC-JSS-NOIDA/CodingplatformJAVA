@@ -1,13 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+ 	  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+      <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta charset="ISO-8859-1">
+      <title>index</title>
 </head>
 <body>
-<h1>Yeah....!! you are registered and logged in !!!</h1>
+<h5 style="color: red;" class="left-align">${invalid}</h5>
+<div id="login_form">
+	<h1>LOGIN </h1>
+	<form action="login" method="POST">
+	Enter email Id :
+	<br>
+	<input type="text" name="email" required>
+	<br> 
+	Enter password:<br><input type="password" name="password" required><br>
+	<br>
+	<input type="submit" value="submit">
+	</form>
+</div> 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div>
+<h1>SIGN UP</h1>
+	<form action="signup" method="post" >
+	Enter team name<br><input type="text" name="team_name" required><br> 
+	Enter 1 participant name<br><input type="text" name="participant1_name" required><br> 
+	Enter 1 participant roll number<br><input type="text" name="participant1_roll" required><br> 
+	Enter 2 participant name<br><input type="text" name="participant2_name" required><br> 
+	Enter 2 participant roll number<br><input type="text" name="participant2_roll" required><br> 
+	Enter Email Id:<br><input type="text" name="emailid" required><br>
+	Enter contact number:<br><input type="text" name="contactno" required><br>
+	Enter password:<br><input type="password" name="password" required>
+	<br> 
+	<br>
+	<input type=submit value="submit">
+	</form>
+</div>
 </body>
 </html>

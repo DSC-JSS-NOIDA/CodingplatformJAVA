@@ -6,15 +6,25 @@ import javax.persistence.Id;
 @Entity
 public class Userdet {
 	
-		 @Id
-		private String emailid;
+		/*sequence of variables should be same as of form*/
 		private String team_name;
 		private String participant1_name;
 		private String participant1_roll;
-		private String participant2_roll;
 		private String participant2_name;
-		private String contactno;           //used as a password
+		private String participant2_roll;
+		@Id
+		private String emailid;
+		private String contactno;
+		private String password;
 		
+		
+		
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
 		public String getEmailid() {
 			return emailid;
 		}

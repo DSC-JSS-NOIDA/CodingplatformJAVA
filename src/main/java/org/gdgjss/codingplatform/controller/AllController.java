@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,19 +44,20 @@ public class AllController {
 	private Userdet userdet;
 	
 //	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
- 
+
 	
- /*
-  * code for login of user
-  * without using g-api
-  * 
-  */
-    /**
-     * 
-     * @param httpSession
-     * @param requestParams
-     * @return
-     */
+	/**
+	 * simple boot controller for application
+	 * @author suyash
+	 * @return
+	 */
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public ModelAndView indexpage(){
+		ModelAndView model = new ModelAndView("index");
+		return model;
+	}
+	
+	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(HttpSession httpSession, Map<String,String> requestParams){
@@ -105,85 +107,40 @@ public class AllController {
 
        return model;
 	}
-	
-	/*
-	 * code registration of new user
-	 * 
-	 */
-	
-	
-	/**
-	 * 
-	 * @param httpSession
-	 * @param requestParams
-	 * @return
-	 */
-	
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView signup(HttpSession httpSession, Map<String,String> requestParams){
-		ModelAndView model=null;
-		String team_name=requestParams.get("team_name");
-		String user_1=requestParams.get("name_1");
-		String user1_roll=requestParams.get("roll_1");
-		String user_2=requestParams.get("name_2");
-		String user2_roll=requestParams.get("roll_2");
-		String email=requestParams.get("emailid");
-		String contact=requestParams.get("password");
-		
-		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
-		Session session =sessionFactory.openSession();
-		session.beginTransaction();
-		Query queryResult = session.createQuery("from Userdet");
-	       java.util.List allUsers;
-	       String emailid,contactnum;
-	       
-	       allUsers = queryResult.list();
-	       int f;
-	       f=0;
-	       for (int i = 0; i < allUsers.size(); i++) {
-	        Userdet user = (Userdet) allUsers.get(i);
-	         	emailid=user.getEmailid();
-	         	contactnum=user.getContactno();
-	        if(emailid.equals(email)){
-	         f=1;
-	         break; 
-	         }
-	        }
-	         
-	           if(f!=1){
-	    Userdet user= new Userdet();  
-	       user.setEmailid(email);
-	       user.setTeam_name(team_name);
-	       user.setParticipant1_name(user_1);
-	       user.setParticipant1_roll(user1_roll);
-	       user.setParticipant2_name(user_2);
-	       user.setParticipant2_roll(user2_roll);
-	       user.setContactno(contact);
-	       
-	       
-	       
-	       session.save(user);
-	       session.getTransaction().commit();
-	       session.close(); 
-	       user=null;
-	          System.out.println(team_name);
-	          model=new ModelAndView("dashboard");
-	          model.addObject("team",team_name);
-	       
 
-	           } 
-	           else
-	           {   System.out.println("duplicate");
-	                model=new ModelAndView("index");
-	                model.addObject("msg","already exists go to login page");
-	           }
-	            
-	return model;
+	/**
+	 * Sign up form controller for participating team
+	 * 
+	 * @author tilhari
+	 * @param requestParams
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ModelAndView signup(@ModelAttribute("userdet")
+				org.gdgjss.codingplatform.models.Userdet userdet){
+		
+		Session session = sessionFactory.openSession();
+		ModelAndView model = new ModelAndView("index");
+		if(session.get(Userdet.class, userdet.getEmailid()) == null)
+		{
+			session.beginTransaction();
+			session.save(userdet);
+			session.getTransaction().commit();
+			session.close();
+			model.addObject("invalid", "Successfully registered, login to proceed!");
+			
+		}
+		else
+			model.addObject("invalid", "This email is already registered.");
+		
+		return model;
 	
 	}
 	
 	
-		/**
+	
+	
+	/**
 	 * 
 	 * @param httpSession
 	 * @param requestParams
