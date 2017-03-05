@@ -437,7 +437,7 @@ public class AllController {
 	           return model;  
 		
 	} 
-	// editing the exixting questions
+	// editing the existing questions
 	@RequestMapping(value = "/ques_edit", method = RequestMethod.POST)
 	public ModelAndView quesedit(HttpSession httpSession, @RequestParam Map<String,String> requestParams) {
 		String quesId = requestParams.get("id");
@@ -544,7 +544,7 @@ public class AllController {
 
 
 /*
- * google login oauth comented for further use
+ * google login oauth commented for further use
  * 
  */
 
