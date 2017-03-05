@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,6 +19,7 @@ import org.gdgjss.codingplatform.models.Userdet;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+
+
 /**
  * this class contains all view controllers, maps view to service layer 
  * @author suyash
@@ -59,6 +63,7 @@ public class AllController {
 	}
 	
 	/**
+	 * @author singhal
 	 * controller for user login
 	 * @param httpSession
 	 * @param requestParams
@@ -77,6 +82,10 @@ public class AllController {
 				userdet = (Userdet) httpSession.getAttribute("SESSION");
 				model = new ModelAndView("dashboard");
 				model.addObject("TeamName", userdet.getTeam_name());
+				
+				List<Questions> ques = session.createCriteria(Questions.class).list();
+			    model.addObject("ques", ques);
+			  
 				
 			  }
 			else
@@ -122,9 +131,7 @@ public class AllController {
 		return model;
 	
 	}
-	
-	
-	
+
 	
 	/**
 	 * 
@@ -240,6 +247,12 @@ public class AllController {
 	       
 	} 
 	
+	
+	/*
+	 * code for admin login
+	 */
+	
+	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public ModelAndView admin(HttpSession httpSession) {
 		ModelAndView model= new ModelAndView("admin");
@@ -247,6 +260,11 @@ public class AllController {
 		
 	} 
 	
+	/**
+	 * code for editor
+	 * @param httpSession
+	 * @return
+	 */
 	@RequestMapping(value = "/ques", method = RequestMethod.GET)
 	public ModelAndView ques(HttpSession httpSession) {
 		ModelAndView model= new ModelAndView("Quespage");
