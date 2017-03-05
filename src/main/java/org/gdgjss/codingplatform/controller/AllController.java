@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.gdgjss.codingplatform.models.Questions;
@@ -34,7 +35,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
  * this class contains all view controllers, maps view to service layer 
  * @author suyash
  *
- */
+ */ 
 
 @Controller
 public class AllController {
@@ -57,54 +58,39 @@ public class AllController {
 		return model;
 	}
 	
-	
+	/**
+	 * controller for user login
+	 * @param httpSession
+	 * @param requestParams
+	 * @return
+	 */
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(HttpSession httpSession, Map<String,String> requestParams){
-		ModelAndView model=null;
-		String email=requestParams.get("email");
-		String contact=requestParams.get("contact");
-		httpSession.setAttribute("loggedinuser",email);		//generating session for the logged in user
-		Session session =	sessionFactory.openSession();
-	       session.beginTransaction();
-	       Query queryResult = session.createQuery("from Userdet");
-	       java.util.List allUsers;
-	       String emailid,contactnum,teamname="";
-	       
-	       int f;
-	       f=0;
-	       
-	       allUsers = queryResult.list();
-	       System.out.println(allUsers.size());
-	       for (int i = 0; i < allUsers.size(); i++) {
-	        Userdet user = (Userdet) allUsers.get(i);
-	         emailid=user.getEmailid();
-	         contactnum=user.getContactno();
-	         
-	        
-	        if(emailid.equals(email) && contactnum.equals(contact))
-	        {
-	        	System.out.println("welcome");
-	        	teamname=user.getTeam_name();
-	            f=1;
-	        	
-	        	break; 
-	        }
-	              }
-	       
-	       if(f==1)
-	       {
-	    	   model= new ModelAndView("dashboard");
-	    	   model.addObject("team",teamname);
-	       }    	       
-	       else
-	       {
-	    	   model= new ModelAndView("index");
-	    	   model.addObject("msg","no rec found");
-	       }
-	       
-
-
+	public ModelAndView login(HttpSession httpSession, @RequestParam("email") String emailid,
+			@RequestParam("password") String password){
+		ModelAndView model;
+		Session session = sessionFactory.openSession();
+		userdet = (Userdet) session.get(Userdet.class, emailid);
+		if (userdet != null) {
+			if (userdet.getPassword().equals(password)) {
+				httpSession.setAttribute("SESSION", userdet);
+				userdet = (Userdet) httpSession.getAttribute("SESSION");
+				model = new ModelAndView("dashboard");
+				model.addObject("TeamName", userdet.getTeam_name());
+				
+			  }
+			else
+			{
+				model=new ModelAndView("index");
+				model.addObject("invalid","invalid details");
+			}
+		}
+		 
+		else
+		{
+			model= new ModelAndView("index");
+			model.addObject("norecord","no record found");
+		}
        return model;
 	}
 
