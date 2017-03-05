@@ -153,7 +153,7 @@ public class AllController {
         String inputpath="",outputpath="";
         String x="",z="",c="";
         String y="";
-        String b="";
+        String b="",d="";
         /*
          * ********code for path of test case file from db************************
          */
@@ -236,7 +236,7 @@ public class AllController {
 	          	JSONObject resultObject=json.getJSONObject("result");
 	          	message=resultObject.getString("message");
 	          	stdOut=resultObject.getString("stdout");
-	          
+	           
 	          	
 	        	System.out.println(message);
 	        	System.out.println(stdOut);
@@ -246,13 +246,15 @@ public class AllController {
 	        	 List<Questions> output = session.createCriteria(Questions.class).list();
 	  	       
 	  	       
-	             for(Questions a:ques)
+	             for(Questions a:output)
 	     				{   
-	     						b=b+a.getQuesid();
-	     						if(b.equals(qid)){
+	     						d=d+a.getQuesid();
+	     						if(d.equals(qid)){
 	     						outputpath=a.getOutputfilepath();
 	     			        }
+	     						
      				}
+	             System.out.println(outputpath);
 	             
 	             /*
 	              * code to read the output file from the path provided
@@ -262,13 +264,13 @@ public class AllController {
 				
      				
  					
- 					while ( (z = br.readLine()) != null ) {
+ 					while ( (z = file.readLine()) != null ) {
  						// Printing out each line in the file
  						System.out.println(z);
  						if(c!="")
  						c=c+" "+z;
  						else
- 							y=y+z;
+ 							c=c+z;
  					}
 	        	
  					/*
