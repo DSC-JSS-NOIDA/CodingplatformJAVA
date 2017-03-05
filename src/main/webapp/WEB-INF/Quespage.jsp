@@ -43,34 +43,29 @@
 </div>
 <br>
 
-<p>${TeamName}
+<p>TEAM NAME-${Teamname}</p>
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-    Question :<input type=text values=${Question}/>  <br /><br />
+    Question :${Question}  <br /><br />
     </div>
 </div>
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-	Constraint :<input type=text values=${Constraint}/> 
+	Constraint :${Constraint}
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-	Input Format:<input type=text values=${InputFormat}/> <br /><br />
+	Input Format:${InputFormat} <br>
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
-	Output Format<br /><br />
-	</div>
-</div>
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-	Sample Test Case:<input type=text values=${SampleTestCase}/> <br /><br />
+	Sample Test Case:${SampleTestCase} <br /><br />
 	</div>
 </div>
 <br>

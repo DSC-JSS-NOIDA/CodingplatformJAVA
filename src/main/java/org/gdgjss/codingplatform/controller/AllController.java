@@ -279,7 +279,7 @@ public class AllController {
            String InputFormat="";
            String SampleTestCase="";
 	       id=requestParams.get("id");
-	       
+	       String team_name=(String)httpSession.getAttribute("SESSION");
            List<Questions> ques = session.createCriteria(Questions.class).list();
            for(Questions a:ques)
    		{   
@@ -296,6 +296,7 @@ public class AllController {
            model.addObject("Constraint", Constraint);
            model.addObject("InputFormat", InputFormat);
            model.addObject("SampleTestCase", SampleTestCase);
+           model.addObject("Teamname",team_name);
 		   return model;
 		
 	} 
