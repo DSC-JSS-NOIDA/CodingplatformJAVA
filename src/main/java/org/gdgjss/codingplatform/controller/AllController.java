@@ -80,8 +80,8 @@ public class AllController {
 		userdet = (Userdet) session.get(Userdet.class, emailid);
 		if (userdet != null) {
 			if (userdet.getPassword().equals(password)) {
-				httpSession.setAttribute("SESSION", userdet.getEmailid());
-				httpSession.setAttribute("SESSION", userdet.getTeam_name());
+				httpSession.setAttribute("SESSION_email", userdet.getEmailid());
+				httpSession.setAttribute("SESSION_teamname", userdet.getTeam_name());
 				// userdet = (Userdet) httpSession.getAttribute("SESSION");
 				model = new ModelAndView("dashboard");
 				model.addObject("TeamName", userdet.getTeam_name());
@@ -310,9 +310,13 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/ques", method = RequestMethod.GET)
 	public ModelAndView ques(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
-		   Session session =	sessionFactory.openSession();
+		 String team_name=(String)httpSession.getAttribute("SESSION_teamname");
+	       String email=(String)httpSession.getAttribute("SESSION_email");
+	       ModelAndView model;
+	       if( email!=null){
+		Session session =	sessionFactory.openSession();
 	       session.beginTransaction();
-	       ModelAndView model= new ModelAndView("Quespage");
+	       model= new ModelAndView("Quespage");
 	       String id="";
 	       String b="";
 	       String Question=""; 
@@ -320,7 +324,7 @@ public class AllController {
            String InputFormat="";
            String SampleTestCase="";
 	       id=requestParams.get("id");
-	       String team_name=(String)httpSession.getAttribute("SESSION");
+	      
            List<Questions> ques = session.createCriteria(Questions.class).list();
            for(Questions a:ques)
    		{   
@@ -338,6 +342,13 @@ public class AllController {
            model.addObject("InputFormat", InputFormat);
            model.addObject("SampleTestCase", SampleTestCase);
            model.addObject("Teamname",team_name);
+           model.addObject("email",email);
+	    }
+	       else {
+	    	   model= new ModelAndView("index");
+	    	   model.addObject("invalid","log in first to continue");
+	       }
+	       
 		   return model;
 		
 	} 
