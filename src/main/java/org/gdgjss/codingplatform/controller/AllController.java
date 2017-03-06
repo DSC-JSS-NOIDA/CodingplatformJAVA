@@ -230,14 +230,18 @@ public class AllController {
 	         * to prevent the exception error
 	         * 
 	         */
-	        
+	        try{
 	          	JSONObject json= new JSONObject(inputLine);	  
 	          	if(json.has("result")){
 	          	JSONObject resultObject=json.getJSONObject("result");
 	          	message=resultObject.getString("message");
 	          	stdOut=resultObject.getString("stdout");
 	           
-	          	
+	          	}
+	        }
+	        catch(Exception e){
+	        	
+	        }
 	        	System.out.println(message);
 	        	System.out.println(stdOut);
 	             /*
@@ -286,7 +290,7 @@ public class AllController {
  					}
  					
 	        	
-	          	}
+	          	
 	       
 	} 
 	
