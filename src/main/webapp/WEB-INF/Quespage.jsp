@@ -67,16 +67,16 @@
 	<div class="col-md-10 col-md-offset-1">
 	Sample Test Case:${SampleTestCase} <br /><br />
 	</div>
-</div>
+</div> 
 <br>
 CHOOSE LANGUAGE
 <form method="post" action="api" >
 	 	<select class="language" name=lang >
   			<option value="Select">Select</option>
-  			<option value="1">C</option>
-  			<option value="2">C++</option>
-  			<option value="3">Java</option>
-  			<option value="5">Python</option>
+  			<option value="C">C</option>
+  			<option value="CPP">C++</option>
+  			<option value="JAVA">Java</option>
+  			<option value="PYTHON">Python</option>
 		</select>
  <br>
 <textarea name="source" class="source" value="" id="source" hidden/></textarea><br>

@@ -192,7 +192,7 @@ public class AllController {
 	      	       					
        
       //*********************************post req to api*******************  
-        String url = "http://api.hackerrank.com/checker/submission.json";
+        String url = "https://api.hackerearth.com/v3/code/run/";
 	        URL obj = new URL(url);
 	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -203,11 +203,11 @@ public class AllController {
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 
 	       String test="[ " +"'1'"+ "," + "'2'" +"]";
 	       System.out.println();
-                     
+                    String codes="PYTHON"; 
 	        //String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"i am king\",\"123\" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
-	       String urlParameters = "source="+code+"&lang="+language+"&testcases=["+y+" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
+	       String urlParameters = "source="+code+"&lang="+language+"&testcases=["+y+"]&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
 	        // Send post request
-	        con.setDoOutput(true);
+	        con.setDoOutput(true); 
 	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 	        wr.writeBytes(urlParameters);
 	        wr.flush();
@@ -224,7 +224,7 @@ public class AllController {
 	        inputLine=in.readLine();
 	        System.out.println(inputLine);
 	       //   code for specific field from json using json dependency
-	        String message="",stdOut="";
+	        String message="",stdOut="",status="";
 	        /*
 	         * use try catch in this code below 
 	         * to prevent the exception error
@@ -232,17 +232,19 @@ public class AllController {
 	         */
 	        try{
 	          	JSONObject json= new JSONObject(inputLine);	  
-	          	if(json.has("result")){
-	          	JSONObject resultObject=json.getJSONObject("result");
-	          	message=resultObject.getString("message");
-	          	stdOut=resultObject.getString("stdout");
+	          	if(json.has("run_status")){
+	          	JSONObject resultObject=json.getJSONObject("run_status");
+	          	status=resultObject.getString("status");
+	          	stdOut=resultObject.getString("output");
 	           
 	          	}
 	        }
 	        catch(Exception e){
 	        	
 	        }
-	        	System.out.println(message);
+	      
+	        System.out.println(message);
+	        	System.out.println(status);
 	        	System.out.println(stdOut);
 	             /*
 	              * code to verify std output with output file 
@@ -281,7 +283,7 @@ public class AllController {
  					 * code to check the output of api with text file
  					 * 
  					 */
- 					if(c.equals(stdOut))
+ 					if(c.equals(stdOut.trim()))
  					{ 
  						System.out.println("output matched");
  					}
