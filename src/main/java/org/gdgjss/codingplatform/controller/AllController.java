@@ -151,9 +151,8 @@ public class AllController {
 			String quesid = requestParams.get("qid");
         	 System.out.println(language);        
         	 System.out.println(code);
-        	 String inputpath="",outputpath="",x="",y="",z="",c="",d="";  // declaring variables for file reading code
-        	 String team_name=(String)httpSession.getAttribute("SESSION_teamname");
-
+        	 String inputpath="",outputpath="",y=""; 
+        	
         /*
          * to encode source code in utf 8 , as java uses by default utf-16
          */
@@ -220,6 +219,8 @@ public class AllController {
 	        /**
 		    * @author tilhari
 		    * url parameters for hackerearth api
+		    * 
+		    * add other available parameter for TLE, size etc etc
 		    */   
 	        String urlParameters = "source="+urlencode+"&lang=JAVA&input="+y+"&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
 	        
