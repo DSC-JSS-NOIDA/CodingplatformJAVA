@@ -189,7 +189,8 @@ public class AllController {
       //*********************************post request to api*******************  
 	      	       					
 	      	       					
-            String url = "https://api.hackerearth.com/v3/code/run/";
+            //String url = "https://api.hackerearth.com/v3/code/run/";             
+	      	String url = "http://api.hackerrank.com/checker/submission.json";
 	        URL obj = new URL(url);
 	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -199,8 +200,13 @@ public class AllController {
 	        con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 
 	      
-	        //String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"i am king\",\"123\" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
-	         String urlParameters = "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
+	        //url parameters for hackerrank api
+	        
+	        String urlParameters = "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+	       /*
+	        * url parameters for hackerearth api
+	        */
+	        //String urlParameters = "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
 	        // Send post request
 	        con.setDoOutput(true); 
 	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -245,6 +251,12 @@ public class AllController {
 		          	message=json.getString("compile_status");
 		          
 		        }
+	          	    if(json.has("result"))
+	          	    {   JSONObject resultObject=json.getJSONObject("result");
+	          	    	message=resultObject.getString("message");
+	          	    	stdOut=resultObject.getString("stdout");
+	          	    }
+	          	
 	          	else{
 	          		message="not avilabe";
 	              	}
