@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.gson.Gson;
 
 
 /**
@@ -255,6 +256,7 @@ public class AllController {
 	          	    {   JSONObject resultObject=json.getJSONObject("result");
 	          	    	message=resultObject.getString("message");
 	          	    	stdOut=resultObject.getString("stdout");
+	          	       
 	          	    }
 	          	
 	          	else{
@@ -279,24 +281,26 @@ public class AllController {
 	              * from above code
 	              */
 	             
-	             
+	             StringBuilder sb =new StringBuilder();
 	         	BufferedReader file = new BufferedReader(new FileReader(outputpath));
 				
  					while ( (z = file.readLine()) != null ) {
  						// Printing out each line in the file
- 						System.out.println(z);
- 						if(c!="")
- 						c=c+" "+z;
- 						else
- 							c=c+z;
+ 						
+ 					     sb.append(z);
+ 					     sb.append("\n");
+ 					    
  					}
-	        	
+	        	    Gson gson=new Gson();
+	        	    String jsons = gson.toJson(sb);
+	        	    String out="["+jsons+"]";
+	        	    System.out.println(out);
  					/*
  					 * code to check the output of api with text file
  					 * 
  					 */
  					
- 					if(c.equals(stdOut.trim()))
+ 					if(out.equals(stdOut))
  					{ 
  						System.out.println("output matched");
  					}
