@@ -79,7 +79,8 @@ CHOOSE LANGUAGE
   			<option value="PYTHON">Python</option>
 		</select>
  <br>
-<textarea name="source" class="source" value="" id="source" hidden/></textarea><br>
+
+<input type="hidden" name="source" class="source" value="" id="source"><br>
 				
 				<div id="editor_lang"> 
 

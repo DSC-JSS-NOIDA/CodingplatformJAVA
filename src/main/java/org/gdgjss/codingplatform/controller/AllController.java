@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -145,32 +146,28 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
 	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
-		String language = requestParams.get("lang");
-        String code = requestParams.get("source");
-        String qid = requestParams.get("qid");
+			String language = requestParams.get("lang");
+			String code = requestParams.get("source");
+			String quesid = requestParams.get("qid");
         	 System.out.println(language);        
         	 System.out.println(code);
-        String inputpath="",outputpath="";
-        String x="",z="",c="";
-        String y="";
-        String b="",d="";
+        	 String inputpath="",outputpath="",x="",y="",z="",c="",d="";  // declaring variables for file reading code
+      
         /*
-         * ********code for path of test case file from db************************
+         * ********very important code************************
+         * to encode source code in utf 8
+         * as java uses by default utf-16
          */
-               
-        Session session =	sessionFactory.openSession();
+             
+        
+           String urlencode=URLEncoder.encode(code, "UTF-8");
+           Session session =sessionFactory.openSession();
 	       session.beginTransaction();
-	       List<Questions> ques = session.createCriteria(Questions.class).list();
+	       Questions ques= (Questions) session.get(Questions.class,Integer.parseInt(quesid));
+	               inputpath=ques.getInputfilepath();
+	               outputpath=ques.getOutputfilepath();
+	               
 	       
-	       
-           for(Questions a:ques)
-   				{   
-   						b=b+a.getQuesid();
-   						if(b.equals(qid)){
-   						inputpath=a.getInputfilepath();
-   			        }
-   			
-   				}
 	      	       
 	      	       /*
 	      	        * *********************************code to read the test case file**********************************8
@@ -179,33 +176,31 @@ public class AllController {
 	      	       //****************************************error in sending this file to api**************************
 	      	       	BufferedReader br = new BufferedReader(new FileReader(inputpath));
 			
-	      	       				
-	      	       					
 	      	       					while ( (x = br.readLine()) != null ) {
 	      	       						// Printing out each line in the file
 	      	       						System.out.println(x);
 	      	       						if(y!="")
-	      	       						y=y+" "+x;
+	      	       							y=y+" "+x;
 	      	       						else
 	      	       							y=y+x;
 	      	       							}
 	      	       					
        
-      //*********************************post req to api*******************  
-        String url = "https://api.hackerearth.com/v3/code/run/";
+      //*********************************post request to api*******************  
+	      	       					
+	      	       					
+            String url = "https://api.hackerearth.com/v3/code/run/";
 	        URL obj = new URL(url);
 	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 	        //add request header
 	        con.setRequestMethod("POST");
-
-	     con.setRequestProperty("User-Agent","chrome");
+	        con.setRequestProperty("ENCODING", "UTF-8");
+	        con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 
-	       String test="[ " +"'1'"+ "," + "'2'" +"]";
-	       System.out.println();
-                    String codes="PYTHON"; 
+	      
 	        //String urlParameters = "source="+code+"&lang="+language+"&testcases=[\"i am king\",\"123\" ]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
-	       String urlParameters = "source="+code+"&lang="+language+"&testcases=["+y+"]&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
+	         String urlParameters = "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
 	        // Send post request
 	        con.setDoOutput(true); 
 	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -224,52 +219,57 @@ public class AllController {
 	        inputLine=in.readLine();
 	        System.out.println(inputLine);
 	       //   code for specific field from json using json dependency
-	        String message="",stdOut="",status="";
+	        
+	        
+	        String message="",stdOut="",status="";  //declaring variables for outputs of api
+	        
+	        
 	        /*
 	         * use try catch in this code below 
 	         * to prevent the exception error
 	         * 
 	         */
 	        try{
-	          	JSONObject json= new JSONObject(inputLine);	  
+	          	JSONObject json= new JSONObject(inputLine);	
+	          	
 	          	if(json.has("run_status")){
 	          	JSONObject resultObject=json.getJSONObject("run_status");
 	          	status=resultObject.getString("status");
+	          	if(resultObject.has("output"))
 	          	stdOut=resultObject.getString("output");
-	           
+	         
 	          	}
+	          	
+	          	if(json.has("compile_status")){
+		          	//JSONObject compileObject=json.getJSONObject("compile_status");
+		          	message=json.getString("compile_status");
+		          
+		        }
+	          	else{
+	          		message="not avilabe";
+	              	}
+	          	
+	         
 	        }
 	        catch(Exception e){
-	        	
+	        	System.out.println("4");
 	        }
 	      
-	        System.out.println(message);
-	        	System.out.println(status);
-	        	System.out.println(stdOut);
-	             /*
-	              * code to verify std output with output file 
-	              */
-	        	 List<Questions> output = session.createCriteria(Questions.class).list();
-	  	       
-	  	       
-	             for(Questions a:output)
-	     				{   
-	     						d=d+a.getQuesid();
-	     						if(d.equals(qid)){
-	     						outputpath=a.getOutputfilepath();
-	     			        }
-	     						
-     				}
-	             System.out.println(outputpath);
+	            	System.out.println(message);
+	            	System.out.println(status);
+	            	System.out.println(stdOut);
+	             
+	        	
+	             System.out.println(outputpath);   //output file path
 	             
 	             /*
 	              * code to read the output file from the path provided
 	              * from above code
 	              */
+	             
+	             
 	         	BufferedReader file = new BufferedReader(new FileReader(outputpath));
 				
-     				
- 					
  					while ( (z = file.readLine()) != null ) {
  						// Printing out each line in the file
  						System.out.println(z);
@@ -283,6 +283,7 @@ public class AllController {
  					 * code to check the output of api with text file
  					 * 
  					 */
+ 					
  					if(c.equals(stdOut.trim()))
  					{ 
  						System.out.println("output matched");
@@ -290,10 +291,7 @@ public class AllController {
  					else{
  						System.out.println("outputs not matched");
  					}
- 					
-	        	
-	          	
-	       
+
 	} 
 	
 	
