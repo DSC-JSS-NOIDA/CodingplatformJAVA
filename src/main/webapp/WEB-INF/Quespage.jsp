@@ -71,24 +71,15 @@
 <br>
 CHOOSE LANGUAGE
 <form method="post" action="api" >
-				<!--*****************DROPDOWN FOR HACKERRANK API***************    -->
-	 	<select class="language" name=lang >
-  			<option value="Select">Select</option>
-  			<option value="1">C</option>
-  			<option value="2">C++</option>
-  			<option value="3">Java</option>
-  			<option value="5">Python</option>
-		</select>
- <br>
-                     <!-- dropdown for hackerearth api -->
-<!--  	<select class="language" name=lang >
+	 	 <select class="language" name="lang" >
   			<option value="Select">Select</option>
   			<option value="C">C</option>
   			<option value="CPP">C++</option>
   			<option value="JAVA">Java</option>
   			<option value="PYTHON">Python</option>
 		</select>
-		-->
+ <br>
+
 <input type="hidden" name="source" class="source" value="" id="source"><br>
 				
 				<div id="editor_lang"> 

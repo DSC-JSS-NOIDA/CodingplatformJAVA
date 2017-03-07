@@ -84,14 +84,11 @@ public class AllController {
 			if (userdet.getPassword().equals(password)) {
 				httpSession.setAttribute("SESSION_email", userdet.getEmailid());
 				httpSession.setAttribute("SESSION_teamname", userdet.getTeam_name());
-				// userdet = (Userdet) httpSession.getAttribute("SESSION");
 				model = new ModelAndView("dashboard");
-				model.addObject("TeamName", userdet.getTeam_name());
-				
+				model.addObject("TeamName", userdet.getTeam_name());				
 				List<Questions> ques = session.createCriteria(Questions.class).list();
+				session.close();
 			    model.addObject("ques", ques);
-			  
-				
 			  }
 			else
 			{
@@ -118,7 +115,6 @@ public class AllController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView signup(@ModelAttribute("userdet")
 				org.gdgjss.codingplatform.models.Userdet userdet){
-		
 		Session session = sessionFactory.openSession();
 		ModelAndView model = new ModelAndView("index");
 		if(session.get(Userdet.class, userdet.getEmailid()) == null)
@@ -140,59 +136,70 @@ public class AllController {
 	
 	/**
 	 * 
+	 * HackerEarth API controller 
+	 * @author suyash tilhari
 	 * @param httpSession
 	 * @param requestParams
 	 * @throws IOException
 	 * @throws JSONException
 	 */
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
-	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
-			String language = requestParams.get("lang");
-			String code = requestParams.get("source");
-			String quesid = requestParams.get("qid");
-        	 System.out.println(language);        
-        	 System.out.println(code);
-        	 String inputpath="",outputpath="",x="",y="",z="",c="",d="";  // declaring variables for file reading code
-      
+	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)
+			throws IOException,JSONException
+	{
+		String language = requestParams.get("lang");
+		String code = requestParams.get("source");
+		String quesid = requestParams.get("qid");
+        System.out.println(language);        
+        System.out.println(code);
+        String inputpath="",outputpath="",y="",z="",c="",d="";
         /*
-         * ********very important code************************
-         * to encode source code in utf 8
-         * as java uses by default utf-16
+         * to encode source code in utf 8 , as java uses by default utf-16
          */
-             
-        
-           String urlencode=URLEncoder.encode(code, "UTF-8");
-           Session session =sessionFactory.openSession();
-	       session.beginTransaction();
-	       Questions ques= (Questions) session.get(Questions.class,Integer.parseInt(quesid));
-	               inputpath=ques.getInputfilepath();
-	               outputpath=ques.getOutputfilepath();
-	               
-	       
-	      	       
-	      	       /*
-	      	        * *********************************code to read the test case file**********************************8
-	      	        */
-	      	       
-	      	       //****************************************error in sending this file to api**************************
-	      	       	BufferedReader br = new BufferedReader(new FileReader(inputpath));
-			
-	      	       					while ( (x = br.readLine()) != null ) {
-	      	       						// Printing out each line in the file
-	      	       						System.out.println(x);
-	      	       						if(y!="")
-	      	       							y=y+" "+x;
-	      	       						else
-	      	       							y=y+x;
-	      	       							}
-	      	       					
-       
-      //*********************************post request to api*******************  
-	      	       					
-	      	       					
-            //String url = "https://api.hackerearth.com/v3/code/run/";             
-	      	String url = "http://api.hackerrank.com/checker/submission.json";
-	        URL obj = new URL(url);
+        String urlencode=URLEncoder.encode(code, "UTF-8");
+        Session session =sessionFactory.openSession();
+	    session.beginTransaction();
+	    Questions ques= (Questions) session.get(Questions.class,Integer.parseInt(quesid));
+	    inputpath=ques.getInputfilepath();
+	    outputpath=ques.getOutputfilepath();
+	     
+	    /**
+	     * Commented code is a way to read file as it is from its source, but need to include \n by self
+	     * more efficient way
+	     * @author tilhari
+	     */
+	    /*BufferedReader br = new BufferedReader(new FileReader(inputpath));
+			int x;
+	       	while ((x = br.read()) != -1) {	      	       						
+	      	if(y!="")
+	      		y=y+"\n"+x;
+	      	else
+	      		y=y+x;
+	      	}
+	    */
+	    
+	    	/**
+	     	* This is also a way to read file as it is from its source, but is currently without buffer so less efficient
+	     	* @author tilhari
+	     	*/
+	     	FileReader fr=new FileReader(inputpath);    
+	               int i;    
+	               while((i=fr.read())!=-1)    
+	            	   y=y+((char)i);    
+	               fr.close();     	       					
+	      	
+	        /**
+	         *Switch upcoming code lines for toggle HackerRank and hackerEarth API
+	         *
+	         * HackerRank API is in its beta version, does not support TLE, complexity etc.
+	         * No terms and condition also not specified hence no guarantee
+	         *
+	         * @author tilhari
+	         */
+            String url = "https://api.hackerearth.com/v3/code/run/";             
+	      	//String url = "http://api.hackerrank.com/checker/submission.json";
+	        
+            URL obj = new URL(url);
 	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 	        //add request header
@@ -201,13 +208,20 @@ public class AllController {
 	        con.setRequestProperty("User-Agent","chrome");
 	        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); 
 	      
-	        //url parameters for hackerrank api
-	        
-	        String urlParameters = "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
-	       /*
-	        * url parameters for hackerearth api
+	       /**
+	        * @author tilhari
+	        * url parameters for hackerrank api
 	        */
-	        //String urlParameters = "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
+	       // String urlParameters = "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
+	        
+	        System.out.println("Input file--- \n"+y);
+	        
+	        /**
+		    * @author tilhari
+		    * url parameters for hackerearth api
+		    */   
+	        String urlParameters = "source="+urlencode+"&lang=JAVA&input="+y+"&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
+	        
 	        // Send post request
 	        con.setDoOutput(true); 
 	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -215,29 +229,49 @@ public class AllController {
 	        wr.flush();
 	        wr.close();
 
+	        /**
+	         * @author suyash
+	         * reading 
+	         */
 	        int responseCode = con.getResponseCode();
 	        System.out.println("\nSending 'POST' request to URL : " + url);
 	        System.out.println("Post parameters : " + urlParameters);
 	        System.out.println("Response Code : " + responseCode);
 
-	          BufferedReader in = new BufferedReader(
-	               new InputStreamReader(con.getInputStream()));
-	        String inputLine;	  
-	        inputLine=in.readLine();
-	        System.out.println(inputLine);
-	       //   code for specific field from json using json dependency
+	        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 	        
-	        
+	        String respLine=in.readLine();
+	        System.out.println("JSON response --->>>");
+	        System.out.println(respLine);
 	        String message="",stdOut="",status="";  //declaring variables for outputs of api
-	        
 	        
 	        /*
 	         * use try catch in this code below 
 	         * to prevent the exception error
 	         * 
 	         */
+	        
+	        /*
+	        *********************SARTHAK START FROM HERE ONWARD***************************
+	        write code to read response in different situations as stated on hackerearth API docs and write to
+	        match output file with result from json,,,,,,,,,,,,
+	        use json viewer tool online for better understanding.
+	        See my code how easily file can be read exactly as it is from source*/
+	        
+	        
+	        
+	        
+	        /**
+	         * @author suyash
+	         * TODO: println adds \n at end of last output line for JAVA language,
+	         * so test case should also have \n at end for correct match,
+	         * but this can be a problem in case of other language.
+	         * so some corner cases need to be considered while testing on different languages OR
+	         * different test cases can be made for different languages.........
+	         */
+	        
 	        try{
-	          	JSONObject json= new JSONObject(inputLine);	
+	          	JSONObject json= new JSONObject(respLine);	
 	          	
 	          	if(json.has("run_status")){
 	          	JSONObject resultObject=json.getJSONObject("run_status");
@@ -260,7 +294,7 @@ public class AllController {
 	          	    }
 	          	
 	          	else{
-	          		message="not avilabe";
+	          		message="not avilable";
 	              	}
 	          	
 	         
