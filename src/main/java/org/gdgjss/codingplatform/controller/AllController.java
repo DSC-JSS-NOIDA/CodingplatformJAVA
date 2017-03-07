@@ -144,15 +144,16 @@ public class AllController {
 	 * @throws JSONException
 	 */
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
-	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)
-			throws IOException,JSONException
-	{
-		String language = requestParams.get("lang");
-		String code = requestParams.get("source");
-		String quesid = requestParams.get("qid");
-        System.out.println(language);        
-        System.out.println(code);
-        String inputpath="",outputpath="",y="",z="",c="",d="";
+
+	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
+			String language = requestParams.get("lang");
+			String code = requestParams.get("source");
+			String quesid = requestParams.get("qid");
+        	 System.out.println(language);        
+        	 System.out.println(code);
+        	 String inputpath="",outputpath="",x="",y="",z="",c="",d="";  // declaring variables for file reading code
+        	 String team_name=(String)httpSession.getAttribute("SESSION_teamname");
+
         /*
          * to encode source code in utf 8 , as java uses by default utf-16
          */
@@ -336,7 +337,27 @@ public class AllController {
  					
  					if(out.equals(stdOut))
  					{ 
- 						System.out.println("output matched");
+ 						   java.util.List marks;
+					       String t="";
+                           String score;
+					       Query queryResult = session.createQuery("from Userdet");			       
+					       marks = queryResult.list();
+					       /**
+					        * 
+					        * Will see afterward,,, commented to resolve conflicts
+					        * @author suyash
+					        */
+					       /*for (int ii = 0; ii < marks.size(); ii++) 
+					       {
+					         Userdet user1 = (Userdet)marks.get(ii);
+					         t=user1.getTeam_name();
+						     score=user1.getScore();
+					           if(t.equals(team_name))
+					           {
+					              user1.setScore(score+100);
+					              break;
+					           }
+ 					       }*/
  					}
  					else{
  						System.out.println("outputs not matched");
@@ -344,7 +365,16 @@ public class AllController {
 
 	} 
 	
-	
+	@RequestMapping(value = "/leaderboard.jsp", method = RequestMethod.POST)
+	public ModelAndView leaderboard(HttpSession httpSession) {
+		   ModelAndView model= new ModelAndView("leaderboard");
+		   Session session =	sessionFactory.openSession();
+	       session.beginTransaction();
+           List<Userdet> user = session.createCriteria(Userdet.class).list();
+           model.addObject("user",user);
+		   return model;
+		
+	}
 	/*
 	 * code for admin login
 	 */

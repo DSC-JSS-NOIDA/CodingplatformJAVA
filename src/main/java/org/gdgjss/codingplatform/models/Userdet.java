@@ -3,10 +3,17 @@ package org.gdgjss.codingplatform.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 @Entity
+@Table(
+		   name = "Userdet", 
+		   uniqueConstraints = {@UniqueConstraint(columnNames = {"team_name"})}
+		)
 public class Userdet {
 	
 		/*sequence of variables should be same as of form*/
+	
 		private String team_name;
 		private String participant1_name;
 		private String participant1_roll;
@@ -16,9 +23,16 @@ public class Userdet {
 		private String emailid;
 		private String contactno;
 		private String password;
+		private String score;
 		
 		
 		
+		public String getScore() {
+			return score;
+		}
+		public void setScore(String score) {
+			this.score = score;
+		}
 		public String getPassword() {
 			return password;
 		}
