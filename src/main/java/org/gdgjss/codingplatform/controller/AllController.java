@@ -145,7 +145,7 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
 
-	public void submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
+	public ModelAndView submission(HttpSession httpSession, @RequestParam Map<String,String> requestParams)throws IOException,JSONException  {
 			String language = requestParams.get("lang");
 			String code = requestParams.get("source");
 			String quesid = requestParams.get("qid");
@@ -290,12 +290,12 @@ public class AllController {
 		          	message=json.getString("compile_status");
 		          
 		        }
-	          	    if(json.has("result"))
-	          	    {   JSONObject resultObject=json.getJSONObject("result");
-	          	    	message=resultObject.getString("message");
-	          	    	stdOut=resultObject.getString("stdout");
-	          	       
-	          	    }
+//	          	    if(json.has("result"))
+//	          	    {   JSONObject resultObject=json.getJSONObject("result");
+//	          	    	message=resultObject.getString("message");
+//	          	    	stdOut=resultObject.getString("stdout");
+//	          	       
+//	          	    }
 	          	
 	          	else{
 	          		message="not avilable";
@@ -306,12 +306,23 @@ public class AllController {
 	        catch(Exception e){
 	        	System.out.println("4");
 	        }
+	        
+	        /*
+	         * api output converted to json
+	         */
 	      
+	        
+	        			Gson gsons=new Gson();
+	        			String jsonapi = gsons.toJson(stdOut);
+	        			String out_api="["+jsonapi+"]";
+	        			
+    	    
+    	    
 	            	System.out.println(message);
 	            	System.out.println(status);
 	            	System.out.println(stdOut);
 	            	System.out.println(htmlOutput);
-
+	            	System.out.println(out_api);
 	        	  
 	        	    
 	        	
@@ -322,20 +333,20 @@ public class AllController {
 	              * using BufferReader
 	              */
 	             
-	             FileReader file=new FileReader(outputpath);    
-	               int j;    
-	               while((j=file.read())!=-1)    
-	            	   z=z+((char)j);    
-	               fr.close();  
-	               System.out.println("output path--- \n"+z);
-	   	         
+//	             FileReader file=new FileReader(outputpath);    
+//	               int j;    
+//	               while((j=file.read())!=-1)    
+//	            	   z=z+((char)j);    
+//	               file.close();  
+//	               System.out.println("output path--- \n"+z);
+//	   	         
 	             /*
 	              * code to read the output file from the path provided
 	              * from above code 
 	              * by using buffer reader
 	              */
 	             
-	            /* StringBuilder sb =new StringBuilder();
+	             StringBuilder sb =new StringBuilder();
 	         	BufferedReader file = new BufferedReader(new FileReader(outputpath));
 				
  					while ( (z = file.readLine()) != null ) {
@@ -350,22 +361,23 @@ public class AllController {
  					 * code for converting output text file to json
  					 * for use with hackerrRank API
  					 */
-//	            
-//	        	    Gson gson=new Gson();
-//	        	    String jsons = gson.toJson(z);
-//	        	    String out="["+jsons+"]";
-//	        	    System.out.println(out);
-//	        	    
+	            
+	        	    Gson gson=new Gson();
+	        	    String jsons = gson.toJson(sb);
+	        	    String out="["+jsons+"]";
+	        	    System.out.println(out);
+	        	    
 	        	    
 	        	    
  					/*
  					 * code to check the output of api with text file
  					 * 
  					 */
- 					
- 					if(z.equals(stdOut))
+ 					String verify;
+ 					if(out.equals(out_api))
  					{ 
  						   System.out.println("output matched");
+ 						   verify="output matched";
  						   /*
  						    * java.util.List marks;
  						    * 
@@ -394,11 +406,25 @@ public class AllController {
  					}
  					else{
  						System.out.println("outputs not matched");
+ 						verify="output not matched";
  					}
-
+ 				
+ 		/**
+ 		 * 
+ 		 * sending data to Questionpage			
+ 		 */
+ 		ModelAndView model= new ModelAndView("ResultPage");
+ 					model.addObject("message",message);
+ 					model.addObject("status",status);
+ 					model.addObject("stdout",stdOut);
+ 					model.addObject("code",code);
+ 					model.addObject("verify",verify);
+ 					model.addObject("quesid",quesid);
+ 					
+	         return model;
 	} 
 	
-	@RequestMapping(value = "/leaderboard.jsp", method = RequestMethod.POST)
+	@RequestMapping(value = "/leaderboard", method = RequestMethod.POST)
 	public ModelAndView leaderboard(HttpSession httpSession) {
 		   ModelAndView model= new ModelAndView("leaderboard");
 		   Session session =	sessionFactory.openSession();

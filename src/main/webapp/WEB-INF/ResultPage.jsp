@@ -41,45 +41,9 @@
 <a href=#>logout</a>
 </nav>
 </div>
-<br>
 
-<p>TEAM NAME-${Teamname}</p>
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
-    Question :${Question}  <br /><br />
-    </div>
-</div>
-
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
-	Constraint :${Constraint}
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
-	Input Format:${InputFormat} <br>
-	</div>
-</div>
-
-
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
-	Sample Test Case:${SampleTestCase} 
-	</div>
-</div> 
-<br>
-CHOOSE LANGUAGE
-<form method="post" action="api" >
-	 	 <select class="language" name="lang" >
-  			<option value="Select">Select</option>
-  			<option value="C">C</option>
-  			<option value="CPP">C++</option>
-  			<option value="JAVA">Java</option>
-  			<option value="PYTHON">Python</option>
-		</select>
  <br>
-
+<h1>YOUR SUBMISSION</h1>
 <input type="hidden" name="source" class="source" value="" id="source"><br>
 				
 				<div id="editor_lang"> 
@@ -139,9 +103,16 @@ CHOOSE LANGUAGE
     
 <input type=hidden value="${quesid}" name=qid><br>
 
-<input type="submit"  >
+
 
   <div>
+<h1>RESULT STATUS</h1>
+
+ <h4>message=${message}</h4><BR>
+ <h4>status=${status}</h4><BR>
+ <h4>stdout=${stdout}</h4><BR>
+  <h4>${verify}</h4><BR>
+  </div>
 
 </form>
 </body>
