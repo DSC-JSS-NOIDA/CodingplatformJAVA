@@ -107,11 +107,10 @@
 
   <div>
 <h1>RESULT STATUS</h1>
-
- <h4>message=${message}</h4><BR>
- <h4>status=${status}</h4><BR>
- <h4>stdout=${stdout}</h4><BR>
-  <h4>${verify}</h4><BR>
+ <h5>message=${message}</h5><br>
+ <h5>status=${status}</h5><BR>
+ <h5>stdout=${stdout}</h5><BR>
+  <h5>${verify}</h5><BR>
   </div>
 
 </form>
