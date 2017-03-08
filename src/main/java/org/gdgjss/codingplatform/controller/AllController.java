@@ -328,7 +328,7 @@ public class AllController {
 	            	   z=z+((char)j);    
 	               fr.close();  
 	               System.out.println("output path--- \n"+z);
-	   	        
+	   	         
 	             /*
 	              * code to read the output file from the path provided
 	              * from above code 
