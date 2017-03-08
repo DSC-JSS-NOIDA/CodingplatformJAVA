@@ -151,7 +151,7 @@ public class AllController {
 			String quesid = requestParams.get("qid");
         	 System.out.println(language);        
         	 System.out.println(code);
-        	 String inputpath="",outputpath="",y=""; 
+        	 String inputpath="",outputpath="",y="",z=""; 
         	
         /*
          * to encode source code in utf 8 , as java uses by default utf-16
@@ -222,7 +222,7 @@ public class AllController {
 		    * 
 		    * add other available parameter for TLE, size etc etc
 		    */   
-	        String urlParameters = "source="+urlencode+"&lang=JAVA&input="+y+"&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
+	        String urlParameters = "source="+urlencode+"&lang="+language+"&input="+y+"&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
 	        
 	        // Send post request
 	        con.setDoOutput(true); 
@@ -245,7 +245,7 @@ public class AllController {
 	        String respLine=in.readLine();
 	        System.out.println("JSON response --->>>");
 	        System.out.println(respLine);
-	        String message="",stdOut="",status="";  //declaring variables for outputs of api
+	        String message="",stdOut="",status="",htmlOutput="";  //declaring variables for outputs of api
 	        
 	        /*
 	         * use try catch in this code below 
@@ -278,6 +278,8 @@ public class AllController {
 	          	if(json.has("run_status")){
 	          	JSONObject resultObject=json.getJSONObject("run_status");
 	          	status=resultObject.getString("status");
+	          	htmlOutput=resultObject.getString("output_html");
+	          	
 	          	if(resultObject.has("output"))
 	          	stdOut=resultObject.getString("output");
 	         
@@ -308,16 +310,32 @@ public class AllController {
 	            	System.out.println(message);
 	            	System.out.println(status);
 	            	System.out.println(stdOut);
-	             
+	            	System.out.println(htmlOutput);
+
+	        	  
+	        	    
 	        	
 	             System.out.println(outputpath);   //output file path
 	             
 	             /*
-	              * code to read the output file from the path provided
-	              * from above code
+	              * Reading OutPut text case file
+	              * using BufferReader
 	              */
 	             
-	             StringBuilder sb =new StringBuilder();
+	             FileReader file=new FileReader(outputpath);    
+	               int j;    
+	               while((j=file.read())!=-1)    
+	            	   z=z+((char)j);    
+	               fr.close();  
+	               System.out.println("output path--- \n"+z);
+	   	        
+	             /*
+	              * code to read the output file from the path provided
+	              * from above code 
+	              * by using buffer reader
+	              */
+	             
+	            /* StringBuilder sb =new StringBuilder();
 	         	BufferedReader file = new BufferedReader(new FileReader(outputpath));
 				
  					while ( (z = file.readLine()) != null ) {
@@ -327,18 +345,32 @@ public class AllController {
  					     sb.append("\n");
  					    
  					}
-	        	    Gson gson=new Gson();
-	        	    String jsons = gson.toJson(sb);
-	        	    String out="["+jsons+"]";
-	        	    System.out.println(out);
+ 					   
+ 					/*
+ 					 * code for converting output text file to json
+ 					 * for use with hackerrRank API
+ 					 */
+//	            
+//	        	    Gson gson=new Gson();
+//	        	    String jsons = gson.toJson(z);
+//	        	    String out="["+jsons+"]";
+//	        	    System.out.println(out);
+//	        	    
+	        	    
+	        	    
  					/*
  					 * code to check the output of api with text file
  					 * 
  					 */
  					
- 					if(out.equals(stdOut))
+ 					if(z.equals(stdOut))
  					{ 
- 						   java.util.List marks;
+ 						   System.out.println("output matched");
+ 						   /*
+ 						    * java.util.List marks;
+ 						    * 
+ 						    * code to be changed as the score will be updated in submissions table
+ 						    
 					       String t="";
                            String score;
 					       Query queryResult = session.createQuery("from Userdet");			       
