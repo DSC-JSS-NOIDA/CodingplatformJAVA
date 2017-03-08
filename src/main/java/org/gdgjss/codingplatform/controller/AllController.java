@@ -296,6 +296,13 @@ public class AllController {
 //	          	    	stdOut=resultObject.getString("stdout");
 //	          	       
 //	          	    }
+	          	if(responseCode==403||status.equals(""))
+	          	{
+	          		ModelAndView model=new ModelAndView("Errorpage");
+	          		model.addObject("code", code);
+	          		return model;
+	          	}
+	          	
 	          	
 	          	else{
 	          		message="not avilable";
