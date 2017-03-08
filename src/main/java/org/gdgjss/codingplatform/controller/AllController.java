@@ -468,17 +468,14 @@ public class AllController {
            String SampleTestCase="";
 	       id=requestParams.get("id");
 	      
-           List<Questions> ques = session.createCriteria(Questions.class).list();
-           for(Questions a:ques)
-   		{   
-   			b=b+a.getQuesid();
-   			if(b.equals(id)){
+	       Questions a= (Questions) session.get(Questions.class,Integer.parseInt(id));
+   			
    			    Question=a.getDetail(); 
    	            Constraint =a.getConstraints();
    	            InputFormat=a.getInputformat();
    	            SampleTestCase=a.getSampletestcase();
-   			}
-   		}
+   			
+   		
            model.addObject("quesid",id);
            model.addObject("Question", Question);
            model.addObject("Constraint", Constraint);
@@ -486,6 +483,7 @@ public class AllController {
            model.addObject("SampleTestCase", SampleTestCase);
            model.addObject("Teamname",team_name);
            model.addObject("email",email);
+           System.out.println(Question);
 	    }
 	       else {
 	    	   model= new ModelAndView("index");

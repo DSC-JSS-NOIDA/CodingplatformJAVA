@@ -8,10 +8,7 @@
   <meta charset="UTF-8">
   <title>quespage</title>
   <style type="text/css" media="screen">
-    body {
-        overflow: hidden;
-    }
-    
+  
     #editor { 
         margin: 0;
         position: absolute;
@@ -102,16 +99,13 @@
 
     
 <input type=hidden value="${quesid}" name=qid><br>
-
-
-
-  <div>
+ <div>
 <h1>RESULT STATUS</h1>
 
- <h4>message=${message}</h4><BR>
- <h4>status=${status}</h4><BR>
- <h4>stdout=${stdout}</h4><BR>
-  <h4>${verify}</h4><BR>
+ <h5>message=${message}</h5>
+  <h5>status=${status}</h5>
+ <h5>stdout=${stdout}</h5>
+  <h5>${verify}</h5>
   </div>
 
 </form>

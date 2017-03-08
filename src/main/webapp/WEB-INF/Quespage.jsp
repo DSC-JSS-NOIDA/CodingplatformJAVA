@@ -8,9 +8,7 @@
   <meta charset="UTF-8">
   <title>quespage</title>
   <style type="text/css" media="screen">
-    body {
-        overflow: hidden;
-    }
+   
     
     #editor { 
         margin: 0;
@@ -43,29 +41,29 @@
 </div>
 <br>
 
-<p>TEAM NAME-${Teamname}</p>
+<p><font size="4px">TEAM NAME</font>-${Teamname}</p>
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-    Question :${Question}  <br /><br />
+    <b>Question</b> :${Question}  <br /><br />
     </div>
 </div>
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-	Constraint :${Constraint}
+	<b>Constraint </b>:${Constraint}
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-	Input Format:${InputFormat} <br>
+	<b>Input Format</b>:${InputFormat} <br>
 	</div>
 </div>
 
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
-	Sample Test Case:${SampleTestCase} 
+	<b>Sample Test Case</b>:${SampleTestCase} 
 	</div>
 </div> 
 <br>
