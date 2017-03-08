@@ -102,10 +102,12 @@
  <div>
 <h1>RESULT STATUS</h1>
 
+
  <h5>message=${message}</h5>
   <h5>status=${status}</h5>
  <h5>stdout=${stdout}</h5>
   <h5>${verify}</h5>
+
   </div>
 
 </form>
