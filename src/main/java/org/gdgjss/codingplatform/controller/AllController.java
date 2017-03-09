@@ -50,6 +50,7 @@ public class AllController {
 	@Autowired
 	private SessionFactory sessionFactory;
 	private Userdet userdet;
+	private Question question;
 	
 //	private String HACKERRANK_API_CREDENTIALS= "hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86"; 
 
@@ -449,6 +450,29 @@ public class AllController {
 	/*
 	 * code for admin login
 	 */
+	
+	@RequestMapping(value = "/addques", method = RequestMethod.POST)
+	public ModelAndView addques(@ModelAttribute("question")
+				org.gdgjss.codingplatform.models.Questions question){
+		Session session = sessionFactory.openSession();
+		ModelAndView model = new ModelAndView("index");
+		if(session.get(Questions.class, question.getQuesid()) == null)
+		{
+			session.beginTransaction();
+			session.save(question);
+			session.getTransaction().commit();
+			session.close();
+			System.out.println(question.getQuesid());
+			model.addObject("invalid", "Successfully added question");
+			
+		}
+		else
+			
+			model.addObject("invalid", "This question is alredy added");
+		
+		return model;
+	
+	}
 	
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)

@@ -3,8 +3,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>admin pannel</title>
+
+</head>
+<body>
+welcome ${name}<br>
+
+<select name=opt onchange="task_func()" id=frm_task value="select">
+		<option selected="selected">select</option>
+		<option value="0">add user</option>
+		<option value="1">edit user</option>
+		<option value="2">delete user</option>
+		<option value="3">view all user</option>
+		<option value="4">add ques</option>
+		<option value="5">del ques</option>
+		<option value="6">edit ques</option	>
+		<option value="7">view all ques</option>
+		<option value="8">edit submision</option>
+		<option value="9">view submission</option>
+</select>
+<br>
+
+
+ADD QUESTIONS
+ 
+<div>
+         <form name=frm action="addques" method="post">
+         
+          <h2>enter question id:<input type="text" name="quesid"></h2>
+          <h2>enter title<input type="text" name=title></h2>
+          <h2>enter detail</h2><textarea name="detail"></textarea><br>
+                   
+          <h2>enter constraints</h2><textarea name="constraints"></textarea><br>
+         <h2> enter input  format</h2><textarea name="inputformat"></textarea><br> 
+          <h2>enter output format  format</h2><textarea name="outputformat"></textarea><br>
+          <h2>enter sampletestcase</h2><textarea name="sampletestcase"></textarea><br>
+          <h2>enter out file path<input type="text" name="outputfilepath"></h2>
+          <h2>enter input  file path<input type="text" name="inputfilepath"></h2>
+          
+         <input type="submit">
+          </form>
+</div>
+
+
+
+</body>
 <script>
 function task_func(){
 	var task=document.getElementById("frm_task").value;
@@ -57,79 +102,38 @@ default:
 }
 }
 </script>
-</head>
-<body>
-welcome ${name}<br>
 
-<select name=opt onchange="task_func()" id=frm_task value="select">
-<option selected="selected">select</option>
-<option value="0">add user</option>
-<option value="1">edit user</option>
-<option value="2">delete user</option>
-<option value="3">view all user</option>
-<option value="4">add ques</option>
-<option value="5">del ques</option>
-<option value="6">edit ques</option>
-<option value="7">view all ques</option>
-<option value="8">edit submision</option>
-<option value="9">view submission</option>
-</select>
-
-<div id=task_form>
-</div>
-<div hidden id=adduser> 
-								<h1>add user</h1>
-               					<form name=userctrl action=add_user method=post>
-                				enter new user email<input type=text name=email><br>
-                				<input type=submit>
-
-								</form>
-</div>
-<div hidden id="edituser">
-<h1>edit user</h1>
-<form name=userctrl action=edituser method=post>
-
-enter admno<input type=text name=admno><br>
-
-<input type=submit>
-
-</form>
-</div>
-           <div hidden id="edituser">
-           <h1>delete user</h1>
-           <form name=userctrl action=deluser method=post>
-           enter email<input type=text name=email><br>
-           <input type=submit>
-           </form>
-           </div>
-<div>
-ADD QUESTIONS
- 
-
-         <form name=frm action=addques method=post enctype='multipart/form-data'>
-          enter title<textarea name=title></textarea><br>
-          enter detail<textarea name=detail></textarea><br>
-          enter constraints<textarea name=const></textarea><br>
-          enter input  format<textarea name=inp_format></textarea><br>
-         
-          enter sampletestcase<textarea name=sample_testcase></textarea><br>
-          enter input test case<textarea name=inp_testcase></textarea><br>
-          enter output test case<textarea name=op_testcase></textarea><br>
-          upload test case file<input type=file name=file>
-           <br>
-         <input type=submit>
-          </form>
-</div>
-
-<div>
-EDIT QUESTION
-<br>
-       <form name=frm3 action=edit_ques method=post>
-        enter ques id<input type=text name=id>
-          <br>
-          <input type=submit>
-       </form>
-</div>
-
-</body>
+ <script>
+          CKEDITOR.replace( 'detail', {
+  			width: '70%',
+  			height: 50
+  		} );
+            
+        </script>
+        <script>
+          CKEDITOR.replace( 'constraints', {
+  			width: '70%',
+  			height: 50
+  		} );
+          </script>
+          <script>
+          CKEDITOR.replace( 'inputformat', {
+    			width: '70%',
+    			height: 50
+    		} );
+            </script>
+            <script>
+           
+          CKEDITOR.replace( 'outputformat', {
+    			width: '70%',
+    			height: 50
+    		} );
+            </script>
+         <script> 
+          CKEDITOR.replace( 'sampletestcase', {
+    			width: '70%',
+    			height: 50
+    		} );
+            
+        </script> 
 </html>

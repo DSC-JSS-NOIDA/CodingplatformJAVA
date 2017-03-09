@@ -4,9 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 @Entity
+@Table(
+		   name = "Questions", 
+		   uniqueConstraints = {@UniqueConstraint(columnNames = {"quesid"})}
+		)
 public class Questions {
-	@Id @GeneratedValue
+	@Id 
 	int quesid;
 	 
 	private String title;
@@ -24,8 +30,14 @@ public class Questions {
 	private String outputfilepath;
 	private String inputfilepath;
 	
-	public Questions(){}	
 	
+	
+	public int getQuesid() {
+		return quesid;
+	}
+	public void setQuesid(int quesid) {
+		this.quesid = quesid;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -50,13 +62,18 @@ public class Questions {
 	public void setInputformat(String inputformat) {
 		this.inputformat = inputformat;
 	}
+	public String getOutputformat() {
+		return outputformat;
+	}
+	public void setOutputformat(String outputformat) {
+		this.outputformat = outputformat;
+	}
 	public String getSampletestcase() {
 		return sampletestcase;
 	}
 	public void setSampletestcase(String sampletestcase) {
 		this.sampletestcase = sampletestcase;
 	}
-	
 	public String getOutputfilepath() {
 		return outputfilepath;
 	}
@@ -69,29 +86,9 @@ public class Questions {
 	public void setInputfilepath(String inputfilepath) {
 		this.inputfilepath = inputfilepath;
 	}
-	public int getQuesid() {
-		return quesid;
-	}
-	public void setQuesid(int quesid) {
-		this.quesid = quesid;
-	}
-	public String getOutputformat() {
-		return outputformat;
-	}
+	
 
-	public void setOutputformat(String outputformat) {
-		this.outputformat = outputformat;
-	}
 	
-	public Questions(String title,String detail,String constraints,String inputformat,String sampletestcase,String inputtestcase,String outputtestcase,String path){
-		super();
-	
-		this.title=title;
-		this.detail=detail;
-		this.constraints=constraints;
-		this.inputformat=inputformat;
-		this.sampletestcase=sampletestcase;
-		
-			}
-	
+
+
 }
