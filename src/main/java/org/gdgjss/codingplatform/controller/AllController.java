@@ -296,6 +296,11 @@ public class AllController {
 //	          	    	stdOut=resultObject.getString("stdout");
 //	          	       
 //	          	    }
+	          	/**
+	          	 * @author  singhal
+	          	 * code for error handling
+	          	 * 
+	          	 */
 	          	if(responseCode==403||status.equals(""))
 	          	{
 	          		ModelAndView model=new ModelAndView("Errorpage");
@@ -472,6 +477,8 @@ public class AllController {
 	       String Question=""; 
            String Constraint ="";
            String InputFormat="";
+           String OutPutFormat;
+           String title;
            String SampleTestCase="";
 	       id=requestParams.get("id");
 	      
@@ -481,15 +488,18 @@ public class AllController {
    	            Constraint =a.getConstraints();
    	            InputFormat=a.getInputformat();
    	            SampleTestCase=a.getSampletestcase();
-   			
-   		
+   			    OutPutFormat=a.getOutputformat();
+   		        title=a.getTitle();
+   			    
            model.addObject("quesid",id);
+           model.addObject("Title",title);
            model.addObject("Question", Question);
            model.addObject("Constraint", Constraint);
            model.addObject("InputFormat", InputFormat);
            model.addObject("SampleTestCase", SampleTestCase);
            model.addObject("Teamname",team_name);
            model.addObject("email",email);
+           model.addObject("OutputFormat",OutPutFormat);
            System.out.println(Question);
 	    }
 	       else {

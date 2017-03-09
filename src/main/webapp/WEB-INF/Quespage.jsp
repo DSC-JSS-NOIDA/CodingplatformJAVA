@@ -42,10 +42,26 @@
 <br>
 
 <p><font size="4px">TEAM NAME</font>-${Teamname}</p>
+
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+    <b>Title</b> :${Title}  <br /><br />
+    </div>
+</div>
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
     <b>Question</b> :${Question}  <br /><br />
     </div>
+</div>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+	<b>Input Format</b>:${InputFormat} <br>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+	<b>Output Format</b>:${OutputFormat} <br>
+	</div>
 </div>
 
 <div class="row">
@@ -54,11 +70,7 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
-	<b>Input Format</b>:${InputFormat} <br>
-	</div>
-</div>
+
 
 
 <div class="row">

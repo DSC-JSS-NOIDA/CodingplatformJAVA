@@ -14,9 +14,13 @@ public class Questions {
 	private String detail;
 	@Lob
 	private String constraints;
+	@Lob
 	private String inputformat;
 	@Lob
+	private String outputformat;
+	@Lob
 	private String sampletestcase;
+	
 	private String outputfilepath;
 	private String inputfilepath;
 	
@@ -70,6 +74,13 @@ public class Questions {
 	}
 	public void setQuesid(int quesid) {
 		this.quesid = quesid;
+	}
+	public String getOutputformat() {
+		return outputformat;
+	}
+
+	public void setOutputformat(String outputformat) {
+		this.outputformat = outputformat;
 	}
 	
 	public Questions(String title,String detail,String constraints,String inputformat,String sampletestcase,String inputtestcase,String outputtestcase,String path){
