@@ -240,6 +240,18 @@ public class AllController {
 	        System.out.println("\nSending 'POST' request to URL : " + url);
 	        System.out.println("Post parameters : " + urlParameters);
 	        System.out.println("Response Code : " + responseCode);
+	        
+	       /**
+	        * @author singhal 
+	        * code for exception handling of incomplete post request
+	        * due to internet connectivity problem
+	        */
+	        if(responseCode==403)
+          	{
+          		ModelAndView model=new ModelAndView("Errorpage");
+          		model.addObject("code", code);
+          		return model;
+          	}
 
 	        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 	        
@@ -297,17 +309,7 @@ public class AllController {
 //	          	    	stdOut=resultObject.getString("stdout");
 //	          	       
 //	          	    }
-	          	/**
-	          	 * @author  singhal
-	          	 * code for error handling
-	          	 * 
-	          	 */
-	          	if(responseCode==403||status.equals(""))
-	          	{
-	          		ModelAndView model=new ModelAndView("Errorpage");
-	          		model.addObject("code", code);
-	          		return model;
-	          	}
+	          
 	          	
 	          	
 	          	else{
