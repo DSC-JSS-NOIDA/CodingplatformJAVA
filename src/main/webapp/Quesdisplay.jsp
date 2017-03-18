@@ -16,7 +16,7 @@
 SELECT * from questions;  
 </sql:query>  
    
-<table border="2" width="100%">  
+<table >  
 <tr>  
 <th><a href="#">TITLES</a></th>
 </tr>  
