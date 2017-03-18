@@ -14,11 +14,11 @@
 		<form name=logondet method=post action=adminverify>
 			<div>
 				<label for="username">Enter your user id : </label> <input
-					type="text" id="username" required>
+					type="text" id="username" name="id" required>
 			</div>
 			<div>
 				<label for="pass">Enter password : </label> <input type="password"
-					id="pass" required>
+					id="pass" name="pass" required>
 			</div>
 
 			<button type="submit">Submit</button>
