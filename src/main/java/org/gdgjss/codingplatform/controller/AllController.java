@@ -123,8 +123,8 @@ public class AllController {
 	 */
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(HttpSession httpSession, @RequestParam("email") String emailid,
-			@RequestParam("password") String password) {
+	public ModelAndView login(HttpSession httpSession, @RequestParam("id") String emailid,
+			@RequestParam("pass") String password) {
 		ModelAndView model;
 		Session session = sessionFactory.openSession();
 		userdet = (Userdet) session.get(Userdet.class, emailid);

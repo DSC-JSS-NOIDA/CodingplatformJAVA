@@ -22,7 +22,7 @@
 <body>
 	<nav>
 		<div class="nav-wrapper blue darken-1">
-			<a href="#" class="brand-logo" style="margin-left: 30px;">Crack In the Shell</a>
+			<a href="#" class="brand-logo" style="margin-left: 30px;">Code In Less</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="#">Home</a></li>
 				<li><a href="#">Dashboard</a></li>
