@@ -86,11 +86,11 @@
 								for="participant2_roll">Participant 2 roll number</label>
 						</div>
 						<div class="input-field col s10 offset-s1">
-							<input type="text" name="email" id="email" required> <label
-								for="email">Email</label>
+							<input type="text" name="emailid" id="email" required> <label
+								for="email">Email</label> 
 						</div>
 						<div class="input-field col s10 offset-s1">
-							<input type="text" name="contact" id="contact" required>
+							<input type="text" name="contactno" id="contact" required>
 							<label for="contact">Contact</label>
 						</div>
 						<div class="input-field col s10 offset-s1">
