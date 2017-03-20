@@ -66,47 +66,6 @@ public class AllController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexpage() {
 		
-		
-		
-		//String correspondingQuesMark="ques1_JAVA";
-		//String correspondingQuesLength="ques1_JAVA_l";
-		//Session session = sessionFactory.openSession();
-		//Result res = (Result) session.get(Result.class, "shasha@grey.com");
-		//String hql="SELECT "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
-		//String hql="SELECT email , "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
-		
-		//String hql="UPDATE Result R set "+ correspondingQuesLength+" = "+1000000+" WHERE R.email = 'sss@hh.com'";
-		//String hql="SELECT min("+ correspondingQuesLength + ") FROM Result R";
-		//String hql= "SELECT"+" ques1_JAVA_l"+" FROM Result R WHERE R.email = 'shasha@grey.com' ";
-		//System.out.println("HQL is --->>>");
-		//System.out.println(hql);
-		
-		//Query query = session.createQuery(hql);
-		//int rr=query.executeUpdate();
-		//List<Object> r =(List<Object>) query.list();
-		//Iterator itr = r.iterator();
-		
-		//System.out.println("YAHI HHHHHH -------- >>>>");
-		
-		
-		
-		/*while(itr.hasNext()){
-			   Object[] obj = (Object[]) itr.next();
-			   //now you have one array of Object for each row
-			   String client = String.valueOf(obj[0]);
-			   Integer marks = Integer.parseInt(String.valueOf(obj[1]));
-			   Integer length = Integer.parseInt(String.valueOf(obj[2]));
-			   System.out.println(client + " "+marks +"  "+ length);
-			   //SERVICE assumed as int
-			   //same way for all obj[2], obj[3], obj[4]
-			}*/
-		//System.out.println(rr);
-		/*for(int i=0; i<r.size();i++)
-		{
-			System.out.println(((Fetch)r.get(i)).getCorresponding_length());
-		}
-		*/  //  System.out.println(r.get(0));
-		//session.close();
 		ModelAndView model = new ModelAndView("index");
 		return model;
 	}
@@ -415,7 +374,7 @@ public class AllController {
 			verify = "output matched";
 			
 			
-			System.out.println("-----------------------------------here-----------------------");
+			System.out.println("-----------------------------------calculation begins here-----------------------");
 			 session = sessionFactory.openSession();
 			
 			/**
@@ -519,19 +478,6 @@ public class AllController {
 			
 			session.close();
 			
-			/*	String correspondingQues="ques1_JAVA";
-			String correspondingQuesLength="ques1_JAVA_l";
-			Session session = sessionFactory.openSession();
-			Result res = (Result) session.get(Result.class, "shasha@grey.com");
-			String hql= "SELECT"+" ques1_JAVA_l"+" FROM Result R WHERE R.email = 'shasha@grey.com' ";
-			System.out.println("HQL is --->>>");
-			System.out.println(hql);
-			
-			Query query = session.createQuery(hql);
-			List r = query.list();
-			System.out.println("YAHI HHHHHH -------- >>>>");
-			    System.out.println(r.get(0));
-			*/
 		
 		} else {
 			System.out.println("outputs not matched");
@@ -565,6 +511,7 @@ public class AllController {
 		return model;
 
 	}
+	
 	/*
 	 * code for admin login
 	 */
@@ -1036,3 +983,45 @@ public class AllController {
 // return "new_user";
 //
 // }
+
+
+// code from index controller-----------------------------------------------------
+//String correspondingQuesMark="ques1_JAVA";
+//String correspondingQuesLength="ques1_JAVA_l";
+//Session session = sessionFactory.openSession();
+//Result res = (Result) session.get(Result.class, "shasha@grey.com");
+//String hql="SELECT "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
+//String hql="SELECT email , "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
+
+//String hql="UPDATE Result R set "+ correspondingQuesLength+" = "+1000000+" WHERE R.email = 'sss@hh.com'";
+//String hql="SELECT min("+ correspondingQuesLength + ") FROM Result R";
+//String hql= "SELECT"+" ques1_JAVA_l"+" FROM Result R WHERE R.email = 'shasha@grey.com' ";
+//System.out.println("HQL is --->>>");
+//System.out.println(hql);
+
+//Query query = session.createQuery(hql);
+//int rr=query.executeUpdate();
+//List<Object> r =(List<Object>) query.list();
+//Iterator itr = r.iterator();
+
+//System.out.println("YAHI HHHHHH -------- >>>>");
+
+
+
+/*while(itr.hasNext()){
+	   Object[] obj = (Object[]) itr.next();
+	   //now you have one array of Object for each row
+	   String client = String.valueOf(obj[0]);
+	   Integer marks = Integer.parseInt(String.valueOf(obj[1]));
+	   Integer length = Integer.parseInt(String.valueOf(obj[2]));
+	   System.out.println(client + " "+marks +"  "+ length);
+	   //SERVICE assumed as int
+	   //same way for all obj[2], obj[3], obj[4]
+	}*/
+//System.out.println(rr);
+/*for(int i=0; i<r.size();i++)
+{
+	System.out.println(((Fetch)r.get(i)).getCorresponding_length());
+}
+*/  //  System.out.println(r.get(0));
+//session.close();
