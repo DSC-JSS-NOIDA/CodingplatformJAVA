@@ -18,12 +18,11 @@ import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.gdgjss.codingplatform.models.Questions;
 import org.gdgjss.codingplatform.models.Userdet;
 import org.gdgjss.codingplatform.models.Result;
-
-
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
+import org.hibernate.criterion.Order;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,29 +68,29 @@ public class AllController {
 		
 		
 		
-		String correspondingQuesMark="ques1_JAVA";
-		String correspondingQuesLength="ques1_JAVA_l";
-		Session session = sessionFactory.openSession();
-		Result res = (Result) session.get(Result.class, "shasha@grey.com");
+		//String correspondingQuesMark="ques1_JAVA";
+		//String correspondingQuesLength="ques1_JAVA_l";
+		//Session session = sessionFactory.openSession();
+		//Result res = (Result) session.get(Result.class, "shasha@grey.com");
 		//String hql="SELECT "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
-		String hql="SELECT email , "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
+		//String hql="SELECT email , "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
 		
 		//String hql="UPDATE Result R set "+ correspondingQuesLength+" = "+1000000+" WHERE R.email = 'sss@hh.com'";
 		//String hql="SELECT min("+ correspondingQuesLength + ") FROM Result R";
 		//String hql= "SELECT"+" ques1_JAVA_l"+" FROM Result R WHERE R.email = 'shasha@grey.com' ";
-		System.out.println("HQL is --->>>");
-		System.out.println(hql);
+		//System.out.println("HQL is --->>>");
+		//System.out.println(hql);
 		
-		Query query = session.createQuery(hql);
+		//Query query = session.createQuery(hql);
 		//int rr=query.executeUpdate();
-		List<Object> r =(List<Object>) query.list();
-		Iterator itr = r.iterator();
+		//List<Object> r =(List<Object>) query.list();
+		//Iterator itr = r.iterator();
 		
-		System.out.println("YAHI HHHHHH -------- >>>>");
+		//System.out.println("YAHI HHHHHH -------- >>>>");
 		
 		
 		
-		while(itr.hasNext()){
+		/*while(itr.hasNext()){
 			   Object[] obj = (Object[]) itr.next();
 			   //now you have one array of Object for each row
 			   String client = String.valueOf(obj[0]);
@@ -100,14 +99,14 @@ public class AllController {
 			   System.out.println(client + " "+marks +"  "+ length);
 			   //SERVICE assumed as int
 			   //same way for all obj[2], obj[3], obj[4]
-			}
+			}*/
 		//System.out.println(rr);
 		/*for(int i=0; i<r.size();i++)
 		{
 			System.out.println(((Fetch)r.get(i)).getCorresponding_length());
 		}
 		*/  //  System.out.println(r.get(0));
-		session.close();
+		//session.close();
 		ModelAndView model = new ModelAndView("index");
 		return model;
 	}
@@ -554,13 +553,15 @@ public class AllController {
 		return model;
 	}
 
-	@RequestMapping(value = "/leaderboard", method = RequestMethod.POST)
+	@RequestMapping(value = "/leaderboard", method = RequestMethod.GET)
 	public ModelAndView leaderboard(HttpSession httpSession) {
 		ModelAndView model = new ModelAndView("leaderboard");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		List<Userdet> user = session.createCriteria(Userdet.class).list();
-		model.addObject("user", user);
+		Criteria c=session.createCriteria(Result.class);
+		c.addOrder(Order.desc("total"));
+		List<Result> result = c.list();
+		model.addObject("resultRows", result);
 		return model;
 
 	}
