@@ -35,7 +35,7 @@
 <nav>
 
 
-<a href=#>leader board</a>
+<a href="leaderboard">leader board</a>
 <a href=#>logout</a>
 </nav>
 </div>
