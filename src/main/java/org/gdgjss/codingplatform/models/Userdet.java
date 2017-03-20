@@ -1,5 +1,6 @@
 package org.gdgjss.codingplatform.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,14 +24,15 @@ public class Userdet {
 		private String emailid;
 		private String contactno;
 		private String password;
-		private String score;
+		@Column(columnDefinition = "int default -99")
+		private int score;
 		
 		
 		
-		public String getScore() {
+		public int getScore() {
 			return score;
 		}
-		public void setScore(String score) {
+		public void setScore(int score) {
 			this.score = score;
 		}
 		public String getPassword() {
