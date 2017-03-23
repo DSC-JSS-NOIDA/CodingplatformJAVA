@@ -505,6 +505,20 @@ public class AllController {
 		 * 
 		 * sending data to Questionpage
 		 */
+		
+		
+		switch(status){
+			case "AC": status="NO COMPILATION ERROR";
+			            break;
+			case "CE": status="COMPILATION ERROR";
+						break;
+			case "TLE": status="TIME LIMIT EXCEED";
+						break;
+			case " ":   status="RUNTIME ERROR";
+			 			break;
+			case "RE":  status="RUNTIME ERROR";
+			            break;
+			}
 		ModelAndView model = new ModelAndView("ResultPage");
 		model.addObject("message", message);
 		model.addObject("status", status);
