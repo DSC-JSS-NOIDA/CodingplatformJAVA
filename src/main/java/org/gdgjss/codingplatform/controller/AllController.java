@@ -79,7 +79,7 @@ public class AllController {
 	 */
 	
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView LogoutController(HttpSession httpSession) {
 		httpSession.invalidate();
 		ModelAndView model = new ModelAndView("index");
