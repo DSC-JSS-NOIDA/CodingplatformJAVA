@@ -69,6 +69,23 @@ public class AllController {
 		ModelAndView model = new ModelAndView("index");
 		return model;
 	}
+	
+	/**
+	 * 
+	 * controller for session logout
+	 * @author sarthak
+	 * @param httpSession
+	 * @return
+	 */
+	
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public ModelAndView LogoutController(HttpSession httpSession) {
+		httpSession.invalidate();
+		ModelAndView model = new ModelAndView("index");
+		model.addObject("invalid","successfully logged out");
+		return model;
+	}
 
 	/**
 	 * 
@@ -606,6 +623,19 @@ public class AllController {
 		} else {
 			return new ModelAndView("err");
 		}
+		return model;
+	}
+	
+	/**
+	 * controller for rules page
+	 * @author sarthak
+	 * @return
+	 */
+	
+	@RequestMapping(value = "/rules", method = RequestMethod.GET)
+	public ModelAndView RulesPage() {
+		
+		ModelAndView model = new ModelAndView("rulespage");
 		return model;
 	}
 }
