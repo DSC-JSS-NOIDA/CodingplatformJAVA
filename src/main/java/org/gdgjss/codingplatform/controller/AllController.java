@@ -652,7 +652,12 @@ public class AllController {
 		ModelAndView model = new ModelAndView("rulespage");
 		return model;
 	}
-	
+	/**
+	 * controller for dashboard to view ques list
+	 * 
+	 * @author sarthak
+	 * @return
+	 */
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public ModelAndView dashboard() {
 		
