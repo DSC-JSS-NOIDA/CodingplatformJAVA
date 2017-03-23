@@ -652,6 +652,13 @@ public class AllController {
 		ModelAndView model = new ModelAndView("rulespage");
 		return model;
 	}
+	
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard() {
+		
+		ModelAndView model = new ModelAndView("dashboard");
+		return model;
+	}
 }
 
 
