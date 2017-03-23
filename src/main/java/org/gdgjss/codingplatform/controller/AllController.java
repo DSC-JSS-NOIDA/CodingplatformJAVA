@@ -659,9 +659,21 @@ public class AllController {
 	 * @return
 	 */
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-	public ModelAndView dashboard() {
-		
-		ModelAndView model = new ModelAndView("dashboard");
+	public ModelAndView dashboard(HttpSession httpSession) {
+		ModelAndView model;
+		Session session = sessionFactory.openSession();
+		if((String) httpSession.getAttribute("SESSION_email")==null){
+		 model = new ModelAndView("dashboard");
+		model.addObject("TeamName", userdet.getTeam_name());
+		List<Questions> ques = session.createCriteria(Questions.class).list();
+		model.addObject("ques", ques);
+	
+		}
+		else
+		{
+			model=new ModelAndView("index");
+			model.addObject("invalid","LOG IN FORST TO CONTINUE");
+		}
 		return model;
 	}
 }
