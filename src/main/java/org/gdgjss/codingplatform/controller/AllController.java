@@ -662,7 +662,7 @@ public class AllController {
 	public ModelAndView dashboard(HttpSession httpSession) {
 		ModelAndView model;
 		Session session = sessionFactory.openSession();
-		if((String) httpSession.getAttribute("SESSION_email")==null){
+		if((String) httpSession.getAttribute("SESSION_email")!=null){
 		 model = new ModelAndView("dashboard");
 		model.addObject("TeamName", userdet.getTeam_name());
 		List<Questions> ques = session.createCriteria(Questions.class).list();
