@@ -31,22 +31,33 @@
 		</ul>
 	</div>
 	</nav>
-
-	<div id="ques" class="z-depth-1" align="center">
-		<h2>RULES</h2>
-		<div id="rules" style="">
-			<p>1. Establishing SSL connection without server's identity
-				verification is not recommended.</p>
-			<p>2. Establishing SSL connection without server's identity
-				verification is not recommended.</p>
-			<p>3. Establishing SSL connection without server's identity
-				verification is not recommended.</p>
-			<p>4. Establishing SSL connection without server's identity
-				verification is not recommended.</p>
-			<p>4. Establishing SSL connection without server's identity
-				verification is not recommended.</p>
+	<div id="main">
+		<div id="ques" class="z-depth-1" align="center">
+			<h2>RULES</h2>
+			<div id="rules" style="">
+				<p>1. Establishing SSL connection without server's identity
+					verification is not recommended.</p>
+				<p>2. Establishing SSL connection without server's identity
+					verification is not recommended.</p>
+				<p>3. Establishing SSL connection without server's identity
+					verification is not recommended.</p>
+				<p>4. Establishing SSL connection without server's identity
+					verification is not recommended.</p>
+				<p>4. Establishing SSL connection without server's identity
+					verification is not recommended.</p>
+			</div>
 		</div>
 	</div>
+	
+	<footer class="page-footer blue darken-1" style="padding-top: 0px;">
+	<div class="footer-copyright">
+		<div class="container">
+			© 2017 Copyright <a target="_blank"
+				class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDS
+				JSS Noida </a>
+		</div>
+	</div>
+	</footer>
 </body>
 <style>
 body {

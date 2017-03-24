@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,8 +22,43 @@
 <title>Error</title>
 </head>
 <body>
-<h1>SERVER PROBLEM TRY SUBMITTING AGAIN</h1>
-CODE:${code}
+	<nav>
+	<div class="nav-wrapper blue darken-1">
+		<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
+			In Less}</a>
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li><a href="dashboard">Dashboard</a></li>
+			<li><a href="rules">Rules</a></li>
+			<li><a href="leaderboard">Leaderboard</a></li>
+			<li><a href="logout">Log Out</a></li>
+		</ul>
+	</div>
+	</nav>
 
+	<div id="main">
+		<div id="ques">
+			<h5>SERVER PROBLEM TRY SUBMITTING AGAIN</h5>
+			<p>CODE : ${code}</p>
+		</div>
+	</div>
+
+	<footer class="page-footer blue darken-1" style="padding-top: 0px;">
+	<div class="footer-copyright">
+		<div class="container">
+			© 2017 Copyright <a target="_blank"
+				class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDS
+				JSS Noida </a>
+		</div>
+	</div>
+	</footer>
 </body>
+<style>
+#ques {
+	background: rgba(255, 255, 255, .3);
+	padding: 10px;
+	border-radius: 3px;
+	width: 820px;
+	margin: 30px auto;
+}
+</style>
 </html>

@@ -3,10 +3,23 @@ body {
 	/* 	background-image: linear-gradient(60deg, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
  */
 	background-image: linear-gradient(155deg, #eff4fb 0%, #c3cfe2 100%);
-	background-size: cover; 
+	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-attachment: fixed;
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+#main {
+	flex: 1 0 auto;
+	margin-bottom: 15px;
+}
+
+footer {
+	width: 100%;
+	padding-top: 0px;
 }
 
 #brand {

@@ -28,9 +28,10 @@
 	</nav>
 	<!-- <h5 style="color: red;" class="left-align"></h5> -->
 	<div id="snackbar">${invalid}${norecord}</div>
-	<div class="row " style="height:100%;min-height:563px;">
+	<div id="main "
+		style="height: 100%; min-height: 534px; width: 700px; margin: 0 auto;">
 		<div class="card col s6 offset-s3"
-			style="background: rgba(255, 255, 255, .5);margin-top:20px;">
+			style="background: rgba(255, 255, 255, .5); margin-top: 20px; padding: 20px;">
 			<div class="card-content" align="center">
 				<p style="font-size: 30px; color: #0572d2;">GET STARTED</p>
 			</div>
@@ -44,7 +45,7 @@
 				</ul>
 			</div>
 			<div class="card-content " id="cards"
-				style="background: rgba(255, 255, 255, .5);">
+				style="background: rgba(255, 255, 255, .5); margin-top: 0;">
 				<div id="login_form">
 					<form action="login" method="POST">
 						<div class="input-field col s10 offset-s1">
@@ -57,7 +58,8 @@
 								for="pass">Password</label>
 						</div>
 						<div align="center">
-							<button type="submit" class="waves-effect waves-light btn blue">Submit</button>
+							<button type="submit" class="waves-effect waves-light btn blue"
+								style="margin-bottom: 0;">Submit</button>
 						</div>
 					</form>
 				</div>
@@ -100,20 +102,37 @@
 							<label for="password">Password</label>
 						</div>
 						<div align="center">
-							<button type="submit" class="waves-effect waves-light btn blue">Submit</button>
+							<button type="submit" class="waves-effect waves-light btn blue"
+								style="margin-bottom: 0;">Submit</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<footer class="page-footer blue darken-1" style="padding-top: 0px;">
+		<div class="footer-copyright">
+			<div class="container">
+				© 2017 Copyright <a target="_blank"
+					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDS
+					JSS Noida </a>
+			</div>
+		</div>
+	</footer>
 </body>
 
 <style>
+#main {
+	
+}
+
 h1 {
 	padding-top: 25px;
 	font-size: 30px;
+}
+
+#login_form, #signup_form {
+	padding: 20px 45px;
 }
 
 #login_form h3 {
@@ -128,7 +147,7 @@ h1 {
 
 #cards {
 	padding: 0;
-	margin-top:50px;
+	margin-top: 50px;
 }
 
 .indicator {

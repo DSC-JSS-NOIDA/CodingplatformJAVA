@@ -37,12 +37,12 @@
 			</ul>
 		</div>
 	</nav>
-	<div style="padding-left: 70px;">
+	<div style="padding-left: 70px;" id="main">
 		<p style="color: #0572d2;">
 			<span style="font-size: 16px; font-weight: 500;">TEAM NAME : </span><span
 				style="font-size: 14px;">${Teamname}</span>
 		</p>
-		<div id="main">
+		<div id="ques">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<b>Title</b> : ${Title} <br />
@@ -50,7 +50,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Question</b> : ${Question} 
+					<b>Question</b> : ${Question}
 				</div>
 			</div>
 			<div class="row">
@@ -94,7 +94,7 @@
 						<option value="python">Python</option>
 					</select>
 					<textarea id="editor2" name="code">${code}</textarea>
-					
+
 
 
 				</div>
@@ -150,10 +150,21 @@
 				<input type=hidden value="${quesid}" name=qid>
 				<button type="submit" class="waves-effect waves-light btn blue">Submit</button>
 
-				<div>
+				
 			</form>
 		</div>
 	</div>
+
+	<footer class="page-footer blue darken-1" style="padding-top: 0px;">
+		<div class="footer-copyright">
+			<div class="container">
+				© 2017 Copyright <a target="_blank"
+					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDS
+					JSS Noida </a>
+			</div>
+		</div>
+	</footer>
+
 </body>
 <style type="text/css" media="screen">
 #editor {
@@ -171,7 +182,7 @@
 	border-radius: 4px;
 }
 
-#main {
+#ques {
 	background: rgba(255, 255, 255, .3);
 	padding: 10px;
 	border-radius: 3px;
@@ -182,7 +193,6 @@
 	background: rgba(255, 255, 255, .7);
 	width: 150px;
 }
-
 
 button {
 	margin: 10px 0px 20px 0px;
