@@ -19,7 +19,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
-<title>quespage</title>
+<title>Result</title>
 
 </head>
 <body>
@@ -28,6 +28,7 @@
 			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
 				In Less}</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#">Team : <span>${TeamName}</span></a></li>
 				<li><a href="dashboard">Dashboard</a></li>
 				<li><a href="rules">Rules</a></li>
 				<li><a href="leaderboard">Leaderboard</a></li>
@@ -36,74 +37,74 @@
 		</div>
 	</nav>
 	<div id="main">
-		<br>
-		<h1>YOUR SUBMISSION</h1>
-		<input type="hidden" name="source" class="source" value="" id="source">
-		<br>
+		<div id="ques" class="z-depth-1">
+			<br>
+			<h1>YOUR SUBMISSION</h1>
+			<input type="hidden" name="source" class="source" value=""
+				id="source">
 
-		<div id="editor_lang">
+			<div id="editor_lang">
 
-			<select class="language" id="editor_select" name="editor_lang">
-				<option value="">Select</option>
-				<option value="c_cpp">C</option>
-				<option value="c_cpp">C++</option>
-				<option value="java">Java</option>
-				<option value="python">Python</option>
-			</select>
-
-
-
-			<textarea id="editor2" name="code">${code}</textarea>
+				<select class="language browser-default" id="editor_select"
+					name="editor_lang">
+					<option value="c_cpp">C</option>
+					<option value="c_cpp">C++</option>
+					<option value="java">Java</option>
+					<option value="python">Python</option>
+				</select>
 
 
-		</div>
-		<!-- load ace -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"
-			type="text/javascript" charset="utf-8"></script>
 
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
-		<script>
-			// trigger extension
+				<textarea id="editor2" name="code">${code}</textarea>
 
-			var lang = "c_cpp";
-			$(document).ready(function() {
-				$("#editor_select").change(function() {
-					$("#editor_select option:selected").each(function() {
-						lang = $(this).attr('value');
-						console.log(lang);
-						editor2.session.setMode("ace/mode/" + lang);
-						// v: Date.now();  
+
+			</div>
+			<!-- load ace -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"
+				type="text/javascript" charset="utf-8"></script>
+
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+			<script>
+				// trigger extension
+
+				var lang = "c_cpp";
+				$(document).ready(function() {
+					$("#editor_select").change(function() {
+						$("#editor_select option:selected").each(function() {
+							lang = $(this).attr('value');
+							console.log(lang);
+							editor2.session.setMode("ace/mode/" + lang);
+							// v: Date.now();  
+						});
 					});
 				});
-			});
 
-			var editor2 = ace.edit("editor2");
-			editor2.setTheme("ace/theme/twilight");
-			editor2.session.setMode("ace/mode/html");
-			editor2.setAutoScrollEditorIntoView(true);
-			editor2.setOption("maxLines", 16);
-			editor2.setOption("minLines", 8);
-			var source = $("#editor2").val();
-			$("#source").val('source');
-			editor2.getSession().on("change", function() {
-				$("#source").val(editor2.getSession().getValue());
-			});
-		</script>
-
-
-		<input type=hidden value="${quesid}" name=qid> <br>
-		<div>
-			<h1>RESULT STATUS</h1>
+				var editor2 = ace.edit("editor2");
+				editor2.setTheme("ace/theme/twilight");
+				editor2.session.setMode("ace/mode/html");
+				editor2.setAutoScrollEditorIntoView(true);
+				editor2.setOption("maxLines", 16);
+				editor2.setOption("minLines", 8);
+				var source = $("#editor2").val();
+				$("#source").val('source');
+				editor2.getSession().on("change", function() {
+					$("#source").val(editor2.getSession().getValue());
+				});
+			</script>
 
 
-			<h6>Message : ${message}</h6>
-			<h6>Status : ${status}</h6>
-			<h6>Stdout : ${stdout}</h6>
-			<h6>${verify}</h5>
+			<input type=hidden value="${quesid}" name=qid> <br>
+			<div>
+				<h1>RESULT STATUS</h1>
 
+
+				<h6>Message : ${message}</h6>
+				<h6>Status : ${status}</h6>
+				<h6>Stdout : ${stdout}</h6>
+				<h6>${verify}</h6>
+			</div>
 		</div>
-
 	</div>
 	<footer class="page-footer blue darken-1" style="padding-top: 0px;">
 		<div class="footer-copyright">
@@ -131,17 +132,22 @@
 	border-radius: 4px;
 }
 
-#main {
+#ques {
 	max-width: 1100px;
 	margin-left: 50px;
 	margin-top: 30px;
 	padding: 10px 30px 30px 30px;;
-	background: rgba(255, 255, 255, .3);
+	background: rgba(255, 255, 255, .4);
 }
 
 h1 {
 	font-size: 30px;
 	color: #0572d2;
+}
+
+.language {
+	background: rgba(255, 255, 255, .7);
+	width: 150px;
 }
 </style>
 </html>

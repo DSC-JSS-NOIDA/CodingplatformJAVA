@@ -30,6 +30,7 @@
 			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
 				In Less}</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#">Team : <span>${TeamName}</span></a></li>
 				<li><a href="dashboard">Dashboard</a></li>
 				<li><a href="rules">Rules</a></li>
 				<li><a href="leaderboard">Leaderboard</a></li>
@@ -42,7 +43,7 @@
 			<span style="font-size: 16px; font-weight: 500;">TEAM NAME : </span><span
 				style="font-size: 14px;">${Teamname}</span>
 		</p>
-		<div id="ques">
+		<div id="ques" class="z-depth-1">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<b>Title</b> : ${Title} <br />
@@ -150,7 +151,7 @@
 				<input type=hidden value="${quesid}" name=qid>
 				<button type="submit" class="waves-effect waves-light btn blue">Submit</button>
 
-				
+
 			</form>
 		</div>
 	</div>
@@ -183,8 +184,8 @@
 }
 
 #ques {
-	background: rgba(255, 255, 255, .3);
-	padding: 10px;
+	background: rgba(255, 255, 255, .4);
+	padding: 15px 25px 10px 25px;
 	border-radius: 3px;
 	width: 1000px;
 }

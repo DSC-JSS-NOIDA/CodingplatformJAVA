@@ -27,6 +27,7 @@
 			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
 				In Less}</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="#">Team : <span>${TeamName}</span></a></li>
 				<li><a href="dashboard">Dashboard</a></li>
 				<li><a href="rules">Rules</a></li>
 				<li><a href="leaderboard">Leaderboard</a></li>
@@ -41,7 +42,7 @@
 				int i = 1;
 			%>
 			<table class=" bordered highlight ">
-				
+
 				<c:forEach var="question" items="${ques}">
 					<tr>
 						<td id="index"><%=i%>.</td>

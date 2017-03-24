@@ -38,7 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.gson.Gson;
 
-
 /**
  * this class contains all view controllers, maps view to service layer
  * 
@@ -65,31 +64,32 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexpage() {
-		
+
 		ModelAndView model = new ModelAndView("index");
 		return model;
 	}
-	
+
 	/**
 	 * 
 	 * controller for session logout
+	 * 
 	 * @author sarthak
 	 * @param httpSession
 	 * @return
 	 */
-	
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView LogoutController(HttpSession httpSession) {
 		httpSession.invalidate();
 		ModelAndView model = new ModelAndView("index");
-		model.addObject("invalid","successfully logged out");
+		model.addObject("invalid", "successfully logged out");
 		return model;
 	}
 
 	/**
 	 * 
 	 * controller for user login
+	 * 
 	 * @author singhal
 	 * @author sarthak
 	 * @param httpSession
@@ -137,12 +137,12 @@ public class AllController {
 		Session session = sessionFactory.openSession();
 		ModelAndView model = new ModelAndView("index");
 		if (session.get(Userdet.class, userdet.getEmailid()) == null) {
-			Result result=new Result(userdet.getEmailid(),userdet.getTeam_name());
+			Result result = new Result(userdet.getEmailid(), userdet.getTeam_name());
 			session.beginTransaction();
 			session.save(userdet);
 			session.save(result);
 			session.getTransaction().commit();
-			
+
 			model.addObject("invalid", "Successfully registered, login to proceed!");
 
 		} else
@@ -238,10 +238,9 @@ public class AllController {
 		System.out.println("Input file--- \n" + y);
 
 		/**
-		 * @author tilhari
-		 * url parameters for hackerearth api
+		 * @author tilhari url parameters for hackerearth api
 		 * 
-		 * add other available parameter for TLE, size etc etc
+		 *         add other available parameter for TLE, size etc etc
 		 */
 		String urlParameters = "source=" + urlencode + "&lang=" + language + "&input=" + y
 				+ "&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
@@ -262,11 +261,9 @@ public class AllController {
 		System.out.println("Response Code : " + responseCode);
 
 		/**
-		 * @author singhal
-		 * code for exception handling of incomplete post
-		 * request due to internet connectivity problem
-		 * @author suyash
-		 * due to bad request problem also.
+		 * @author singhal code for exception handling of incomplete post
+		 *         request due to internet connectivity problem
+		 * @author suyash due to bad request problem also.
 		 */
 		if (responseCode == 403) {
 			ModelAndView model = new ModelAndView("Errorpage");
@@ -280,7 +277,7 @@ public class AllController {
 		System.out.println("JSON response --->>>");
 		System.out.println(respLine);
 		String message = "", stdOut = "", status = "", htmlOutput = "";
-		
+
 		/*
 		 * use try catch in this code below to prevent the exception error
 		 * 
@@ -299,7 +296,7 @@ public class AllController {
 			JSONObject json = new JSONObject(respLine);
 
 			if (json.has("run_status")) {
-				
+
 				JSONObject resultObject = json.getJSONObject("run_status");
 				status = resultObject.getString("status");
 				htmlOutput = resultObject.getString("output_html");
@@ -308,7 +305,7 @@ public class AllController {
 					stdOut = resultObject.getString("output");
 
 			}
-			
+
 			if (json.has("compile_status")) {
 				// JSONObject
 				// compileObject=json.getJSONObject("compile_status");
@@ -372,8 +369,8 @@ public class AllController {
 		}
 
 		/*
-		 * code for converting output text file to json for use with hackerEarth use
-		 * API
+		 * code for converting output text file to json for use with hackerEarth
+		 * use API
 		 */
 
 		Gson gson = new Gson();
@@ -389,113 +386,112 @@ public class AllController {
 		if (out.equals(out_api)) {
 			System.out.println("output matched");
 			verify = "output matched";
-			
-			
+
 			System.out.println("-----------------------------------calculation begins here-----------------------");
-			 session = sessionFactory.openSession();
-			
+			session = sessionFactory.openSession();
+
 			/**
 			 * @author suyash
 			 * 
-			 * code for leaderboard and marking scheme
+			 *         code for leaderboard and marking scheme
 			 */
-			int lengthOfCode=code.length();
-			String lang=language;
-			if(language.equals("CPP"))
-			{
-				lang="C";
+			int lengthOfCode = code.length();
+			String lang = language;
+			if (language.equals("CPP")) {
+				lang = "C";
 			}
-			String correspondingQuesMark="ques" + quesid + "_" + lang;
-			String correspondingQuesLength="ques" + quesid + "_" + lang+ "_l";
+			String correspondingQuesMark = "ques" + quesid + "_" + lang;
+			String correspondingQuesLength = "ques" + quesid + "_" + lang + "_l";
 			String emailid = (String) httpSession.getAttribute("SESSION_email");
-			//chiki
-			String hql_current_user_length = "SELECT "+correspondingQuesLength+" FROM Result R WHERE R.email = '"+ emailid+"'";
+			// chiki
+			String hql_current_user_length = "SELECT " + correspondingQuesLength + " FROM Result R WHERE R.email = '"
+					+ emailid + "'";
 			Query query = session.createQuery(hql_current_user_length);
 			List r = query.list();
-			int current_user_length= (int) r.get(0);
-			System.out.println("current_user_length --->> " +current_user_length);
-			if(lengthOfCode < current_user_length)
-			{
-				String hql_min_length= "SELECT min(" + correspondingQuesLength + ") FROM Result R";
+			int current_user_length = (int) r.get(0);
+			System.out.println("current_user_length --->> " + current_user_length);
+			if (lengthOfCode < current_user_length) {
+				String hql_min_length = "SELECT min(" + correspondingQuesLength + ") FROM Result R";
 				query = session.createQuery(hql_min_length);
 				r = query.list();
-				int min_length= (int) r.get(0);
-				System.out.println("min_length --->> " +min_length);
-				String hql_update_length="UPDATE Result R set "+ correspondingQuesLength+" = "+lengthOfCode+" WHERE R.email = '"+emailid+"'";
+				int min_length = (int) r.get(0);
+				System.out.println("min_length --->> " + min_length);
+				String hql_update_length = "UPDATE Result R set " + correspondingQuesLength + " = " + lengthOfCode
+						+ " WHERE R.email = '" + emailid + "'";
 				query = session.createQuery(hql_update_length);
-				int effected_rows=query.executeUpdate();
-				System.out.println("updated length --->> " +lengthOfCode + " effected row ---->> "+ effected_rows );
-				if(lengthOfCode < min_length)
-				{
-					min_length= lengthOfCode;
-					String fetch_corresponding_marks_length="SELECT email , "+correspondingQuesMark+" , "+correspondingQuesLength+" , total FROM Result R";
+				int effected_rows = query.executeUpdate();
+				System.out.println("updated length --->> " + lengthOfCode + " effected row ---->> " + effected_rows);
+				if (lengthOfCode < min_length) {
+					min_length = lengthOfCode;
+					String fetch_corresponding_marks_length = "SELECT email , " + correspondingQuesMark + " , "
+							+ correspondingQuesLength + " , total FROM Result R";
 					query = session.createQuery(fetch_corresponding_marks_length);
-					List<Object> re =(List<Object>) query.list();
+					List<Object> re = (List<Object>) query.list();
 					Iterator itr = re.iterator();
 					System.out.println("DATA FROM TABLE--->>");
-					while(itr.hasNext()){
-						   Object[] obje = (Object[]) itr.next();
-						   //now you have one array of Object for each row
-						   String idemail = String.valueOf(obje[0]);
-						   Integer marks = Integer.parseInt(String.valueOf(obje[1]));
-						   Integer length = Integer.parseInt(String.valueOf(obje[2]));
-						   Integer total = Integer.parseInt(String.valueOf(obje[3]));
-						   System.out.println(idemail + "  " +marks +"  "+ length + " " + total);
-						   if(length < 1000000)
-						   {
-							   int updated_marks= 100 -(length - min_length);
-							   if(updated_marks < 20)
-								   updated_marks= 20;
-							   total=total-marks+updated_marks;
-							   String hql_update_marks="UPDATE Result R set "+ correspondingQuesMark+" = "+updated_marks+" WHERE R.email = '"+idemail+"'";
-							   query = session.createQuery(hql_update_marks);
-								int effected_rows_marks=query.executeUpdate();
-								System.out.println("updated marks of  --->> " + effected_rows_marks + " marks is   "+ updated_marks);
-								String hql_update_total_marks="UPDATE Result R set R.total = "+total+" WHERE R.email = '"+idemail+"'";
-								   query = session.createQuery(hql_update_total_marks);
-									int hql_update_totalmarks=query.executeUpdate();
-									   
-						   }
-						   
+					while (itr.hasNext()) {
+						Object[] obje = (Object[]) itr.next();
+						// now you have one array of Object for each row
+						String idemail = String.valueOf(obje[0]);
+						Integer marks = Integer.parseInt(String.valueOf(obje[1]));
+						Integer length = Integer.parseInt(String.valueOf(obje[2]));
+						Integer total = Integer.parseInt(String.valueOf(obje[3]));
+						System.out.println(idemail + "  " + marks + "  " + length + " " + total);
+						if (length < 1000000) {
+							int updated_marks = 100 - (length - min_length);
+							if (updated_marks < 20)
+								updated_marks = 20;
+							total = total - marks + updated_marks;
+							String hql_update_marks = "UPDATE Result R set " + correspondingQuesMark + " = "
+									+ updated_marks + " WHERE R.email = '" + idemail + "'";
+							query = session.createQuery(hql_update_marks);
+							int effected_rows_marks = query.executeUpdate();
+							System.out.println(
+									"updated marks of  --->> " + effected_rows_marks + " marks is   " + updated_marks);
+							String hql_update_total_marks = "UPDATE Result R set R.total = " + total
+									+ " WHERE R.email = '" + idemail + "'";
+							query = session.createQuery(hql_update_total_marks);
+							int hql_update_totalmarks = query.executeUpdate();
+
 						}
-				}
-				else
-				{
-					String fetch_corresponding_marks_length="SELECT "+correspondingQuesMark+" , "+correspondingQuesLength+" , total FROM Result R where R.email= '"+emailid+"'";
-					query = session.createQuery(fetch_corresponding_marks_length);
-					List<Object> re =(List<Object>) query.list();
-					Iterator itr = re.iterator();
-					
-					while(itr.hasNext()){
-						   Object[] obje = (Object[]) itr.next();
-						   //now you have one array of Object for each row
-						   Integer marks = Integer.parseInt(String.valueOf(obje[0]));
-						   Integer length = Integer.parseInt(String.valueOf(obje[1]));
-						   Integer total = Integer.parseInt(String.valueOf(obje[2]));						   
-						   System.out.println(marks +"  "+ length);
-						   if(length < 1000000)
-						   {
-							   int updated_marks= 100 -(length - min_length);
-							   if(updated_marks < 20)
-								   updated_marks= 20;
-							   total=total-marks+updated_marks;
-							   System.out.println("MArks to be updated-->>>  "+ updated_marks);
-							   String hql_update_marks="UPDATE Result R set "+ correspondingQuesMark+" = "+updated_marks+" WHERE R.email = '"+emailid+"'";
-							   query = session.createQuery(hql_update_marks);
-								int effected_rows_marks=query.executeUpdate();
-								String hql_update_total_marks="UPDATE Result R set R.total = "+total+" WHERE R.email = '"+emailid+"'";
-								query = session.createQuery(hql_update_total_marks);
-								int hql_update_totalmarks=query.executeUpdate();
-						   }
+
 					}
-				
-				
+				} else {
+					String fetch_corresponding_marks_length = "SELECT " + correspondingQuesMark + " , "
+							+ correspondingQuesLength + " , total FROM Result R where R.email= '" + emailid + "'";
+					query = session.createQuery(fetch_corresponding_marks_length);
+					List<Object> re = (List<Object>) query.list();
+					Iterator itr = re.iterator();
+
+					while (itr.hasNext()) {
+						Object[] obje = (Object[]) itr.next();
+						// now you have one array of Object for each row
+						Integer marks = Integer.parseInt(String.valueOf(obje[0]));
+						Integer length = Integer.parseInt(String.valueOf(obje[1]));
+						Integer total = Integer.parseInt(String.valueOf(obje[2]));
+						System.out.println(marks + "  " + length);
+						if (length < 1000000) {
+							int updated_marks = 100 - (length - min_length);
+							if (updated_marks < 20)
+								updated_marks = 20;
+							total = total - marks + updated_marks;
+							System.out.println("MArks to be updated-->>>  " + updated_marks);
+							String hql_update_marks = "UPDATE Result R set " + correspondingQuesMark + " = "
+									+ updated_marks + " WHERE R.email = '" + emailid + "'";
+							query = session.createQuery(hql_update_marks);
+							int effected_rows_marks = query.executeUpdate();
+							String hql_update_total_marks = "UPDATE Result R set R.total = " + total
+									+ " WHERE R.email = '" + emailid + "'";
+							query = session.createQuery(hql_update_total_marks);
+							int hql_update_totalmarks = query.executeUpdate();
+						}
+					}
+
 				}
 			}
-			
+
 			session.close();
-			
-		
+
 		} else {
 			System.out.println("outputs not matched");
 			verify = "output not matched";
@@ -505,20 +501,24 @@ public class AllController {
 		 * 
 		 * sending data to Questionpage
 		 */
-		
-		
-		switch(status){
-			case "AC": status="NO COMPILATION ERROR";
-			            break;
-			case "CE": status="COMPILATION ERROR";
-						break;
-			case "TLE": status="TIME LIMIT EXCEED";
-						break;
-			case " ":   status="RUNTIME ERROR";
-			 			break;
-			case "RE":  status="RUNTIME ERROR";
-			            break;
-			}
+
+		switch (status) {
+		case "AC":
+			status = "NO COMPILATION ERROR";
+			break;
+		case "CE":
+			status = "COMPILATION ERROR";
+			break;
+		case "TLE":
+			status = "TIME LIMIT EXCEED";
+			break;
+		case " ":
+			status = "RUNTIME ERROR";
+			break;
+		case "RE":
+			status = "RUNTIME ERROR";
+			break;
+		}
 		ModelAndView model = new ModelAndView("ResultPage");
 		model.addObject("message", message);
 		model.addObject("status", status);
@@ -535,14 +535,15 @@ public class AllController {
 		ModelAndView model = new ModelAndView("leaderboard");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Criteria c=session.createCriteria(Result.class);
+		Criteria c = session.createCriteria(Result.class);
 		c.addOrder(Order.desc("total"));
 		List<Result> result = c.list();
 		model.addObject("resultRows", result);
+		model.addObject("TeamName", userdet.getTeam_name());
 		return model;
 
 	}
-	
+
 	/*
 	 * code for admin login
 	 */
@@ -616,6 +617,7 @@ public class AllController {
 			model.addObject("Teamname", team_name);
 			model.addObject("email", email);
 			model.addObject("OutputFormat", OutPutFormat);
+			model.addObject("TeamName", team_name);
 			System.out.println(Question);
 		} else {
 			model = new ModelAndView("index");
@@ -639,19 +641,22 @@ public class AllController {
 		}
 		return model;
 	}
-	
+
 	/**
 	 * controller for rules page
+	 * 
 	 * @author sarthak
 	 * @return
 	 */
-	
+
 	@RequestMapping(value = "/rules", method = RequestMethod.GET)
 	public ModelAndView RulesPage() {
-		
+
 		ModelAndView model = new ModelAndView("rulespage");
+		model.addObject("TeamName", userdet.getTeam_name());
 		return model;
 	}
+
 	/**
 	 * controller for dashboard to view ques list
 	 * 
@@ -662,21 +667,19 @@ public class AllController {
 	public ModelAndView dashboard(HttpSession httpSession) {
 		ModelAndView model;
 		Session session = sessionFactory.openSession();
-		if((String) httpSession.getAttribute("SESSION_email")!=null){
-		 model = new ModelAndView("dashboard");
-		model.addObject("TeamName", userdet.getTeam_name());
-		List<Questions> ques = session.createCriteria(Questions.class).list();
-		model.addObject("ques", ques);
-	
-		}
-		else
-		{
-			model=new ModelAndView("index");
-			model.addObject("invalid","LOG IN FORST TO CONTINUE");
+		if ((String) httpSession.getAttribute("SESSION_email") != null) {
+			model = new ModelAndView("dashboard");
+			model.addObject("TeamName", userdet.getTeam_name());
+			List<Questions> ques = session.createCriteria(Questions.class).list();
+			model.addObject("ques", ques);
+
+		} else {
+			model = new ModelAndView("index");
+			model.addObject("invalid", "LOG IN FORST TO CONTINUE");
 		}
 		return model;
 	}
-	
+
 	/**
 	 * temporary controller for error page
 	 * 
@@ -685,12 +688,12 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/errorpage", method = RequestMethod.GET)
 	public ModelAndView ErrorPage() {
-		
+
 		ModelAndView model = new ModelAndView("Errorpage");
+		model.addObject("TeamName", userdet.getTeam_name());
 		return model;
 	}
-	
-	
+
 	/**
 	 * temporary controller for result page
 	 * 
@@ -699,113 +702,31 @@ public class AllController {
 	 */
 	@RequestMapping(value = "/resultpage", method = RequestMethod.GET)
 	public ModelAndView ResultPage() {
-		
+
 		ModelAndView model = new ModelAndView("ResultPage");
+		model.addObject("TeamName", userdet.getTeam_name());
 		return model;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // adding new user from admin pannel
-	/*@RequestMapping(value = "/add_user", method = RequestMethod.POST)
-	public ModelAndView adduser(HttpSession httpSession, @RequestParam Map<String, String> requestParams) {
-		String email = requestParams.get("email");
-
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-
-		ModelAndView model = new ModelAndView("add");
-
-		Query queryResult = session.createQuery("from Userdet");
-		java.util.List allUsers;
-		String email_id;
-		email_id = null;
-
-		allUsers = queryResult.list();
-		int f;
-		f = 0;
-		for (int i = 0; i < allUsers.size(); i++) {
-			Userdet user = (Userdet) allUsers.get(i);
-			email_id = user.getEmailid();
-
-			if (email.equals(email_id)) {
-				f = 1;
-
-				break;
-
-			}
-		}
-
-		if (f != 1) {
-			Userdet user = new Userdet();
-			user.setEmailid(email);
-			session.save(user);
-			session.getTransaction().commit();
-
-			session.close();
-			user = null;
-			System.out.println(email);
-			model.addObject("add", "record added");
-		} else {
-			System.out.println("duplicate");
-			model.addObject("dup", "duplicate record");
-		}
-		return model;
-
-	}
-}
-*/
+/*
+ * @RequestMapping(value = "/add_user", method = RequestMethod.POST) public
+ * ModelAndView adduser(HttpSession httpSession, @RequestParam Map<String,
+ * String> requestParams) { String email = requestParams.get("email"); Session
+ * session = sessionFactory.openSession(); session.beginTransaction();
+ * ModelAndView model = new ModelAndView("add"); Query queryResult =
+ * session.createQuery("from Userdet"); java.util.List allUsers; String
+ * email_id; email_id = null; allUsers = queryResult.list(); int f; f = 0; for
+ * (int i = 0; i < allUsers.size(); i++) { Userdet user = (Userdet)
+ * allUsers.get(i); email_id = user.getEmailid(); if (email.equals(email_id)) {
+ * f = 1; break; } } if (f != 1) { Userdet user = new Userdet();
+ * user.setEmailid(email); session.save(user);
+ * session.getTransaction().commit(); session.close(); user = null;
+ * System.out.println(email); model.addObject("add", "record added"); } else {
+ * System.out.println("duplicate"); model.addObject("dup", "duplicate record");
+ * } return model; } }
+ */
 /*
  * code for admin pannel operations commented for further use
  * 
@@ -1079,44 +1000,43 @@ public class AllController {
 //
 // }
 
+// code from index
+// controller-----------------------------------------------------
+// String correspondingQuesMark="ques1_JAVA";
+// String correspondingQuesLength="ques1_JAVA_l";
+// Session session = sessionFactory.openSession();
+// Result res = (Result) session.get(Result.class, "shasha@grey.com");
+// String hql="SELECT "+correspondingQuesMark+" , "+correspondingQuesLength+"
+// FROM Result R";
+// String hql="SELECT email , "+correspondingQuesMark+" ,
+// "+correspondingQuesLength+" FROM Result R";
 
-// code from index controller-----------------------------------------------------
-//String correspondingQuesMark="ques1_JAVA";
-//String correspondingQuesLength="ques1_JAVA_l";
-//Session session = sessionFactory.openSession();
-//Result res = (Result) session.get(Result.class, "shasha@grey.com");
-//String hql="SELECT "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
-//String hql="SELECT email , "+correspondingQuesMark+" , "+correspondingQuesLength+" FROM Result R";
+// String hql="UPDATE Result R set "+ correspondingQuesLength+" = "+1000000+"
+// WHERE R.email = 'sss@hh.com'";
+// String hql="SELECT min("+ correspondingQuesLength + ") FROM Result R";
+// String hql= "SELECT"+" ques1_JAVA_l"+" FROM Result R WHERE R.email =
+// 'shasha@grey.com' ";
+// System.out.println("HQL is --->>>");
+// System.out.println(hql);
 
-//String hql="UPDATE Result R set "+ correspondingQuesLength+" = "+1000000+" WHERE R.email = 'sss@hh.com'";
-//String hql="SELECT min("+ correspondingQuesLength + ") FROM Result R";
-//String hql= "SELECT"+" ques1_JAVA_l"+" FROM Result R WHERE R.email = 'shasha@grey.com' ";
-//System.out.println("HQL is --->>>");
-//System.out.println(hql);
+// Query query = session.createQuery(hql);
+// int rr=query.executeUpdate();
+// List<Object> r =(List<Object>) query.list();
+// Iterator itr = r.iterator();
 
-//Query query = session.createQuery(hql);
-//int rr=query.executeUpdate();
-//List<Object> r =(List<Object>) query.list();
-//Iterator itr = r.iterator();
+// System.out.println("YAHI HHHHHH -------- >>>>");
 
-//System.out.println("YAHI HHHHHH -------- >>>>");
-
-
-
-/*while(itr.hasNext()){
-	   Object[] obj = (Object[]) itr.next();
-	   //now you have one array of Object for each row
-	   String client = String.valueOf(obj[0]);
-	   Integer marks = Integer.parseInt(String.valueOf(obj[1]));
-	   Integer length = Integer.parseInt(String.valueOf(obj[2]));
-	   System.out.println(client + " "+marks +"  "+ length);
-	   //SERVICE assumed as int
-	   //same way for all obj[2], obj[3], obj[4]
-	}*/
-//System.out.println(rr);
-/*for(int i=0; i<r.size();i++)
-{
-	System.out.println(((Fetch)r.get(i)).getCorresponding_length());
-}
-*/  //  System.out.println(r.get(0));
-//session.close();
+/*
+ * while(itr.hasNext()){ Object[] obj = (Object[]) itr.next(); //now you have
+ * one array of Object for each row String client = String.valueOf(obj[0]);
+ * Integer marks = Integer.parseInt(String.valueOf(obj[1])); Integer length =
+ * Integer.parseInt(String.valueOf(obj[2])); System.out.println(client +
+ * " "+marks +"  "+ length); //SERVICE assumed as int //same way for all obj[2],
+ * obj[3], obj[4] }
+ */
+// System.out.println(rr);
+/*
+ * for(int i=0; i<r.size();i++) {
+ * System.out.println(((Fetch)r.get(i)).getCorresponding_length()); }
+ */ // System.out.println(r.get(0));
+// session.close();
