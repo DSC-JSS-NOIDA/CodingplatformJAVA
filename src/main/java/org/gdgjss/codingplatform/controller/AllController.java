@@ -676,6 +676,33 @@ public class AllController {
 		}
 		return model;
 	}
+	
+	/**
+	 * temporary controller for error page
+	 * 
+	 * @author sarthak
+	 * @return
+	 */
+	@RequestMapping(value = "/errorpage", method = RequestMethod.GET)
+	public ModelAndView ErrorPage() {
+		
+		ModelAndView model = new ModelAndView("Errorpage");
+		return model;
+	}
+	
+	
+	/**
+	 * temporary controller for result page
+	 * 
+	 * @author sarthak
+	 * @return
+	 */
+	@RequestMapping(value = "/resultpage", method = RequestMethod.GET)
+	public ModelAndView ResultPage() {
+		
+		ModelAndView model = new ModelAndView("ResultPage");
+		return model;
+	}
 }
 
 

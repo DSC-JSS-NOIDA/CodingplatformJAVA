@@ -24,8 +24,7 @@
 <body>
 	<nav>
 		<div class="nav-wrapper blue darken-1">
-			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
-				In Less}</a>
+			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">WELCOME ${TeamName}</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="dashboard">Dashboard</a></li>
 				<li><a href="rules">Rules</a></li>
