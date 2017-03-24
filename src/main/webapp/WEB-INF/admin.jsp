@@ -21,32 +21,31 @@
 <body>
 	<nav>
 	<div class="nav-wrapper blue darken-1">
-		<a href="#" class="brand-logo" style="margin-left: 30px;">Crack In the Shell</a>
-		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Dashboard</a></li>
-			<li><a href="#">Leaderboard</a></li>
-		</ul>
+		<a href="index" class="brand-logo center" style="margin-left: 30px;">{Code
+			In Less}</a>
 	</div>
 	</nav>
-	<div id="back" align="center" class="z-depth-2">
-		<p style="font-size:30px;color:#0572d2;padding-top:20px;margin-bottom:0;">ADMIN LOGIN</p>
-		<form name="logondet" method="post" action="adminverify" class="row">
-			<div class="input-field col s6">
-				<input type="text" id="username" name="id" required> <label
-					for="username">Username</label>
-			</div>
+	<div style="min-height: 563px;padding-top:150px;">
+		<div id="back" align="center" class="z-depth-2">
+			<p
+				style="font-size: 30px; color: #0572d2; padding-top: 20px; margin-bottom: 0;">ADMIN
+				LOGIN</p>
+			<form name="logondet" method="post" action="adminverify" class="row">
+				<div class="input-field col s6">
+					<input type="text" id="username" name="id" required> <label
+						for="username">Username</label>
+				</div>
 
-			<div class="input-field col s6 ">
-				<input type="password" id="pass" name="pass" required> <label
-					for="pass">Password</label>
-			</div>
+				<div class="input-field col s6 ">
+					<input type="password" id="pass" name="pass" required> <label
+						for="pass">Password</label>
+				</div>
 
-			<button type="submit" class="waves-effect waves-light btn blue">Submit</button>
+				<button type="submit" class="waves-effect waves-light btn blue">Submit</button>
 
-		</form>
+			</form>
+		</div>
 	</div>
-
 </body>
 <style>
 h1 {
@@ -56,7 +55,7 @@ h1 {
 
 #back {
 	width: 600px;
-	margin: 150px auto;
+	margin: 0px auto 0px auto;
 	background: rgba(255, 255, 255, .5);
 	padding: 0 50px;
 }
