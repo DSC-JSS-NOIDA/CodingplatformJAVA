@@ -98,7 +98,7 @@
 							<label for="contact">Contact</label>
 						</div>
 						<div class="input-field col s10 offset-s1">
-							<input type="text" name="password" id="password" required>
+							<input type="password" name="password" id="password" required>
 							<label for="password">Password</label>
 						</div>
 						<div align="center">
