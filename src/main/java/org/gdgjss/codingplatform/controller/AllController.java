@@ -657,7 +657,7 @@ public class AllController {
 		c.addOrder(Order.desc("total"));
 		List<Result> result = c.list();
 		model.addObject("resultRows", result);
-		model.addObject("TeamName", userdet.getTeam_name());
+		model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 		return model;
 
 	}
