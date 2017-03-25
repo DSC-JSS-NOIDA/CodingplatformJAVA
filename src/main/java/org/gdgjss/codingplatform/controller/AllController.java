@@ -166,6 +166,8 @@ public class AllController {
 
 	public ModelAndView submission(HttpSession httpSession, @RequestParam Map<String, String> requestParams)
 			throws IOException, JSONException {
+		
+		if((String) httpSession.getAttribute("SESSION_email")!=null){
 		String language = requestParams.get("lang");
 		String code = requestParams.get("source");
 		String quesid = requestParams.get("qid");
@@ -634,6 +636,14 @@ public class AllController {
 	    	 	model.addObject("status",status);
 	    	 	return model;
 			}
+		  }
+		}
+		
+		else
+		{
+			ModelAndView model=new ModelAndView("index");
+			model.addObject("invalid","KINDLY LOGIN FIRST");
+			return model;
 		}
 		return null;
 	}
@@ -659,7 +669,7 @@ public class AllController {
 	@RequestMapping(value = "/addques", method = RequestMethod.POST)
 	public ModelAndView addques(@ModelAttribute("question") org.gdgjss.codingplatform.models.Questions question) {
 		Session session = sessionFactory.openSession();
-		ModelAndView model = new ModelAndView("index");
+		ModelAndView model = new ModelAndView("adminpannel");
 		if (session.get(Questions.class, question.getQuesid()) == null) {
 			session.beginTransaction();
 			session.save(question);
