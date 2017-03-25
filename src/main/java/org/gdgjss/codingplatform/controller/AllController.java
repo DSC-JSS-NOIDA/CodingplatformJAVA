@@ -501,8 +501,6 @@ public class AllController {
 		 * 
 		 * sending data to Questionpage
 		 */
-		
-
 
 		switch (status) {
 		case "AC":
@@ -521,49 +519,123 @@ public class AllController {
 			status = "RUNTIME ERROR";
 			break;
 		}
+    
+		System.out.println(status);
 		
-		
-		
-		ModelAndView model=new ModelAndView("ResultPage"); 
-		if(message=="OK" && status=="NO COMPILATION ERROR"){
+		System.out.println(message);
+		if(message.equals("OK"))
+		{
 			
+			System.out.println("-1");
+			if(status.equals("NO COMPILATION ERROR"))
+				
+			{  
+				
+				System.out.println("0");
+				if(verify.equals("CORRECT ANSWER")){
+				
+					
+					System.out.println("1");
+						ModelAndView 	model=new ModelAndView("ResultPage");
+						model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+						model.addObject("code",code);
+						model.addObject("colour","green");
+						model.addObject("status",status);
+						model.addObject("verify",verify);
+						model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
+							return model;	
+			           }
 			
-			model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
-			model.addObject("status", status);
-			model.addObject("stdout", stdOut);
-			model.addObject("code", code);
-			model.addObject("verify",verify);
+				else if(  verify.equals("WRONG ANSWER"))
+			          {
+					System.out.println("2");
+						ModelAndView  model=new ModelAndView("ResultPage");
+			    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+			    	 	model.addObject("code",code);
+			    	 	model.addObject("colour","red");
+			    	 	model.addObject("status",status);
+			    	 	model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
+			    	 	model.addObject("verify",verify);
+			    	 	return model;
+						}
+			}
+			else if(status.equals("COMPILATION ERROR"))
+			{
+				
+				System.out.println("3");
+				ModelAndView  model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","red");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+	    	 	
+			}
+			
+			else if (status.equals("TIME LIMIT EXCEED")){
+				
+				
+				System.out.println("4");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","blue");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
+			
+			else if(status.equals("RUNTIME ERROR")){
+				
+				System.out.println("5");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
+			
 		}
 		
 		else{
-			model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
-			model.addObject("status", status);
-			model.addObject("stdout","YOUR OUTPUT IS" + " " +stdOut);
-			model.addObject("code", code);
-			model.addObject("verify",verify);
 			
+			 if(status.equals("COMPILATION ERROR"))
+			{
+				
+				System.out.println("6");
+				ModelAndView  model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","red");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+	    	 	
+			}
+			
+			else if (status.equals("TIME LIMIT EXCEED")){
+				
+				
+				System.out.println("7");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","blue");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
+			
+			else if(status.equals("RUNTIME ERROR")){
+				
+				System.out.println("8");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
 		}
-			
-		 if(message=="CE"){
-			
-			
-			model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
-			model.addObject("status", status);
-			model.addObject("code", code);
-		}
-		
-		else if(message=="RE"){
-			
-		
-			model.addObject("TeamName",userdet.getTeam_name());
-			model.addObject("status", status);
-			model.addObject("code", code);
-		}
-	
-		
-	
-
-		return model;
+		return null;
 	}
 
 	@RequestMapping(value = "/leaderboard", method = RequestMethod.GET)

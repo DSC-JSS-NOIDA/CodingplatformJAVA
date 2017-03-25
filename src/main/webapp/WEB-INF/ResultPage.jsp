@@ -88,10 +88,8 @@
 			<div>
 				<h1>RESULT STATUS</h1>
 
-
-				<h6>Message : ${message}</h6>
-				<h6>Status : ${status}</h6>
-				<h6>Stdout : ${stdout}</h6>
+				<h6 style="color:${colour};">${status}</h6>
+				<h6>${stdout}</h6>
 				<h6>${verify}</h6>
 			</div>
 		</div>
