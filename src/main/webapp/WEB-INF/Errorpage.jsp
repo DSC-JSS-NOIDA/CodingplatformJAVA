@@ -38,8 +38,15 @@
 
 	<div id="main">
 		<div id="ques" class="z-depth-1">
-			<h5>SERVER PROBLEM TRY SUBMITTING AGAIN</h5>
-			<p>CODE : ${code}</p>
+			<h5>INTERNET PROBLEM TRY REFRESHING AGAIN</h5>
+		
+			
+			<div id="editor_lang">
+<div style="color:red">YOUR SUBMISSION</div>
+				<textarea id="editor2" name="code">${code}</textarea>
+
+
+			</div>
 		</div>
 	</div>
 
@@ -53,6 +60,44 @@
 	</div>
 	</footer>
 </body>
+
+
+			
+			<!-- load ace -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"
+				type="text/javascript" charset="utf-8"></script>
+
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+			<script>
+				// trigger extension
+
+				var lang = "c_cpp";
+				$(document).ready(function() {
+					$("#editor_select").change(function() {
+						$("#editor_select option:selected").each(function() {
+							lang = $(this).attr('value');
+							console.log(lang);
+							editor2.session.setMode("ace/mode/" + lang);
+							// v: Date.now();  
+						});
+					});
+				});
+
+				var editor2 = ace.edit("editor2");
+				editor2.setTheme("ace/theme/twilight");
+				editor2.session.setMode("ace/mode/html");
+				editor2.setAutoScrollEditorIntoView(true);
+				editor2.setOption("maxLines", 16);
+				editor2.setOption("minLines", 8);
+				var source = $("#editor2").val();
+				$("#source").val('source');
+				editor2.getSession().on("change", function() {
+					$("#source").val(editor2.getSession().getValue());
+				});
+			</script>
+
+
 <style>
 #ques {
 	background: rgba(255, 255, 255, .3);
