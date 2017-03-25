@@ -45,16 +45,6 @@
 
 			<div id="editor_lang">
 
-				<select class="language browser-default" id="editor_select"
-					name="editor_lang">
-					<option value="c_cpp">C</option>
-					<option value="c_cpp">C++</option>
-					<option value="java">Java</option>
-					<option value="python">Python</option>
-				</select>
-
-
-
 				<textarea id="editor2" name="code">${code}</textarea>
 
 

@@ -265,7 +265,7 @@ public class AllController {
 		 *         request due to internet connectivity problem
 		 * @author suyash due to bad request problem also.
 		 */
-		if (responseCode == 403) {
+		if (responseCode == 403 || responseCode == 500) {
 			ModelAndView model = new ModelAndView("Errorpage");
 			model.addObject("code", code);
 			return model;
@@ -385,7 +385,7 @@ public class AllController {
 		String verify;
 		if (out.equals(out_api)) {
 			System.out.println("output matched");
-			verify = "output matched";
+			verify = "CORRECT ANSWER";
 
 			System.out.println("-----------------------------------calculation begins here-----------------------");
 			session = sessionFactory.openSession();
@@ -494,13 +494,15 @@ public class AllController {
 
 		} else {
 			System.out.println("outputs not matched");
-			verify = "output not matched";
+			verify = "WRONG ANSWER";
 		}
 
 		/**
 		 * 
 		 * sending data to Questionpage
 		 */
+		
+
 
 		switch (status) {
 		case "AC":
@@ -519,13 +521,47 @@ public class AllController {
 			status = "RUNTIME ERROR";
 			break;
 		}
-		ModelAndView model = new ModelAndView("ResultPage");
-		model.addObject("message", message);
-		model.addObject("status", status);
-		model.addObject("stdout", stdOut);
-		model.addObject("code", code);
-		model.addObject("verify", verify);
-		model.addObject("quesid", quesid);
+		
+		
+		
+		ModelAndView model=new ModelAndView("ResultPage"); 
+		if(message=="OK" && status=="NO COMPILATION ERROR"){
+			
+			
+			model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+			model.addObject("status", status);
+			model.addObject("stdout", stdOut);
+			model.addObject("code", code);
+			model.addObject("verify",verify);
+		}
+		
+		else{
+			model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
+			model.addObject("status", status);
+			model.addObject("stdout","YOUR OUTPUT IS" + " " +stdOut);
+			model.addObject("code", code);
+			model.addObject("verify",verify);
+			
+		}
+			
+		 if(message=="CE"){
+			
+			
+			model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
+			model.addObject("status", status);
+			model.addObject("code", code);
+		}
+		
+		else if(message=="RE"){
+			
+		
+			model.addObject("TeamName",userdet.getTeam_name());
+			model.addObject("status", status);
+			model.addObject("code", code);
+		}
+	
+		
+	
 
 		return model;
 	}
@@ -669,7 +705,7 @@ public class AllController {
 		Session session = sessionFactory.openSession();
 		if ((String) httpSession.getAttribute("SESSION_email") != null) {
 			model = new ModelAndView("dashboard");
-			model.addObject("TeamName", userdet.getTeam_name());
+			model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 			List<Questions> ques = session.createCriteria(Questions.class).list();
 			model.addObject("ques", ques);
 

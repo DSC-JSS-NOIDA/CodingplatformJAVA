@@ -87,26 +87,18 @@
 			
 			<b>CHOOSE LANGUAGE</b>
 			<form method="post" action="api">
-				<select class="browser-default language" name="lang">
-					<option value="C">C</option>
-					<option value="CPP">C++</option>
-					<option value="JAVA">Java</option>
-					<option value="PYTHON">Python</option>
+				<select class="browser-default language" name="lang" id="editor_select">
+					<option lang="c_cpp" value="C">C</option>
+					<option lang="c_cpp" value="CPP">C++</option>
+					<option lang="java" value="JAVA">Java</option>
+					<option  lang="python" value="PYTHON">Python</option>
 				</select> <br> <input type="hidden" name="source" class="source"
 					value="" id="source">
 				<br>
 				
 				<div id="editor_lang">
-					<select class="language browser-default " id="editor_select"
-						name="editor_lang">
-						<option value="c_cpp">C</option>
-						<option value="c_cpp">C++</option>
-						<option value="java">Java</option>
-						<option value="python">Python</option>
-					</select>
+					
 					<textarea id="editor2" name="code">${code}</textarea>
-
-
 
 				</div>
 				<!-- load ace -->
@@ -133,7 +125,7 @@
 																				lang = $(
 																						this)
 																						.attr(
-																								'value');
+																								'lang');
 																				console
 																						.log(lang);
 																				editor2.session
@@ -183,8 +175,8 @@
 }
 
 #editor_select {
-	background-color: #242424;
-	color: white;
+
+	
 	border: 0px;
 }
 
