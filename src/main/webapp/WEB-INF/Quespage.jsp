@@ -30,7 +30,7 @@
 			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
 				In Less}</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#">Team : <span>${TeamName}</span></a></li>
+				<li><a href="#">Team : <span><b>${TeamName}</b></span></a></li>
 				<li><a href="dashboard">Dashboard</a></li>
 				<li><a href="rules">Rules</a></li>
 				<li><a href="leaderboard">Leaderboard</a></li>
@@ -40,9 +40,9 @@
 	</nav>
 	<div style="padding-left: 70px;" id="main">
 		<p style="color: #0572d2;">
-			<span style="font-size: 16px; font-weight: 500;">TEAM NAME : </span><span
+<%-- 			<span style="font-size: 16px; font-weight: 500;">TEAM NAME : </span><span
 				style="font-size: 14px;">${Teamname}</span>
-		</p>
+ --%>		</p>
 		<div id="ques" class="z-depth-1">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
@@ -51,32 +51,41 @@
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Question</b> : ${Question}
+					<b>Question</b> :
+					<br>
+					 ${Question}
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Input Format</b>:${InputFormat}
+					<b>Input Format</b>:
+					<br>
+					${InputFormat}
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Output Format</b>:${OutputFormat}
+					<b>Output Format</b>:
+					<br>
+					${OutputFormat}
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Constraint </b>:${Constraint}
+					<b>Constraint </b>:
+					<br>${Constraint}
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Sample Test Case</b>:${SampleTestCase}
+					<b>Sample Test Case</b>:
+					<br>${SampleTestCase}
 				</div>
 			</div>
-			CHOOSE LANGUAGE
+			
+			<b>CHOOSE LANGUAGE</b>
 			<form method="post" action="api">
 				<select class="browser-default language" name="lang">
 					<option value="C">C</option>
@@ -85,7 +94,8 @@
 					<option value="PYTHON">Python</option>
 				</select> <br> <input type="hidden" name="source" class="source"
 					value="" id="source">
-
+				<br>
+				
 				<div id="editor_lang">
 					<select class="language browser-default " id="editor_select"
 						name="editor_lang">
@@ -138,8 +148,8 @@
 					editor2.setTheme("ace/theme/twilight");
 					editor2.session.setMode("ace/mode/html");
 					editor2.setAutoScrollEditorIntoView(true);
-					editor2.setOption("maxLines", 16);
-					editor2.setOption("minLines", 8);
+					editor2.setOption("maxLines", 20);
+					editor2.setOption("minLines", 16);
 					var source = $("#editor2").val();
 					$("#source").val('source');
 					editor2.getSession().on("change", function() {

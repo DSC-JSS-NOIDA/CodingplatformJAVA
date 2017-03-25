@@ -24,7 +24,7 @@
 			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
 				In Less}</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#">Team : <span>${TeamName}</span></a></li>
+				<li><a href="#">Team : <span><b>${TeamName}</b></span></a></li>
 				<li><a href="dashboard">Dashboard</a></li>
 				<li><a href="rules">Rules</a></li>
 				<li><a href="leaderboard">Leaderboard</a></li>
@@ -112,7 +112,7 @@
 		<div class="footer-copyright">
 			<div class="container">
 				© 2017 Copyright <a target="_blank"
-					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDS
+					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDG
 					JSS Noida </a>
 			</div>
 		</div>

@@ -50,7 +50,7 @@
 					<form action="login" method="POST">
 						<div class="input-field col s10 offset-s1">
 							<input type="text" id="username" name="id" required> <label
-								for="username">Username</label>
+								for="email">Email</label>
 						</div>
 
 						<div class="input-field col s10 offset-s1">
@@ -114,7 +114,7 @@
 		<div class="footer-copyright">
 			<div class="container">
 				© 2017 Copyright <a target="_blank"
-					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDS
+					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDG
 					JSS Noida </a>
 			</div>
 		</div>
