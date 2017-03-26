@@ -18,8 +18,7 @@
 <body>
 	<nav>
 		<div class="nav-wrapper blue darken-1">
-			<a href="index" class="brand-logo center" style="margin-left: 30px;">{Code
-				In Less}</a>
+			<a href="index" class="brand-logo center" style="margin-left: 30px;">{Code In Less}</a>
 		</div>
 	</nav>
 	<!-- <h5 style="color: red;" class="left-align"></h5> -->
