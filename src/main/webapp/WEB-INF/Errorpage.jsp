@@ -4,13 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script src="js/jquery.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="css/materialize.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
 
 <!-- Compiled and minified JavaScript -->
-<script src="js/materialize.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <title>Error</title>
@@ -34,11 +40,11 @@
 		<div id="ques" class="z-depth-1">
 			<h5>${msg}</h5>
 		
-			
+			<input type="hidden" value="${lang}" id="editor_select">
 			<div id="editor_lang">
 <div style="color:red">YOUR SUBMISSION</div>
 				<textarea id="editor2" name="code">${code}</textarea>
-					 <input type="hidden" value="${lang}" id="editor_select">
+
 
 			</div>
 		</div>
@@ -66,17 +72,7 @@
 			<script>
 				// trigger extension
 
-				var lang = "c_cpp";
-				$(document).ready(function() {
-					$("#editor_select").change(function() {
-						$("#editor_select option:selected").each(function() {
-							lang = $(this).attr('value');
-							console.log(lang);
-							editor2.session.setMode("ace/mode/" + lang);
-							// v: Date.now();  
-						});
-					});
-				});
+			
 
 				var editor2 = ace.edit("editor2");
 				editor2.setTheme("ace/theme/twilight");

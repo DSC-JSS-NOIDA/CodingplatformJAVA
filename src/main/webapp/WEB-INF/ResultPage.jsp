@@ -36,11 +36,12 @@
 			<h1>YOUR SUBMISSION</h1>
 			<input type="hidden" name="source" class="source" value=""
 				id="source">
+				
 
 			<div id="editor_lang">
 
 				<textarea id="editor2" name="code">${code}</textarea>
-				<input type="hidden" value="${lang}" id="editor_select">
+				
 
 			</div>
 			<!-- load ace -->
@@ -52,17 +53,7 @@
 			<script>
 				// trigger extension
 
-				var lang = "c_cpp";
-				$(document).ready(function() {
-					$("#editor_select").change(function() {
-						$("#editor_select option:selected").each(function() {
-							lang = $(this).attr('value');
-							console.log(lang);
-							editor2.session.setMode("ace/mode/" + lang);
-							// v: Date.now();  
-						});
-					});
-				});
+				
 
 				var editor2 = ace.edit("editor2");
 				editor2.setTheme("ace/theme/twilight");
