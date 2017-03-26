@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.gdgjss.codingplatform.models.Questions;
-import org.gdgjss.codingplatform.models.Userdet;
 import org.gdgjss.codingplatform.models.Result;
+import org.gdgjss.codingplatform.models.Userdet;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,17 +26,17 @@ import org.hibernate.criterion.Order;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.http.HttpResponse;
 import com.google.gson.Gson;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 
 /**
  * this class contains all view controllers, maps view to service layer
@@ -151,8 +151,421 @@ public class AllController {
 		return model;
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*	https://market.mashape.com/ideas2it/hacker-earth#api-to-run-program-code
 
-	/**
+*
+*
+*
+*/	
+	@RequestMapping(value = "/api", method = RequestMethod.POST)
+
+	public ModelAndView submission2(HttpSession httpSession, @RequestParam Map<String, String> requestParams)
+			throws IOException, JSONException {
+		
+		if((String) httpSession.getAttribute("SESSION_email")!=null){
+		String language = requestParams.get("lang");
+		String code = requestParams.get("source");
+		String quesid = requestParams.get("qid");
+		System.out.println(language);
+		System.out.println(code);
+		String inputpath = "", outputpath = "", y = "", z = "";
+
+		/*
+		 * to encode source code in utf 8 , as java uses by default utf-16
+		 */
+		String urlencode = URLEncoder.encode(code, "UTF-8");
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Questions ques = (Questions) session.get(Questions.class, Integer.parseInt(quesid));
+		inputpath = ques.getInputfilepath();
+		outputpath = ques.getOutputfilepath();
+		session.close();
+		System.out.println("-----------------------code is------------------");
+		System.out.println(code);
+		System.out.println("-----------------------lang is------------------");
+		System.out.println(language);
+		
+		FileReader fr = new FileReader(inputpath);
+		int i;
+		while ((i = fr.read()) != -1)
+			y = y + ((char) i);
+		fr.close();						
+		System.out.println("Input file------------------------------------- \n" + y);
+		String respLine="";
+		try{
+			
+			System.out.println(" market.mashape.com wala---------------->>>>");
+		com.mashape.unirest.http.HttpResponse<JsonNode> response = Unirest.post("https://ideas2it-hackerearth.p.mashape.com/run/")
+				.header("X-Mashape-Key", "n4bl58t4OrmshTdRKLfrUIR3f2V7p1GpWVXjsnbhJnPZvPOpoE")
+				.header("Content-Type", "application/x-www-form-urlencoded")
+				.header("Accept", "application/json")
+				.field("async", 0)
+				.field("client_secret", "285d57d6ef8550023946fb0e7cbb50377fb464a7")
+				.field("input", y)
+				.field("lang", language)
+				.field("memory_limit", 262144)
+				.field("source", code)
+				.field("time_limit", 10)
+				.asJson();
+				System.out.println("Response here ------------------------------------------");
+				int responseCode = response.getStatus();
+				if (responseCode == 403 || responseCode == 500) {
+					ModelAndView model = new ModelAndView("Errorpage");
+					model.addObject("code", code);
+					return model;
+				}
+				System.out.println(response.getStatus());
+				System.out.println(response.getStatusText());
+				System.out.println(response.getBody());
+				
+				BufferedReader in = new BufferedReader(new InputStreamReader(response.getRawBody()));
+
+				respLine = in.readLine();
+				System.out.println("JSON response --->>>");
+				System.out.println(respLine);
+				
+						
+				}
+				catch(Exception e)
+				{
+					System.out.println("UNIREST ERROR BLOCK");
+				}		
+
+			String message = "", stdOut = "", status = "", htmlOutput = "";
+		try {
+			JSONObject json = new JSONObject(respLine);
+
+			if (json.has("run_status")) {
+
+				JSONObject resultObject = json.getJSONObject("run_status");
+				status = resultObject.getString("status");
+				htmlOutput = resultObject.getString("output_html");
+
+				if (resultObject.has("output"))
+					stdOut = resultObject.getString("output");
+
+			}
+
+			if (json.has("compile_status")) {
+				message = json.getString("compile_status");
+
+			}
+			else {
+				message = "not avilable";
+			}
+
+		} catch (Exception e) {
+			System.out.println("ERROR in /API");
+		}
+		Gson gsons = new Gson();
+		String jsonapi = gsons.toJson(stdOut);
+		String out_api = "[" + jsonapi + "]";
+
+		System.out.println(message);
+		System.out.println(status);
+		System.out.println(stdOut);
+		System.out.println(htmlOutput);
+		System.out.println(out_api);
+
+		System.out.println(outputpath); // output file path
+		StringBuilder sb = new StringBuilder();
+		BufferedReader file = new BufferedReader(new FileReader(outputpath));
+
+		while ((z = file.readLine()) != null) {
+			sb.append(z);
+			sb.append("\n");
+		}
+
+
+		Gson gson = new Gson();
+		String jsons = gson.toJson(sb);
+		String out = "[" + jsons + "]";
+		System.out.println(out);
+
+		String verify;
+		if (out.equals(out_api)) {
+			System.out.println("output matched");
+			verify = "CORRECT ANSWER";
+
+			System.out.println("-----------------------------------calculation begins here-----------------------");
+			session = sessionFactory.openSession();
+
+			/**
+			 * @author suyash
+			 * 
+			 *         code for leaderboard and marking scheme
+			 */
+			int lengthOfCode = code.length();
+			String lang = language;
+			if (language.equals("CPP")) {
+				lang = "C";
+			}
+			String correspondingQuesMark = "ques" + quesid + "_" + lang;
+			String correspondingQuesLength = "ques" + quesid + "_" + lang + "_l";
+			String emailid = (String) httpSession.getAttribute("SESSION_email");
+			// chiki
+			String hql_current_user_length = "SELECT " + correspondingQuesLength + " FROM Result R WHERE R.email = '"
+					+ emailid + "'";
+			Query query = session.createQuery(hql_current_user_length);
+			List r = query.list();
+			int current_user_length = (int) r.get(0);
+			System.out.println("current_user_length --->> " + current_user_length);
+			if (lengthOfCode < current_user_length) {
+				String hql_min_length = "SELECT min(" + correspondingQuesLength + ") FROM Result R";
+				query = session.createQuery(hql_min_length);
+				r = query.list();
+				int min_length = (int) r.get(0);
+				System.out.println("min_length --->> " + min_length);
+				String hql_update_length = "UPDATE Result R set " + correspondingQuesLength + " = " + lengthOfCode
+						+ " WHERE R.email = '" + emailid + "'";
+				query = session.createQuery(hql_update_length);
+				int effected_rows = query.executeUpdate();
+				System.out.println("updated length --->> " + lengthOfCode + " effected row ---->> " + effected_rows);
+				if (lengthOfCode < min_length) {
+					min_length = lengthOfCode;
+					String fetch_corresponding_marks_length = "SELECT email , " + correspondingQuesMark + " , "
+							+ correspondingQuesLength + " , total FROM Result R";
+					query = session.createQuery(fetch_corresponding_marks_length);
+					List<Object> re = (List<Object>) query.list();
+					Iterator itr = re.iterator();
+					System.out.println("DATA FROM TABLE--->>");
+					while (itr.hasNext()) {
+						Object[] obje = (Object[]) itr.next();
+						// now you have one array of Object for each row
+						String idemail = String.valueOf(obje[0]);
+						Integer marks = Integer.parseInt(String.valueOf(obje[1]));
+						Integer length = Integer.parseInt(String.valueOf(obje[2]));
+						Integer total = Integer.parseInt(String.valueOf(obje[3]));
+						System.out.println(idemail + "  " + marks + "  " + length + " " + total);
+						if (length < 1000000) {
+							int updated_marks = 100 - (length - min_length);
+							if (updated_marks < 20)
+								updated_marks = 20;
+							total = total - marks + updated_marks;
+							String hql_update_marks = "UPDATE Result R set " + correspondingQuesMark + " = "
+									+ updated_marks + " WHERE R.email = '" + idemail + "'";
+							query = session.createQuery(hql_update_marks);
+							int effected_rows_marks = query.executeUpdate();
+							System.out.println(
+									"updated marks of  --->> " + effected_rows_marks + " marks is   " + updated_marks);
+							String hql_update_total_marks = "UPDATE Result R set R.total = " + total
+									+ " WHERE R.email = '" + idemail + "'";
+							query = session.createQuery(hql_update_total_marks);
+							int hql_update_totalmarks = query.executeUpdate();
+
+						}
+
+					}
+				} else {
+					String fetch_corresponding_marks_length = "SELECT " + correspondingQuesMark + " , "
+							+ correspondingQuesLength + " , total FROM Result R where R.email= '" + emailid + "'";
+					query = session.createQuery(fetch_corresponding_marks_length);
+					List<Object> re = (List<Object>) query.list();
+					Iterator itr = re.iterator();
+
+					while (itr.hasNext()) {
+						Object[] obje = (Object[]) itr.next();
+						// now you have one array of Object for each row
+						Integer marks = Integer.parseInt(String.valueOf(obje[0]));
+						Integer length = Integer.parseInt(String.valueOf(obje[1]));
+						Integer total = Integer.parseInt(String.valueOf(obje[2]));
+						System.out.println(marks + "  " + length);
+						if (length < 1000000) {
+							int updated_marks = 100 - (length - min_length);
+							if (updated_marks < 20)
+								updated_marks = 20;
+							total = total - marks + updated_marks;
+							System.out.println("MArks to be updated-->>>  " + updated_marks);
+							String hql_update_marks = "UPDATE Result R set " + correspondingQuesMark + " = "
+									+ updated_marks + " WHERE R.email = '" + emailid + "'";
+							query = session.createQuery(hql_update_marks);
+							int effected_rows_marks = query.executeUpdate();
+							String hql_update_total_marks = "UPDATE Result R set R.total = " + total
+									+ " WHERE R.email = '" + emailid + "'";
+							query = session.createQuery(hql_update_total_marks);
+							int hql_update_totalmarks = query.executeUpdate();
+						}
+					}
+
+				}
+			}
+
+			session.close();
+
+		} else {
+			System.out.println("outputs not matched");
+			verify = "WRONG ANSWER";
+		}
+
+		/**
+		 * 
+		 * sending data to Questionpage
+		 */
+
+		switch (status) {
+		case "AC":
+			status = "NO COMPILATION ERROR";
+			break;
+		case "CE":
+			status = "COMPILATION ERROR";
+			break;
+		case "TLE":
+			status = "TIME LIMIT EXCEED";
+			break;
+		case " ":
+			status = "RUNTIME ERROR";
+			break;
+		case "RE":
+			status = "RUNTIME ERROR";
+			break;
+		}
+    
+		System.out.println(status);
+		
+		System.out.println(message);
+		if(message.equals("OK"))
+		{
+			
+			System.out.println("-1");
+			if(status.equals("NO COMPILATION ERROR"))
+				
+			{  
+				
+				System.out.println("0");
+				if(verify.equals("CORRECT ANSWER")){
+				
+					
+					System.out.println("1");
+						ModelAndView 	model=new ModelAndView("ResultPage");
+						model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+						model.addObject("code",code);
+						model.addObject("colour","green");
+						model.addObject("status",status);
+						model.addObject("verify",verify);
+						model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
+							return model;	
+			           }
+			
+				else if(  verify.equals("WRONG ANSWER"))
+			          {
+					System.out.println("2");
+						ModelAndView  model=new ModelAndView("ResultPage");
+			    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+			    	 	model.addObject("code",code);
+			    	 	model.addObject("colour","red");
+			    	 	model.addObject("status",status);
+			    	 	model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
+			    	 	model.addObject("verify",verify);
+			    	 	return model;
+						}
+			}
+			else if(status.equals("COMPILATION ERROR"))
+			{
+				
+				System.out.println("3");
+				ModelAndView  model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","red");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+	    	 	
+			}
+			
+			else if (status.equals("TIME LIMIT EXCEED")){
+				
+				
+				System.out.println("4");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","blue");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
+			
+			else if(status.equals("RUNTIME ERROR")){
+				
+				System.out.println("5");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
+			
+		}
+		
+		else{
+			
+			 if(status.equals("COMPILATION ERROR"))
+			{
+				
+				System.out.println("6");
+				ModelAndView  model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","red");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+	    	 	
+			}
+			
+			else if (status.equals("TIME LIMIT EXCEED")){
+				
+				
+				System.out.println("7");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","blue");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
+			
+			else if(status.equals("RUNTIME ERROR")){
+				
+				System.out.println("8");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("status",status);
+	    	 	return model;
+			}
+		  }
+		}
+		
+		else
+		{
+			ModelAndView model=new ModelAndView("index");
+			model.addObject("invalid","KINDLY LOGIN FIRST");
+			return model;
+		}
+		return null;
+	}
+	
+	
+/*
+ORIGINAL CODE
+*
+*
+*
+*
+*
+*
+*
+*/	/**
 	 * 
 	 * HackerEarth API controller
 	 * 
@@ -162,7 +575,7 @@ public class AllController {
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	@RequestMapping(value = "/api", method = RequestMethod.POST)
+	@RequestMapping(value = "/api2", method = RequestMethod.POST)
 
 	public ModelAndView submission(HttpSession httpSession, @RequestParam Map<String, String> requestParams)
 			throws IOException, JSONException {
@@ -245,7 +658,7 @@ public class AllController {
 		 *         add other available parameter for TLE, size etc etc
 		 */
 		String urlParameters = "source=" + urlencode + "&lang=" + language + "&input=" + y
-				+ "&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43";
+				+ "&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43"+"&time_limit=5&memory_limit=262144&async=0";
 
 		// Send post request
 		con.setDoOutput(true);
