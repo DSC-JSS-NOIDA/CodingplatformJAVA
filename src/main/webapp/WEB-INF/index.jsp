@@ -73,7 +73,7 @@
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="participant1_roll"
 									id="participant1_roll" required> <label
-									for="participant1_roll">Participant 1 roll number</label>
+									for="participant1_roll">Participant 1 roll number/ Zeal Id</label>
 							</div>
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="participant2_name"
@@ -83,7 +83,7 @@
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="participant2_roll"
 									id="participant2_roll" required> <label
-									for="participant2_roll">Participant 2 roll number</label>
+									for="participant2_roll">Participant 2 roll number / Zeal Id</label>
 							</div>
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="emailid" id="email" required> <label
