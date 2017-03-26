@@ -553,6 +553,16 @@ public class AllController {
 	    	 	model.addObject("status",status);
 	    	 	return model;
 			}
+				else if(status.equals(null)){
+				
+				System.out.println("9");
+				ModelAndView model=new ModelAndView("Errorpage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("msg","UNEXPECTED ERROR TRY AGAIN!!!");
+	    	 	return model;
+			}
 		  }
 		}
 		
