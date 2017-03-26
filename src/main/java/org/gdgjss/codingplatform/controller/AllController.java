@@ -172,6 +172,8 @@ public class AllController {
 			throws IOException, JSONException {
 		
 		if((String) httpSession.getAttribute("SESSION_email")!=null){
+			
+			
 		String language = requestParams.get("lang");
 		String code = requestParams.get("source");
 		String quesid = requestParams.get("qid");
@@ -218,9 +220,16 @@ public class AllController {
 				.asJson();
 				System.out.println("Response here ------------------------------------------");
 				int responseCode = response.getStatus();
-				if (responseCode == 403 || responseCode == 500) {
+				if (responseCode == 403 || responseCode == 500 ) {
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
+					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING PAGE");
+					return model;
+				}
+				else if(responseCode == 504){
+					ModelAndView model = new ModelAndView("Errorpage");
+					model.addObject("code", code);
+					model.addObject("msg","YOUR CODE  EXCEEDED MAX CHARACTER LIMIT  TRY AGAIN!!!");
 					return model;
 				}
 				System.out.println(response.getStatus());
@@ -413,7 +422,7 @@ public class AllController {
 
 		switch (status) {
 		case "AC":
-			status = "NO COMPILATION ERROR";
+			status = "COMPILED SUCCESSFULLY";
 			break;
 		case "CE":
 			status = "COMPILATION ERROR";
@@ -436,7 +445,7 @@ public class AllController {
 		{
 			
 			System.out.println("-1");
-			if(status.equals("NO COMPILATION ERROR"))
+			if(status.equals("COMPILED SUCCESSFULLY"))
 				
 			{  
 				
@@ -451,7 +460,7 @@ public class AllController {
 						model.addObject("colour","green");
 						model.addObject("status",status);
 						model.addObject("verify",verify);
-						model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
+						
 							return model;	
 			           }
 			
@@ -463,7 +472,6 @@ public class AllController {
 			    	 	model.addObject("code",code);
 			    	 	model.addObject("colour","red");
 			    	 	model.addObject("status",status);
-			    	 	model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
 			    	 	model.addObject("verify",verify);
 			    	 	return model;
 						}

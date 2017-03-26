@@ -38,7 +38,7 @@
 
 	<div id="main">
 		<div id="ques" class="z-depth-1">
-			<h5>INTERNET PROBLEM TRY REFRESHING AGAIN</h5>
+			<h5>${msg}</h5>
 		
 			
 			<div id="editor_lang">
