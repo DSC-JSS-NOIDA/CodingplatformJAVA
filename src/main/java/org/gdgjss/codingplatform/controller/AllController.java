@@ -224,12 +224,14 @@ public class AllController {
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
 					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING PAGE");
+					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 					return model;
 				}
 				else if(responseCode == 504){
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
 					model.addObject("msg","YOUR CODE  EXCEEDED MAX CHARACTER LIMIT  TRY AGAIN!!!");
+					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 					return model;
 				}
 				System.out.println(response.getStatus());
