@@ -680,7 +680,7 @@ ORIGINAL CODE
 		 *         request due to internet connectivity problem
 		 * @author suyash due to bad request problem also.
 		 */
-		if (responseCode == 403 || responseCode == 500) {
+		if (responseCode == 403 || responseCode == 500 || responseCode == 504) {
 			ModelAndView model = new ModelAndView("Errorpage");
 			model.addObject("code", code);
 			return model;
@@ -1206,7 +1206,7 @@ ORIGINAL CODE
 
 		} else {
 			model = new ModelAndView("index");
-			model.addObject("invalid", "LOG IN FORST TO CONTINUE");
+			model.addObject("invalid", "LOG IN FIRST TO CONTINUE");
 		}
 		return model;
 	}
