@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.api.client.http.HttpResponse;
 import com.google.gson.Gson;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -209,6 +208,9 @@ public class AllController {
 		fr.close();						
 		System.out.println("Input file------------------------------------- \n" + y);
 		String respLine="";
+		System.out.println("length of input file--->>>> "+ y.length());
+		System.out.println("length of code file--->>>> "+ code.length());
+		
 		try{
 			
 			System.out.println(" market.mashape.com wala---------------->>>>");
@@ -226,7 +228,7 @@ public class AllController {
 				.asJson();
 				System.out.println("Response here ------------------------------------------");
 				int responseCode = response.getStatus();
-				if (responseCode == 403 || responseCode == 500 ) {
+				if (responseCode == 403 || responseCode == 500 || responseCode == 504 ) {
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
 					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING PAGE");
@@ -234,14 +236,14 @@ public class AllController {
 					model.addObject("lang",language);
 					return model;
 				}
-				else if(responseCode == 504){
+				/*else if(responseCode == 504){
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
 					model.addObject("msg","YOUR CODE  EXCEEDED MAX CHARACTER LIMIT  TRY AGAIN!!!");
 					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 					model.addObject("lang",language);
 					return model;
-				}
+				}*/
 				System.out.println(response.getStatus());
 				System.out.println(response.getStatusText());
 				System.out.println(response.getBody());
@@ -256,14 +258,14 @@ public class AllController {
 				}
 				catch(Exception e)
 				{
+
 					System.out.println("UNIREST ERROR BLOCK");
 					ModelAndView model=new ModelAndView("Errorpage");
 					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING");
 					model.addObject("lang",language);
 					model.addObject("code",code);
 					return model;
-					
-					
+
 				}		
 
 			String message = "", stdOut = "", status = "", htmlOutput = "";
@@ -295,13 +297,16 @@ public class AllController {
 		Gson gsons = new Gson();
 		String jsonapi = gsons.toJson(stdOut);
 		String out_api = "[" + jsonapi + "]";
-
+		
+		
+		System.out.println("Sarthaks gooo code--------------");
 		System.out.println(message);
 		System.out.println(status);
 		System.out.println(stdOut);
 		System.out.println(htmlOutput);
 		System.out.println(out_api);
-
+		System.out.println("Sarthaks gooo code ends here--------------");
+		
 		System.out.println(outputpath); // output file path
 		StringBuilder sb = new StringBuilder();
 		BufferedReader file = new BufferedReader(new FileReader(outputpath));
@@ -1284,334 +1289,3 @@ ORIGINAL CODE
 	}
 }
 
-// adding new user from admin pannel
-/*
- * @RequestMapping(value = "/add_user", method = RequestMethod.POST) public
- * ModelAndView adduser(HttpSession httpSession, @RequestParam Map<String,
- * String> requestParams) { String email = requestParams.get("email"); Session
- * session = sessionFactory.openSession(); session.beginTransaction();
- * ModelAndView model = new ModelAndView("add"); Query queryResult =
- * session.createQuery("from Userdet"); java.util.List allUsers; String
- * email_id; email_id = null; allUsers = queryResult.list(); int f; f = 0; for
- * (int i = 0; i < allUsers.size(); i++) { Userdet user = (Userdet)
- * allUsers.get(i); email_id = user.getEmailid(); if (email.equals(email_id)) {
- * f = 1; break; } } if (f != 1) { Userdet user = new Userdet();
- * user.setEmailid(email); session.save(user);
- * session.getTransaction().commit(); session.close(); user = null;
- * System.out.println(email); model.addObject("add", "record added"); } else {
- * System.out.println("duplicate"); model.addObject("dup", "duplicate record");
- * } return model; } }
- */
-/*
- * code for admin pannel operations commented for further use
- * 
- */
-// // add new questions to db
-// @RequestMapping(value = "/addques", method = RequestMethod.POST)
-// public ModelAndView addques(HttpSession httpSession, @RequestParam
-// Map<String,String> requestParams) {
-// String title=requestParams.get("title");
-// String details=requestParams.get("detail");
-// String constraints=requestParams.get("const");
-// String inputformat=requestParams.get("inp_format");
-// String outpuformat=requestParams.get("op_format");
-// String inputtestcase=requestParams.get("inp_testcase");
-// String outputtestcase=requestParams.get("op_testcase");
-// String file=requestParams.get("file");
-// Session session = sessionFactory.openSession();
-// session.beginTransaction();
-//
-// ModelAndView model = new ModelAndView("addques");
-//
-// Query queryResult = session.createQuery("from Questions");
-// java.util.List allUsers;
-// String titl;
-// titl=null;
-//
-// allUsers = queryResult.list();
-// int f;
-// f=0;
-// for (int i = 0; i < allUsers.size(); i++) {
-// Questions user = (Questions) allUsers.get(i);
-// titl=user.getTitle();
-//
-// if(title.equals(titl)){
-// f=1;
-//
-// break;
-//
-//
-// }
-// }
-//
-// if(f!=1){
-// Questions user= new Questions();
-// user.setTitle(title);
-// user.setDetail(details);
-// user.setConstraints(constraints);
-// user.setInputformat(inputformat);
-// user.setInputtestcase(inputtestcase);
-// user.setOutputtestcase(outputtestcase);
-// // user.setPath(path);
-// session.save(user);
-// session.getTransaction().commit();
-//
-// session.close();
-// user=null;
-// System.out.println(title);
-// model.addObject("add","record added");
-// }
-// else
-// { System.out.println("duplicate");
-// model.addObject("dup","duplicate record");
-// }
-// return model;
-//
-// }
-// // editing the existing questions
-// @RequestMapping(value = "/ques_edit", method = RequestMethod.POST)
-// public ModelAndView quesedit(HttpSession httpSession, @RequestParam
-// Map<String,String> requestParams) {
-// String quesId = requestParams.get("id");
-//
-// Session session = sessionFactory.openSession();
-// session.beginTransaction();
-//
-// ModelAndView model = new ModelAndView("quesedit");
-//
-// Query queryResult = session.createQuery("from Questions");
-// java.util.List allUsers;
-// String det,title,inp_format,cons,inp_case,op_case,path;
-// int qid;
-// qid=0;
-// det=null;
-// title=null;
-// inp_format=null;
-// cons=null;
-// inp_case=null;
-// op_case=null;
-// path=null;
-// allUsers = queryResult.list();
-// int f;
-// f=0;
-// for (int i = 0; i < allUsers.size(); i++) {
-// Questions user = (Questions) allUsers.get(i);
-// qid=user.getQuesid();
-// title=user.getTitle();
-// cons=user.getConstraints();
-// det=user.getDetail();
-// inp_case=user.getInputtestcase();
-// op_case=user.getOutputtestcase();
-// path=user.getPath();
-//
-//
-// if(quesId.equals(qid) ){
-// f=1;
-// break;
-//
-// }
-//
-// }
-// if(f==1){
-// model.addObject("qid",qid);
-// model.addObject("title",title);
-// model.addObject("detail",det);
-// model.addObject("constraints",cons);
-// model.addObject("inputcase",inp_case);
-// model.addObject("outputcase",op_case);
-// model.addObject("path",path);
-//
-// }
-// else
-// {
-// model.addObject("norec","no record found");
-// }
-//
-// return model;
-//
-// }
-// //modify questions
-// @RequestMapping(value = "/modifyque", method = RequestMethod.POST)
-// public ModelAndView modify(HttpSession httpSession, @RequestParam
-// Map<String,String> requestParams) {
-// ModelAndView model = new ModelAndView("quesedit");
-// String quesid = requestParams.get("id");
-// String det,title,inp_format,cons,inp_case,op_case,path;
-// det=requestParams.get("detail");
-// title=requestParams.get("title");
-// cons=requestParams.get("cons");
-// inp_case=requestParams.get("inpcase");
-// op_case=requestParams.get("opcase");
-// /*
-// space for code for file upload
-// after which path requsest parameter to be used
-//
-// */
-// // path=requestParams.get("");
-// Session session = sessionFactory.openSession();
-// session.beginTransaction();
-//
-//
-// Questions user= (Questions) session.get(Questions.class,quesid);
-// user.setQuesid(Integer.parseInt(quesid));
-// user.setDetail(det);
-// user.setConstraints(cons);
-// user.setInputtestcase(inp_case);
-// user.setOutputtestcase(op_case);
-// /*
-// path to be set after the file upload code is written
-//
-// */
-// //user.setPath(path);
-// session.update(user);
-// session.getTransaction().commit();
-// session.close();
-//
-//
-// model.addObject("rec","record edited");
-// return model;
-// }
-//
-//
-// }
-
-/*
- * google login oauth commented for further use
- * 
- */
-
-// @RequestMapping(value = "/registration", method = RequestMethod.POST)
-// public ModelAndView registration(HttpSession httpSession, @RequestParam
-// Map<String,String> requestParams) {
-// GoogleIdToken.Payload payLoad;
-// ModelAndView model=new ModelAndView("dashboard");
-// String auth_token= requestParams.get("auth_token");
-// String branch=requestParams.get("branch");
-// String year=requestParams.get("year");
-// String admno=requestParams.get("admno");
-//
-// // code for fetching user data from google api
-// try {
-// payLoad = IdTokenVerifierAndParser.getPayload(auth_token);
-// String name = (String) payLoad.get("name");
-// String email = payLoad.getEmail();
-// avatar= (String) payLoad.get("picture");
-// System.out.println("User name: " + name);
-// System.out.println("User email: " + email);
-// System.out.println("avatar :" + avatar);
-// System.out.println("branch :" + branch);
-// System.out.println("year :" + year);
-// System.out.println("admission no :" + admno);
-// userdet=new Userdet
-// (email,avatar,year,branch,name,admno);
-// Session session = sessionFactory.openSession();
-// session.beginTransaction();
-//
-// session.save(userdet);
-// session.getTransaction().commit();
-// session.close();
-// model.addObject("name",name);
-// model.addObject("avatar",avatar);
-//
-// } catch (Exception e) {
-// // TODO Auto-generated catch block
-// e.printStackTrace();
-// }
-//
-// return model;
-//
-// }
-/**
- * // * Controller, after completion of registration or login verification // *
- * // * @param httpSession // * @param email // * @return ModelAndView //
- */
-// @RequestMapping(value = "/dashboard", method = RequestMethod.POST)
-// public ModelAndView login(HttpSession httpSession, @RequestParam ("email")
-// String email){
-// httpSession.setAttribute("loggedinuser",email);
-// ModelAndView model=new ModelAndView("dashboard");//generating session for the
-// logged in user
-// Session session =sessionFactory.openSession();
-// session.beginTransaction();
-// userdet = (Userdet) session.get(Userdet.class, email);
-// //String name=userdet.getName();
-// //String avatar=userdet.getAvatar();
-// //model.addObject("name",name);
-// model.addObject("avatar",avatar);
-// return model;
-//
-// }
-//
-/// **
-// * controller for first time logging user for registration
-// *
-// * @param httpSession
-// * @param requestParams
-// * @return ModelAndView
-// */
-//
-/**
- * // *for login verification through google API // * @param httpSession //
- * * @param email // * @return String //
- */
-/// *MediaType.APPLICATION_JSON_VALUE return string*/
-// @RequestMapping(value = "/loginverifier",
-// method = RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-// public @ResponseBody String loginverify(HttpSession httpSession,
-// @RequestParam ("user_email") String email){
-// Session session =sessionFactory.openSession();
-// session.beginTransaction();
-//
-// userdet = (Userdet) session.get(Userdet.class, email);
-//
-// session.close();
-// if(userdet != null)
-// {
-// return "registered";
-// }
-//
-// else
-// return "new_user";
-//
-// }
-
-// code from index
-// controller-----------------------------------------------------
-// String correspondingQuesMark="ques1_JAVA";
-// String correspondingQuesLength="ques1_JAVA_l";
-// Session session = sessionFactory.openSession();
-// Result res = (Result) session.get(Result.class, "shasha@grey.com");
-// String hql="SELECT "+correspondingQuesMark+" , "+correspondingQuesLength+"
-// FROM Result R";
-// String hql="SELECT email , "+correspondingQuesMark+" ,
-// "+correspondingQuesLength+" FROM Result R";
-
-// String hql="UPDATE Result R set "+ correspondingQuesLength+" = "+1000000+"
-// WHERE R.email = 'sss@hh.com'";
-// String hql="SELECT min("+ correspondingQuesLength + ") FROM Result R";
-// String hql= "SELECT"+" ques1_JAVA_l"+" FROM Result R WHERE R.email =
-// 'shasha@grey.com' ";
-// System.out.println("HQL is --->>>");
-// System.out.println(hql);
-
-// Query query = session.createQuery(hql);
-// int rr=query.executeUpdate();
-// List<Object> r =(List<Object>) query.list();
-// Iterator itr = r.iterator();
-
-// System.out.println("YAHI HHHHHH -------- >>>>");
-
-/*
- * while(itr.hasNext()){ Object[] obj = (Object[]) itr.next(); //now you have
- * one array of Object for each row String client = String.valueOf(obj[0]);
- * Integer marks = Integer.parseInt(String.valueOf(obj[1])); Integer length =
- * Integer.parseInt(String.valueOf(obj[2])); System.out.println(client +
- * " "+marks +"  "+ length); //SERVICE assumed as int //same way for all obj[2],
- * obj[3], obj[4] }
- */
-// System.out.println(rr);
-/*
- * for(int i=0; i<r.size();i++) {
- * System.out.println(((Fetch)r.get(i)).getCorresponding_length()); }
- */ // System.out.println(r.get(0));
-// session.close();
