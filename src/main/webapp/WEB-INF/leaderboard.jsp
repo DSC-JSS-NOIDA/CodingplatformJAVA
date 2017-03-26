@@ -5,16 +5,13 @@
 <html>
 <head>
 <title>Leaderboard</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="js/jquery.js"></script>
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+<link rel="stylesheet" href="css/materialize.min.css">
 
 <!-- Compiled and minified JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="js/materialize.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
@@ -24,7 +21,7 @@
 			<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
 				In Less}</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#">Team : <span><b>${TeamName}</b></span></a></li>
+
 				<li><a href="dashboard">Dashboard</a></li>
 				<li><a href="rules">Rules</a></li>
 				<li><a href="leaderboard">Leaderboard</a></li>
@@ -44,6 +41,8 @@
 					<tr>
 						<th><span>RANK</span></th>
 						<th><span>TEAM</span></th>
+
+						<th><span>TOTAL SCORE</span></th>
 
 						<th><span>Ques 1 C/C++</span></th>
 						<th><span>Ques 1 JAVA</span></th>
@@ -65,14 +64,14 @@
 						<th><span>Ques 5 JAVA</span></th>
 						<th><span>Ques 5 PYTHON</span></th>
 
-						<th><span>TOTAL SCORE</span></th>
-
 					</tr>
 
 					<c:forEach var="result_row" items="${resultRows}">
 						<tr>
 							<td><%=i%></td>
 							<td><c:out value="${result_row.team}" /></td>
+
+							<td><c:out value="${result_row.total}" /></td>
 
 							<td><c:out value="${result_row.ques1_C}" /></td>
 							<td><c:out value="${result_row.ques1_JAVA}" /></td>
@@ -95,7 +94,6 @@
 							<td><c:out value="${result_row.ques5_JAVA}" /></td>
 							<td><c:out value="${result_row.ques5_PYTHON}" /></td>
 
-							<td><c:out value="${result_row.total}" /></td>
 						</tr>
 						<%
 							i = i + 1;

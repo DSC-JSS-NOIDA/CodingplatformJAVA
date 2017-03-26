@@ -4,20 +4,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<meta charset="UTF-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+<script src="js/jquery.js"></script>
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+<link rel="stylesheet" href="css/materialize.min.css">
 
 <!-- Compiled and minified JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="js/materialize.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta charset="ISO-8859-1">
@@ -40,64 +33,75 @@
 	</nav>
 	<div style="padding-left: 70px;" id="main">
 		<p style="color: #0572d2;">
-<%-- 			<span style="font-size: 16px; font-weight: 500;">TEAM NAME : </span><span
+			<%-- 			<span style="font-size: 16px; font-weight: 500;">TEAM NAME : </span><span
 				style="font-size: 14px;">${Teamname}</span>
- --%>		</p>
+ --%>
+		</p>
 		<div id="ques" class="z-depth-1">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Title</b> : ${Title} <br />
+					<h4>
+						<b>Title</b> : ${Title} <br />
+					</h4>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Question</b> :
-					<br>
-					 ${Question}
+					<h5>
+						<b>Question</b> :
+					</h5>
+					<p>${Question}</p>
+
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Input Format</b>:
-					<br>
-					${InputFormat}
+					<h5>
+						<b>Input Format</b>:
+					</h5>
+					<p>${InputFormat}</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Output Format</b>:
-					<br>
-					${OutputFormat}
+					<h5>
+						<b>Output Format</b>:
+					</h5>
+					<p>${OutputFormat}</p>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Constraint </b>:
-					<br>${Constraint}
+					<h5>
+						<b>Constraint </b>:
+					</h5>
+					<p>${Constraint}</p>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<b>Sample Test Case</b>:
-					<br>${SampleTestCase}
+					<h5>
+						<b>Sample Test Case</b>:
+					</h5>
+					<p>${SampleTestCase}</p>
 				</div>
 			</div>
-			
+
 			<b>CHOOSE LANGUAGE</b>
 			<form method="post" action="api">
-				<select class="browser-default language" name="lang" id="editor_select">
+				<select class="browser-default language" name="lang"
+					id="editor_select">
 					<option lang="c_cpp" value="C">C</option>
 					<option lang="c_cpp" value="CPP">C++</option>
 					<option lang="java" value="JAVA">Java</option>
-					<option  lang="python" value="PYTHON">Python</option>
+					<option lang="python" value="PYTHON">Python</option>
 				</select> <br> <input type="hidden" name="source" class="source"
-					value="" id="source">
-				<br>
-				
+					value="" id="source"> <br>
+
 				<div id="editor_lang">
-					
+
 					<textarea id="editor2" name="code">${code}</textarea>
 
 				</div>
@@ -170,13 +174,15 @@
 
 </body>
 <style type="text/css" media="screen">
-#editor {
-	
+h1 {
+	font-size: 10xp;
+}
+
+h5 {
+	font-size: 20px;
 }
 
 #editor_select {
-
-	
 	border: 0px;
 }
 

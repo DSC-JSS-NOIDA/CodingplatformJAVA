@@ -103,13 +103,19 @@ public class AllController {
 		Session session = sessionFactory.openSession();
 		userdet = (Userdet) session.get(Userdet.class, emailid);
 		if (userdet != null) {
-			if (userdet.getPassword().equals(password)) {
-				httpSession.setAttribute("SESSION_email", userdet.getEmailid());
-				httpSession.setAttribute("SESSION_teamname", userdet.getTeam_name());
-				model = new ModelAndView("dashboard");
-				model.addObject("TeamName", userdet.getTeam_name());
-				List<Questions> ques = session.createCriteria(Questions.class).list();
-				model.addObject("ques", ques);
+					if (userdet.getPassword().equals(password)) {
+							httpSession.setAttribute("SESSION_email", userdet.getEmailid());
+							httpSession.setAttribute("SESSION_teamname", userdet.getTeam_name());
+							if((String) httpSession.getAttribute("SESSION_email")!=null){
+								model = new ModelAndView("dashboard");
+								model.addObject("TeamName", userdet.getTeam_name());
+								List<Questions> ques = session.createCriteria(Questions.class).list();
+								model.addObject("ques", ques);
+				               }
+							else{
+								model = new ModelAndView("index");
+								model.addObject("invalid", "LOG IN FIRST TO CONTINUE");
+							}
 			} else {
 				model = new ModelAndView("index");
 				model.addObject("invalid", "invalid details");
@@ -171,6 +177,8 @@ public class AllController {
 			throws IOException, JSONException {
 		
 		if((String) httpSession.getAttribute("SESSION_email")!=null){
+			
+			
 		String language = requestParams.get("lang");
 		String code = requestParams.get("source");
 		String quesid = requestParams.get("qid");
@@ -220,11 +228,22 @@ public class AllController {
 				.asJson();
 				System.out.println("Response here ------------------------------------------");
 				int responseCode = response.getStatus();
-				if (responseCode == 403 || responseCode == 500) {
+				if (responseCode == 403 || responseCode == 500 || responseCode == 504 ) {
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
+					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING PAGE");
+					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+					model.addObject("lang",language);
 					return model;
 				}
+				/*else if(responseCode == 504){
+					ModelAndView model = new ModelAndView("Errorpage");
+					model.addObject("code", code);
+					model.addObject("msg","YOUR CODE  EXCEEDED MAX CHARACTER LIMIT  TRY AGAIN!!!");
+					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+					model.addObject("lang",language);
+					return model;
+				}*/
 				System.out.println(response.getStatus());
 				System.out.println(response.getStatusText());
 				System.out.println(response.getBody());
@@ -239,9 +258,14 @@ public class AllController {
 				}
 				catch(Exception e)
 				{
-					ModelAndView model = new ModelAndView("Errorpage");
-					model.addObject("code", code);
+
+					System.out.println("UNIREST ERROR BLOCK");
+					ModelAndView model=new ModelAndView("Errorpage");
+					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING");
+					model.addObject("lang",language);
+					model.addObject("code",code);
 					return model;
+
 				}		
 
 			String message = "", stdOut = "", status = "", htmlOutput = "";
@@ -420,7 +444,7 @@ public class AllController {
 
 		switch (status) {
 		case "AC":
-			status = "NO COMPILATION ERROR";
+			status = "COMPILED SUCCESSFULLY";
 			break;
 		case "CE":
 			status = "COMPILATION ERROR";
@@ -443,7 +467,7 @@ public class AllController {
 		{
 			
 			System.out.println("-1");
-			if(status.equals("NO COMPILATION ERROR"))
+			if(status.equals("COMPILED SUCCESSFULLY"))
 				
 			{  
 				
@@ -458,7 +482,8 @@ public class AllController {
 						model.addObject("colour","green");
 						model.addObject("status",status);
 						model.addObject("verify",verify);
-						model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
+						model.addObject("lang",language);
+						
 							return model;	
 			           }
 			
@@ -470,8 +495,8 @@ public class AllController {
 			    	 	model.addObject("code",code);
 			    	 	model.addObject("colour","red");
 			    	 	model.addObject("status",status);
-			    	 	model.addObject("stdout","YOUR OUTPUT IS" + " " + stdOut);
 			    	 	model.addObject("verify",verify);
+			    	 	model.addObject("lang",language);
 			    	 	return model;
 						}
 			}
@@ -484,6 +509,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
 			}
@@ -497,6 +523,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 			
@@ -508,6 +535,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 			
@@ -524,6 +552,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
 			}
@@ -537,6 +566,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 			
@@ -548,6 +578,18 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
+	    	 	return model;
+			}
+				else if(status.equals(null)){
+				
+				System.out.println("9");
+				ModelAndView model=new ModelAndView("Errorpage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("msg","UNEXPECTED ERROR TRY AGAIN!!!");
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 		  }
@@ -1188,10 +1230,10 @@ ORIGINAL CODE
 	 */
 
 	@RequestMapping(value = "/rules", method = RequestMethod.GET)
-	public ModelAndView RulesPage() {
+	public ModelAndView RulesPage(HttpSession httpSession) {
 
 		ModelAndView model = new ModelAndView("rulespage");
-		model.addObject("TeamName", userdet.getTeam_name());
+		model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 		return model;
 	}
 
@@ -1225,10 +1267,10 @@ ORIGINAL CODE
 	 * @return
 	 */
 	@RequestMapping(value = "/errorpage", method = RequestMethod.GET)
-	public ModelAndView ErrorPage() {
+	public ModelAndView ErrorPage(HttpSession httpSession) {
 
 		ModelAndView model = new ModelAndView("Errorpage");
-		model.addObject("TeamName", userdet.getTeam_name());
+		model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 		return model;
 	}
 
@@ -1239,10 +1281,10 @@ ORIGINAL CODE
 	 * @return
 	 */
 	@RequestMapping(value = "/resultpage", method = RequestMethod.GET)
-	public ModelAndView ResultPage() {
+	public ModelAndView ResultPage(HttpSession httpSession) {
 
 		ModelAndView model = new ModelAndView("ResultPage");
-		model.addObject("TeamName", userdet.getTeam_name());
+		model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
 		return model;
 	}
 }
