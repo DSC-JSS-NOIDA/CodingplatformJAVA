@@ -44,7 +44,7 @@
 			<div id="editor_lang">
 <div style="color:red">YOUR SUBMISSION</div>
 				<textarea id="editor2" name="code">${code}</textarea>
-
+					 <input type="hidden" value="${lang}" id="editor_select">
 
 			</div>
 		</div>

@@ -46,7 +46,7 @@
 			<div id="editor_lang">
 
 				<textarea id="editor2" name="code">${code}</textarea>
-
+                 <input type="hidden" value="${lang}" id="editor_select">
 
 			</div>
 			<!-- load ace -->

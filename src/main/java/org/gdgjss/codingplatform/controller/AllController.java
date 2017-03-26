@@ -231,6 +231,7 @@ public class AllController {
 					model.addObject("code", code);
 					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING PAGE");
 					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+					model.addObject("lang",language);
 					return model;
 				}
 				else if(responseCode == 504){
@@ -238,6 +239,7 @@ public class AllController {
 					model.addObject("code", code);
 					model.addObject("msg","YOUR CODE  EXCEEDED MAX CHARACTER LIMIT  TRY AGAIN!!!");
 					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+					model.addObject("lang",language);
 					return model;
 				}
 				System.out.println(response.getStatus());
@@ -256,7 +258,8 @@ public class AllController {
 				{
 					System.out.println("UNIREST ERROR BLOCK");
 					ModelAndView model=new ModelAndView("Errorpage");
-					model.addObject("msg","INTERNAL ERROR TRY REFRESHING");
+					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING");
+					model.addObject("lang",language);
 					model.addObject("code",code);
 					return model;
 					
@@ -474,6 +477,7 @@ public class AllController {
 						model.addObject("colour","green");
 						model.addObject("status",status);
 						model.addObject("verify",verify);
+						model.addObject("lang",language);
 						
 							return model;	
 			           }
@@ -487,6 +491,7 @@ public class AllController {
 			    	 	model.addObject("colour","red");
 			    	 	model.addObject("status",status);
 			    	 	model.addObject("verify",verify);
+			    	 	model.addObject("lang",language);
 			    	 	return model;
 						}
 			}
@@ -499,6 +504,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
 			}
@@ -512,6 +518,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 			
@@ -523,6 +530,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 			
@@ -539,6 +547,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
 			}
@@ -552,6 +561,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 			
@@ -563,6 +573,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 				else if(status.equals(null)){
@@ -573,6 +584,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("msg","UNEXPECTED ERROR TRY AGAIN!!!");
+	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 		  }
