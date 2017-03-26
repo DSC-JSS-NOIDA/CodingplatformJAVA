@@ -3,17 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+<script src="js/jquery.js"></script>
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+<link rel="stylesheet" href="css/materialize.min.css">
 
 <!-- Compiled and minified JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="js/materialize.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta charset="ISO-8859-1">
@@ -29,8 +25,7 @@
 	<!-- <h5 style="color: red;" class="left-align"></h5> -->
 	<div id="snackbar">${invalid}${norecord}</div>
 	<div id="main">
-		<div id="ques"
-			style="height: 100%;  width: 700px; margin: 0 auto;">
+		<div id="ques" style="height: 100%; width: 700px; margin: 0 auto;">
 			<div class="card col s6 offset-s3"
 				style="background: rgba(255, 255, 255, .5); margin-top: 20px; padding: 20px;">
 				<div class="card-content" align="center">

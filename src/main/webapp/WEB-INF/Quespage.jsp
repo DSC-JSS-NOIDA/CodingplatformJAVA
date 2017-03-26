@@ -4,20 +4,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<meta charset="UTF-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+<script src="js/jquery.js"></script>
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+<link rel="stylesheet" href="css/materialize.min.css">
 
 <!-- Compiled and minified JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="js/materialize.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta charset="ISO-8859-1">
@@ -80,13 +73,19 @@
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<h5><b>Constraint </b>:</h5> <p>${Constraint}</p>
+					<h5>
+						<b>Constraint </b>:
+					</h5>
+					<p>${Constraint}</p>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<h5><b>Sample Test Case</b>:</h5> <p>${SampleTestCase}</p>
+					<h5>
+						<b>Sample Test Case</b>:
+					</h5>
+					<p>${SampleTestCase}</p>
 				</div>
 			</div>
 
@@ -178,9 +177,11 @@
 h1 {
 	font-size: 10xp;
 }
-h5{
-font-size:20px;
+
+h5 {
+	font-size: 20px;
 }
+
 #editor_select {
 	border: 0px;
 }
