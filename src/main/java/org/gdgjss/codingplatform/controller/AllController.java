@@ -361,14 +361,16 @@ public class AllController {
 			String correspondingQuesMark = "ques" + quesid + "_" + lang;
 			String correspondingQuesLength = "ques" + quesid + "_" + lang + "_l";
 			String emailid = (String) httpSession.getAttribute("SESSION_email");
-			// chiki
+		
 			String hql_current_user_length = "SELECT " + correspondingQuesLength + " FROM Result R WHERE R.email = '"
 					+ emailid + "'";
+			System.out.println("hql_current_user_length ----   " + hql_current_user_length);
 			Query query = session.createQuery(hql_current_user_length);
 			List r = query.list();
 			int current_user_length = (int) r.get(0);
 			System.out.println("current_user_length --->> " + current_user_length);
 			if (lengthOfCode < current_user_length) {
+				System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&entering if block");
 				String hql_min_length = "SELECT min(" + correspondingQuesLength + ") FROM Result R";
 				query = session.createQuery(hql_min_length);
 				r = query.list();
@@ -415,6 +417,7 @@ public class AllController {
 
 					}
 				} else {
+					System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&entering else block");
 					String fetch_corresponding_marks_length = "SELECT " + correspondingQuesMark + " , "
 							+ correspondingQuesLength + " , total FROM Result R where R.email= '" + emailid + "'";
 					query = session.createQuery(fetch_corresponding_marks_length);
@@ -665,7 +668,7 @@ ORIGINAL CODE
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	@RequestMapping(value = "/api2", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/api2", method = RequestMethod.POST)
 
 	public ModelAndView submission(HttpSession httpSession, @RequestParam Map<String, String> requestParams)
 			throws IOException, JSONException {
@@ -678,9 +681,9 @@ ORIGINAL CODE
 		System.out.println(code);
 		String inputpath = "", outputpath = "", y = "", z = "";
 
-		/*
+		
 		 * to encode source code in utf 8 , as java uses by default utf-16
-		 */
+		 
 		String urlencode = URLEncoder.encode(code, "UTF-8");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -689,31 +692,31 @@ ORIGINAL CODE
 		outputpath = ques.getOutputfilepath();
 		session.close();
 
-		/**
+		*//**
 		 * Commented code is a way to read file as it is from its source, but
 		 * need to include \n by self more efficient way
 		 * 
 		 * @author tilhari
-		 */
-		/*
+		 *//*
+		
 		 * BufferedReader br = new BufferedReader(new FileReader(inputpath));
 		 * int x; while ((x = br.read()) != -1) { if(y!="") y=y+"\n"+x; else
 		 * y=y+x; }
-		 */
+		 
 
-		/**
+		*//**
 		 * This is also a way to read file as it is from its source, but is
 		 * currently without buffer so less efficient
 		 * 
 		 * @author tilhari
-		 */
+		 *//*
 		FileReader fr = new FileReader(inputpath);
 		int i;
 		while ((i = fr.read()) != -1)
 			y = y + ((char) i);
 		fr.close();
 
-		/**
+		*//**
 		 * Switch upcoming code lines for toggle HackerRank and hackerEarth API
 		 *
 		 * HackerRank API is in its beta version, does not support TLE,
@@ -721,7 +724,7 @@ ORIGINAL CODE
 		 * guarantee
 		 *
 		 * @author tilhari
-		 */
+		 *//*
 		String url = "https://api.hackerearth.com/v3/code/run/";
 		// String url = "http://api.hackerrank.com/checker/submission.json";
 
@@ -734,19 +737,19 @@ ORIGINAL CODE
 		con.setRequestProperty("User-Agent", "chrome");
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-		/**
+		*//**
 		 * @author tilhari url parameters for hackerrank api
-		 */
+		 *//*
 		// String urlParameters =
 		// "source="+urlencode+"&lang="+language+"&testcases=["+y+"]&api_key=hackerrank|1466488-1173|ece751e6f0df6c5c8fc1e8c3498da5c1b5d73f86";
 
 		System.out.println("Input file--- \n" + y);
 
-		/**
+		*//**
 		 * @author tilhari url parameters for hackerearth api
 		 * 
 		 *         add other available parameter for TLE, size etc etc
-		 */
+		 *//*
 		String urlParameters = "source=" + urlencode + "&lang=" + language + "&input=" + y
 				+ "&client_secret=d442f2d462c5bcc3fd372f79f878f91bb35ceb43"+"&time_limit=5&memory_limit=262144&async=0";
 
@@ -757,19 +760,19 @@ ORIGINAL CODE
 		wr.flush();
 		wr.close();
 
-		/**
+		*//**
 		 * @author suyash reading
-		 */
+		 *//*
 		int responseCode = con.getResponseCode();
 		System.out.println("\nSending 'POST' request to URL : " + url);
 		System.out.println("Post parameters : " + urlParameters);
 		System.out.println("Response Code : " + responseCode);
 
-		/**
+		*//**
 		 * @author singhal code for exception handling of incomplete post
 		 *         request due to internet connectivity problem
 		 * @author suyash due to bad request problem also.
-		 */
+		 *//*
 		if (responseCode == 403 || responseCode == 500 || responseCode == 504) {
 			ModelAndView model = new ModelAndView("Errorpage");
 			model.addObject("code", code);
@@ -783,19 +786,19 @@ ORIGINAL CODE
 		System.out.println(respLine);
 		String message = "", stdOut = "", status = "", htmlOutput = "";
 
-		/*
+		
 		 * use try catch in this code below to prevent the exception error
 		 * 
-		 */
+		 
 
-		/**
+		*//**
 		 * @author suyash TODO: println adds \n at end of last output line for
 		 *         JAVA language, so test case should also have \n at end for
 		 *         correct match, but this can be a problem in case of other
 		 *         language. so some corner cases need to be considered while
 		 *         testing on different languages OR different test cases can be
 		 *         made for different languages.........
-		 */
+		 *//*
 
 		try {
 			JSONObject json = new JSONObject(respLine);
@@ -832,9 +835,9 @@ ORIGINAL CODE
 			System.out.println("ERROR in /API");
 		}
 
-		/*
+		
 		 * api output converted to json
-		 */
+		 
 
 		Gson gsons = new Gson();
 		String jsonapi = gsons.toJson(stdOut);
@@ -848,9 +851,9 @@ ORIGINAL CODE
 
 		System.out.println(outputpath); // output file path
 
-		/*
+		
 		 * Reading OutPut text case file using BufferReader
-		 */
+		 
 
 		// FileReader file=new FileReader(outputpath);
 		// int j;
@@ -859,10 +862,10 @@ ORIGINAL CODE
 		// file.close();
 		// System.out.println("output path--- \n"+z);
 		//
-		/*
+		
 		 * code to read the output file from the path provided from above code
 		 * by using buffer reader
-		 */
+		 
 
 		StringBuilder sb = new StringBuilder();
 		BufferedReader file = new BufferedReader(new FileReader(outputpath));
@@ -873,20 +876,20 @@ ORIGINAL CODE
 			sb.append("\n");
 		}
 
-		/*
+		
 		 * code for converting output text file to json for use with hackerEarth
 		 * use API
-		 */
+		 
 
 		Gson gson = new Gson();
 		String jsons = gson.toJson(sb);
 		String out = "[" + jsons + "]";
 		System.out.println(out);
 
-		/*
+		
 		 * code to check the output of api with text file
 		 * 
-		 */
+		 
 		String verify;
 		if (out.equals(out_api)) {
 			System.out.println("output matched");
@@ -895,11 +898,11 @@ ORIGINAL CODE
 			System.out.println("-----------------------------------calculation begins here-----------------------");
 			session = sessionFactory.openSession();
 
-			/**
+			*//**
 			 * @author suyash
 			 * 
 			 *         code for leaderboard and marking scheme
-			 */
+			 *//*
 			int lengthOfCode = code.length();
 			String lang = language;
 			if (language.equals("CPP")) {
@@ -1002,10 +1005,10 @@ ORIGINAL CODE
 			verify = "WRONG ANSWER";
 		}
 
-		/**
+		*//**
 		 * 
 		 * sending data to Questionpage
-		 */
+		 *//*
 
 		switch (status) {
 		case "AC":
@@ -1150,6 +1153,7 @@ ORIGINAL CODE
 		}
 		return null;
 	}
+	*/
 
 	@RequestMapping(value = "/leaderboard", method = RequestMethod.GET)
 	public ModelAndView leaderboard(HttpSession httpSession) {
@@ -1165,10 +1169,7 @@ ORIGINAL CODE
 
 	}
 
-	/*
-	 * code for admin login
-	 */
-
+	
 	@RequestMapping(value = "/addques", method = RequestMethod.POST)
 	public ModelAndView addques(@ModelAttribute("question") org.gdgjss.codingplatform.models.Questions question) {
 		Session session = sessionFactory.openSession();
