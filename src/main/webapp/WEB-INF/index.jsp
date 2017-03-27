@@ -3,13 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="css/materialize.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
 
 <!-- Compiled and minified JavaScript -->
-<script src="js/materialize.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta charset="ISO-8859-1">
@@ -18,7 +24,8 @@
 <body>
 	<nav>
 		<div class="nav-wrapper blue darken-1">
-			<a href="index" class="brand-logo center" style="margin-left: 30px;">{Code In Less}</a>
+			<a href="index" class="brand-logo center" style="margin-left: 30px;">{Code
+				In Less}</a>
 		</div>
 	</nav>
 	<!-- <h5 style="color: red;" class="left-align"></h5> -->
@@ -72,7 +79,8 @@
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="participant1_roll"
 									id="participant1_roll" required> <label
-									for="participant1_roll">Participant 1 roll number/ Zeal Id</label>
+									for="participant1_roll">Participant 1 roll number/ Zeal
+									Id</label>
 							</div>
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="participant2_name"
@@ -82,7 +90,8 @@
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="participant2_roll"
 									id="participant2_roll" required> <label
-									for="participant2_roll">Participant 2 roll number / Zeal Id</label>
+									for="participant2_roll">Participant 2 roll number /
+									Zeal Id</label>
 							</div>
 							<div class="input-field col s10 offset-s1">
 								<input type="text" name="emailid" id="email" required> <label
