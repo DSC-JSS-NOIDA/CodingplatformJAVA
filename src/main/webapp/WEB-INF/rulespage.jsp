@@ -4,14 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script src="js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="css/materialize.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
 
 <!-- Compiled and minified JavaScript -->
-<script src="js/materialize.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
 
 <title>Rules</title>
 </head>

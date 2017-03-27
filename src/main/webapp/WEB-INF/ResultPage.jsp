@@ -4,13 +4,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="css/materialize.min.css">
- 
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+
 <!-- Compiled and minified JavaScript -->
-<script src="js/materialize.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <title>Result</title>
@@ -76,6 +82,7 @@
 				<h6 style="color:${colour};">${status}</h6>
 				<h6>${stdout}</h6>
 				<h6>${verify}</h6>
+				
 			</div>
 		</div>
 	</div>

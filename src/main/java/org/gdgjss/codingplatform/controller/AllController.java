@@ -251,7 +251,7 @@ public class AllController {
 				if (responseCode == 403 || responseCode == 500 || responseCode == 504 ) {
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
-					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING PAGE");
+					model.addObject("msg","INTERNET PROBLEM GO BACK AND SUBMIT AGAIN");
 					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 					model.addObject("lang",language);
 					return model;
@@ -281,7 +281,7 @@ public class AllController {
 
 					System.out.println("UNIREST ERROR BLOCK");
 					ModelAndView model=new ModelAndView("Errorpage");
-					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING");
+					model.addObject("msg","INTERNET PROBLEM  GO BACK AND SUBMIT AGAIN");
 					model.addObject("lang",language);
 					model.addObject("code",code);
 					return model;
@@ -512,7 +512,7 @@ public class AllController {
 						model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 						model.addObject("code",code);
 						model.addObject("colour","green");
-						model.addObject("status",status);
+						model.addObject("status",status);									
 						model.addObject("verify",verify);
 						model.addObject("lang",language);
 						
@@ -528,6 +528,7 @@ public class AllController {
 			    	 	model.addObject("colour","red");
 			    	 	model.addObject("status",status);
 			    	 	model.addObject("verify",verify);
+			    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 			    	 	model.addObject("lang",language);
 			    	 	return model;
 						}
@@ -541,6 +542,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
@@ -555,6 +557,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
@@ -567,11 +570,37 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
 			
-		}
+			
+	         else if(status.equals("MEMORY LIMIT EXCEEDED")){
+				
+				System.out.println("9");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
+	    	 	return model;
+	         }
+			
+	         else{
+	        	 System.out.println("11");
+					ModelAndView model=new ModelAndView("ResultPage");
+		    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+		    	 	model.addObject("code",code);
+		    	 	model.addObject("colour","orange");
+		    	 	model.addObject("status",status);
+		    	 	model.addObject("lang",language);
+		    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
+		    	 	return model;
+	         }
+           }
 		
 		else{
 			
@@ -584,6 +613,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
@@ -599,6 +629,7 @@ public class AllController {
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
 	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	return model;
 			}
 			
@@ -611,6 +642,7 @@ public class AllController {
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
 	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	return model;
 			}
 			 
@@ -623,6 +655,7 @@ public class AllController {
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
 	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	return model;
 			}
 				else if(status.equals(null)){
@@ -632,7 +665,7 @@ public class AllController {
 	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
-	    	 	model.addObject("msg","UNEXPECTED ERROR TRY AGAIN!!!");
+	    	 	model.addObject("msg","UNEXPECTED ERROR PROBLEM GO BACK AND SUBMIT AGAIN !!!");
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
@@ -1151,7 +1184,11 @@ ORIGINAL CODE
 			model.addObject("invalid","KINDLY LOGIN FIRST");
 			return model;
 		}
-		return null;
+		
+		
+	ModelAndView model=new ModelAndView("ResultPage");
+ 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	return model;
 	}
 	*/
 
@@ -1329,5 +1366,21 @@ ORIGINAL CODE
 		model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
 		return model;
 	}
+	
+	/**
+	 * controller for handling get request to api
+	 * @author sarthak
+	 * @param httpSession
+	 * @return
+	 */
+	@RequestMapping(value = "/api", method = RequestMethod.GET)
+	public ModelAndView API(HttpSession httpSession) {
+
+		ModelAndView model = new ModelAndView("errorpage2");
+		model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
+	
+		return model;
+	}
+	
 }
 

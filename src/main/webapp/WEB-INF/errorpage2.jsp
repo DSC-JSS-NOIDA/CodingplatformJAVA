@@ -19,9 +19,10 @@
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
-<title>Error</title>
+<title>Insert title here</title>
 </head>
 <body>
+
 	<nav>
 	<div class="nav-wrapper blue darken-1">
 		<a href="dashboard" class="brand-logo" style="margin-left: 30px;">{Code
@@ -35,21 +36,11 @@
 		</ul>
 	</div>
 	</nav>
-
 	<div id="main">
 		<div id="ques" class="z-depth-1">
-			<h5>${msg}</h5>
-		
-			<input type="hidden" value="${lang}" id="editor_select">
-			<div id="editor_lang">
-<div style="color:red">YOUR SUBMISSION</div>
-				<textarea id="editor2" name="code">${code}</textarea>
-
-
-			</div>
+		<h3>Go back and submit again</h3>
 		</div>
 	</div>
-
 	<footer class="page-footer blue darken-1" style="padding-top: 0px;">
 	<div class="footer-copyright">
 		<div class="container">
@@ -60,41 +51,18 @@
 	</div>
 	</footer>
 </body>
-
-
-			
-			<!-- load ace -->
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"
-				type="text/javascript" charset="utf-8"></script>
-
-			<script
-				src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
-			<script>
-				// trigger extension
-
-			
-
-				var editor2 = ace.edit("editor2");
-				editor2.setTheme("ace/theme/twilight");
-				editor2.session.setMode("ace/mode/html");
-				editor2.setAutoScrollEditorIntoView(true);
-				editor2.setOption("maxLines", 16);
-				editor2.setOption("minLines", 8);
-				var source = $("#editor2").val();
-				$("#source").val('source');
-				editor2.getSession().on("change", function() {
-					$("#source").val(editor2.getSession().getValue());
-				});
-			</script>
-
-
 <style>
 #ques {
-	background: rgba(255, 255, 255, .3);
-	padding: 10px;
-	border-radius: 3px;
-	width: 820px;
-	margin: 30px auto;
+	max-width: 1100px;
+	margin-left: 50px;
+	margin-top: 30px;
+	padding: 10px 30px 30px 30px;;
+	background: rgba(255, 255, 255, .4);
+}
+
+h1 {
+	font-size: 30px;
+	color: #0572d2;
 }
 </style>
 </html>
