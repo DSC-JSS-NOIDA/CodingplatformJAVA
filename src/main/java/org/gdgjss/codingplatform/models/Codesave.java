@@ -3,6 +3,7 @@ package org.gdgjss.codingplatform.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -15,25 +16,37 @@ public class Codesave {
 	
 	@Id
 	private String email;
+	@Lob
 	private String ques1_C_code;
+	@Lob
 	private String ques1_JAVA_code;
+	@Lob
 	private String ques1_PYTHON_code;
-	
+	@Lob
 	private String ques2_C_code;
+	@Lob
 	private String ques2_JAVA_code;
+	@Lob
 	private String ques2_PYTHON_code;
-	
+	@Lob
 	private String ques3_C_code;
+	@Lob
 	private String ques3_JAVA_code;
+	@Lob
 	private String ques3_PYTHON_code;
-	
+	@Lob
 	private String ques4_C_code;
+	@Lob
 	private String ques4_JAVA_code;
+	@Lob
 	private String ques4_PYTHON_code;
-	
+	@Lob
 	private String ques5_C_code;
+	@Lob
 	private String ques5_JAVA_code;
+	@Lob
 	private String ques5_PYTHON_code;
+
 	public String getEmail() {
 		return email;
 	}

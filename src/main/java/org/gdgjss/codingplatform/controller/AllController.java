@@ -151,7 +151,6 @@ public class AllController {
 			session.save(userdet);
 			session.save(result);
 			session.getTransaction().commit();
-
 			model.addObject("invalid", "Successfully registered, login to proceed!");
 
 		} else
