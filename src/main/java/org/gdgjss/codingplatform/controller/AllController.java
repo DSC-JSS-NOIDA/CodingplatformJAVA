@@ -509,7 +509,7 @@ public class AllController {
 						model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 						model.addObject("code",code);
 						model.addObject("colour","green");
-						model.addObject("status",status);
+						model.addObject("status",status);									
 						model.addObject("verify",verify);
 						model.addObject("lang",language);
 						
@@ -525,6 +525,7 @@ public class AllController {
 			    	 	model.addObject("colour","red");
 			    	 	model.addObject("status",status);
 			    	 	model.addObject("verify",verify);
+			    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 			    	 	model.addObject("lang",language);
 			    	 	return model;
 						}
@@ -538,6 +539,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
@@ -552,6 +554,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
@@ -564,6 +567,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
@@ -581,6 +585,7 @@ public class AllController {
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","red");
 	    	 	model.addObject("status",status);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 	    	 	
@@ -596,6 +601,7 @@ public class AllController {
 	    	 	model.addObject("colour","blue");
 	    	 	model.addObject("status",status);
 	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	return model;
 			}
 			
@@ -608,6 +614,7 @@ public class AllController {
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
 	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	return model;
 			}
 			 
@@ -620,6 +627,7 @@ public class AllController {
 	    	 	model.addObject("colour","orange");
 	    	 	model.addObject("status",status);
 	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
 	    	 	return model;
 			}
 				else if(status.equals(null)){
@@ -1328,5 +1336,21 @@ ORIGINAL CODE
 		model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
 		return model;
 	}
+	
+	/**
+	 * controller for handling get request to api
+	 * @author sarthak
+	 * @param httpSession
+	 * @return
+	 */
+	@RequestMapping(value = "/api", method = RequestMethod.GET)
+	public ModelAndView API(HttpSession httpSession) {
+
+		ModelAndView model = new ModelAndView("errorpage2");
+		model.addObject("TeamName",(String) httpSession.getAttribute("SESSION_teamname"));
+	
+		return model;
+	}
+	
 }
 
