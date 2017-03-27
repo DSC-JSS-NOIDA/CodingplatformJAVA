@@ -209,12 +209,15 @@ public class AllController {
 				+ code + "' WHERE C.email = '" + (String) httpSession.getAttribute("SESSION_email") + "'";
 		System.out.println("qweuiooooooooooooooooooooooo----------------------------    " + hql_update_code);
 		Query query1 = session.createQuery(hql_update_code);
-		int effected_rows_code = query1.executeUpdate();
 		
+		
+		int effected_rows_code = query1.executeUpdate();
 		
 		System.out.println("Updated codede row------------------   "+ effected_rows_code);
 		
 		session.close();
+		
+		
 		System.out.println("-----------------------code is------------------");
 		System.out.println(code);
 		System.out.println("-----------------------lang is------------------");
@@ -441,6 +444,7 @@ public class AllController {
 									+ " WHERE R.email = '" + emailid + "'";
 							query = session.createQuery(hql_update_total_marks);
 							int hql_update_totalmarks = query.executeUpdate();
+							
 						}
 					}
 
