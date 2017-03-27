@@ -251,7 +251,7 @@ public class AllController {
 				if (responseCode == 403 || responseCode == 500 || responseCode == 504 ) {
 					ModelAndView model = new ModelAndView("Errorpage");
 					model.addObject("code", code);
-					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING PAGE");
+					model.addObject("msg","INTERNET PROBLEM GO BACK AND SUBMIT AGAIN");
 					model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 					model.addObject("lang",language);
 					return model;
@@ -281,7 +281,7 @@ public class AllController {
 
 					System.out.println("UNIREST ERROR BLOCK");
 					ModelAndView model=new ModelAndView("Errorpage");
-					model.addObject("msg","INTERNET PROBLEM TRY REFRESHING");
+					model.addObject("msg","INTERNET PROBLEM  GO BACK AND SUBMIT AGAIN");
 					model.addObject("lang",language);
 					model.addObject("code",code);
 					return model;
@@ -637,7 +637,7 @@ public class AllController {
 	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 	    	 	model.addObject("code",code);
 	    	 	model.addObject("colour","orange");
-	    	 	model.addObject("msg","UNEXPECTED ERROR TRY AGAIN!!!");
+	    	 	model.addObject("msg","UNEXPECTED ERROR PROBLEM GO BACK AND SUBMIT AGAIN !!!");
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
