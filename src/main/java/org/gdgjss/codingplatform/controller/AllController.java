@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Connection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -210,10 +211,10 @@ public class AllController {
 		System.out.println("qweuiooooooooooooooooooooooo----------------------------    " + hql_update_code);
 		Query query1 = session.createQuery(hql_update_code);
 		int effected_rows_code = query1.executeUpdate();
-		
+        
 		
 		System.out.println("Updated codede row------------------   "+ effected_rows_code);
-		
+		session.getTransaction().commit();
 		session.close();
 		System.out.println("-----------------------code is------------------");
 		System.out.println(code);
