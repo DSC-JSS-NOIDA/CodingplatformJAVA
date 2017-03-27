@@ -355,7 +355,7 @@ public class Result {
 		this.ques4_JAVA = 0;
 		this.ques4_PYTHON =0;
 		
-	
+		this.ques4_C_l = 1000000;
 		this.ques4_JAVA_l = 1000000;
 		this.ques4_PYTHON_l = 1000000;
 		

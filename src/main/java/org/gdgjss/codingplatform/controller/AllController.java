@@ -368,7 +368,8 @@ public class AllController {
 			Query query = session.createQuery(hql_current_user_length);
 			List r = query.list();
 			int current_user_length = (int) r.get(0);
-			System.out.println("current_user_length --->> " + current_user_length);
+			System.out.println(lengthOfCode);
+			System.out.println("current_user_length suiiiii--->> " + current_user_length);
 			if (lengthOfCode < current_user_length) {
 				System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&entering if block");
 				String hql_min_length = "SELECT min(" + correspondingQuesLength + ") FROM Result R";
@@ -416,7 +417,8 @@ public class AllController {
 						}
 
 					}
-				} else {
+				} 
+				else {
 					System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&entering else block");
 					String fetch_corresponding_marks_length = "SELECT " + correspondingQuesMark + " , "
 							+ correspondingQuesLength + " , total FROM Result R where R.email= '" + emailid + "'";
