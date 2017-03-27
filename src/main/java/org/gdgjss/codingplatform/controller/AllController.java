@@ -572,7 +572,32 @@ public class AllController {
 	    	 	return model;
 			}
 			
-		}
+			
+	         else if(status.equals("MEMORY LIMIT EXCEEDED")){
+				
+				System.out.println("9");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
+	    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
+	    	 	return model;
+	         }
+			
+	         else{
+	        	 System.out.println("11");
+					ModelAndView model=new ModelAndView("ResultPage");
+		    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+		    	 	model.addObject("code",code);
+		    	 	model.addObject("colour","orange");
+		    	 	model.addObject("status",status);
+		    	 	model.addObject("lang",language);
+		    	 	model.addObject("msg","GO BACK AND SUBMIT AGAIN !!!");	
+		    	 	return model;
+	         }
+           }
 		
 		else{
 			
