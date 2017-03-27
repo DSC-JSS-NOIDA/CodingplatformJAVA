@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
+import org.gdgjss.codingplatform.models.Codesave;
 import org.gdgjss.codingplatform.models.Questions;
 import org.gdgjss.codingplatform.models.Result;
 import org.gdgjss.codingplatform.models.Userdet;
@@ -143,7 +144,9 @@ public class AllController {
 		ModelAndView model = new ModelAndView("index");
 		if (session.get(Userdet.class, userdet.getEmailid()) == null) {
 			Result result = new Result(userdet.getEmailid(), userdet.getTeam_name());
+			Codesave codesave = new Codesave(userdet.getEmailid());
 			session.beginTransaction();
+			session.save(codesave);
 			session.save(userdet);
 			session.save(result);
 			session.getTransaction().commit();
@@ -184,8 +187,14 @@ public class AllController {
 		String quesid = requestParams.get("qid");
 		System.out.println(language);
 		System.out.println(code);
+		String lang=language;
+		if (language.equals("CPP")) {
+			lang = "C";
+		}
 		String inputpath = "", outputpath = "", y = "", z = "";
-
+		String codetobesaved ="ques" + quesid + "_" + lang + "_code";
+		System.out.println("DAAAAAAAAAAAAAAAA------------------------------   "+codetobesaved);
+		
 		/*
 		 * to encode source code in utf 8 , as java uses by default utf-16
 		 */
@@ -195,6 +204,16 @@ public class AllController {
 		Questions ques = (Questions) session.get(Questions.class, Integer.parseInt(quesid));
 		inputpath = ques.getInputfilepath();
 		outputpath = ques.getOutputfilepath();
+		
+		String hql_update_code = "UPDATE Codesave C set " + codetobesaved + " = '"
+				+ code + "' WHERE C.email = '" + (String) httpSession.getAttribute("SESSION_email") + "'";
+		System.out.println("qweuiooooooooooooooooooooooo----------------------------    " + hql_update_code);
+		Query query1 = session.createQuery(hql_update_code);
+		int effected_rows_code = query1.executeUpdate();
+		
+		
+		System.out.println("Updated codede row------------------   "+ effected_rows_code);
+		
 		session.close();
 		System.out.println("-----------------------code is------------------");
 		System.out.println(code);
@@ -336,10 +355,8 @@ public class AllController {
 			 *         code for leaderboard and marking scheme
 			 */
 			int lengthOfCode = code.length();
-			String lang = language;
-			if (language.equals("CPP")) {
-				lang = "C";
-			}
+			
+			
 			String correspondingQuesMark = "ques" + quesid + "_" + lang;
 			String correspondingQuesLength = "ques" + quesid + "_" + lang + "_l";
 			String emailid = (String) httpSession.getAttribute("SESSION_email");
