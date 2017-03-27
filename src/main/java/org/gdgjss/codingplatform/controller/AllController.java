@@ -455,7 +455,7 @@ public class AllController {
 			/**
 			 * under observation
 			 */
-			session.getTransaction().commit();
+			//session.getTransaction().commit();
 			session.close();
 
 		} else {
@@ -483,6 +483,10 @@ public class AllController {
 			break;
 		case "RE":
 			status = "RUNTIME ERROR";
+			break;
+			
+		case "MLE":
+			status = "MEMORY LIMIT EXCEEDED";
 			break;
 		}
     
@@ -607,9 +611,21 @@ public class AllController {
 	    	 	model.addObject("lang",language);
 	    	 	return model;
 			}
-				else if(status.equals(null)){
+			 
+				else if(status.equals("MEMORY LIMIT EXCEEDED")){
 				
 				System.out.println("9");
+				ModelAndView model=new ModelAndView("ResultPage");
+	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	    	 	model.addObject("code",code);
+	    	 	model.addObject("colour","orange");
+	    	 	model.addObject("status",status);
+	    	 	model.addObject("lang",language);
+	    	 	return model;
+			}
+				else if(status.equals(null)){
+				
+				System.out.println("10");
 				ModelAndView model=new ModelAndView("Errorpage");
 	    	 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
 	    	 	model.addObject("code",code);
@@ -1023,7 +1039,7 @@ ORIGINAL CODE
 				
 				System.out.println("0");
 				if(verify.equals("CORRECT ANSWER")){
-				
+				 
 					
 					System.out.println("1");
 						ModelAndView 	model=new ModelAndView("ResultPage");
