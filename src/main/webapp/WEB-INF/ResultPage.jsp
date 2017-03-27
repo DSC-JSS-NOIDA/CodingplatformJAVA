@@ -82,7 +82,7 @@
 				<h6 style="color:${colour};">${status}</h6>
 				<h6>${stdout}</h6>
 				<h6>${verify}</h6>
-				<h4>${msg}</h4>
+				
 			</div>
 		</div>
 	</div>

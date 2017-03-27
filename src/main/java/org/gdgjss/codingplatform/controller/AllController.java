@@ -1181,7 +1181,11 @@ ORIGINAL CODE
 			model.addObject("invalid","KINDLY LOGIN FIRST");
 			return model;
 		}
-		return null;
+		
+		
+	ModelAndView model=new ModelAndView("ResultPage");
+ 	model.addObject("TeamName", (String) httpSession.getAttribute("SESSION_teamname"));
+	return model;
 	}
 
 	@RequestMapping(value = "/leaderboard", method = RequestMethod.GET)
