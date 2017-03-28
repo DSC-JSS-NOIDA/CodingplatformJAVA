@@ -36,8 +36,9 @@
 		</ul>
 	</div>
 	</nav>
-	<div id="main">
-		<div id="ques" class="z-depth-1">
+	<div id="main" align="center">
+		<div id="ques" class="z-depth-1" align="center">
+		<h4>Oops there was a problem!</h4>
 		<h3>Go back and submit again</h3>
 		</div>
 	</div>
@@ -54,7 +55,7 @@
 <style>
 #ques {
 	max-width: 1100px;
-	margin-left: 50px;
+	margin-left: 80px;
 	margin-top: 30px;
 	padding: 10px 30px 30px 30px;;
 	background: rgba(255, 255, 255, .4);
