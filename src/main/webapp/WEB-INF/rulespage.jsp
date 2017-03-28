@@ -37,16 +37,19 @@
 		<div id="ques" class="z-depth-1" align="center">
 			<h2>RULES</h2>
 			<div id="rules" style="">
-				<p>1. Establishing SSL connection without server's identity
-					verification is not recommended.</p>
-				<p>2. Establishing SSL connection without server's identity
-					verification is not recommended.</p>
-				<p>3. Establishing SSL connection without server's identity
-					verification is not recommended.</p>
-				<p>4. Establishing SSL connection without server's identity
-					verification is not recommended.</p>
-				<p>4. Establishing SSL connection without server's identity
-					verification is not recommended.</p>
+				<p>1.It is a 2 hour event.</p>
+				<p>2.In it students will be provided with 6 questions.</p>
+				<p>3.Students are allowed to code in the following four
+					languages.</p>
+				<p>C/C++.</p>
+				<p>JAVA.</p>
+				<p>Python.</p>
+				<p>Php.</p>
+				<p>They can code in either one language or multiple languages.</p>
+				<p>4.Each language has 100 points for the shortest code.</p>
+				<p>5.Use of internet is strictly prohibited.</p>
+				<p>6.In case of any discrepancy, the decision of the event
+					coordinator will be final.</p>
 			</div>
 		</div>
 	</div>
