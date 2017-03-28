@@ -37,6 +37,7 @@
 		<div id="ques" class="z-depth-1" align="center">
 			<h2>RULES</h2>
 			<div id="rules" style="">
+
 				<p>1. It is a 2 hour event, each team can have atmost 2 member.</p>
 				<p>2. Teams will be provided with 5 questions.</p>
 				<p>3. Students are allowed to code in the following four languages: C/C++ , JAVA and PYTHON.</p>
@@ -45,7 +46,7 @@
 				<p>6. Each questions' solution in each language has 100 points for the shortest code, and other teams will be given score relative to the shortest code</p>
 				<p>7. Use of Internet is strictly prohibited. </p>
 				<p>8. In case of any discrepancy ,the decision of the event coordinator will be final. </p>
-				
+
 			</div>
 		</div>
 	</div>
