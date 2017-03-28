@@ -63,7 +63,7 @@
 		<div class="footer-copyright">
 			<div class="container">
 				© 2017 Copyright <a target="_blank"
-					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDS
+					class="grey-text text-lighten-4 right" href="http://gdgjss.in">GDG
 					JSS Noida </a>
 			</div>
 		</div>

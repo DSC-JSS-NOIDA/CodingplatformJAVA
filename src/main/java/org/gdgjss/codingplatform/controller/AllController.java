@@ -202,11 +202,7 @@ public class AllController {
 		inputpath = ques.getInputfilepath();
 		outputpath = ques.getOutputfilepath();
 		
-		String hql_update_code = "UPDATE Codesave C set " + codetobesaved + " = '"
-				+ code + "' WHERE C.email = '" + (String) httpSession.getAttribute("SESSION_email") + "'";
-		Query query1 = session.createQuery(hql_update_code);
-		int effected_rows_code = query1.executeUpdate();
-		session.getTransaction().commit();
+
 		session.close();
 		
 		
@@ -763,7 +759,7 @@ public class AllController {
 		ModelAndView model;
 		String id = requestParams.get("id");
 		String pass = requestParams.get("pass");
-		if (id.equals("gdg") && pass.equals("gdg")) {
+		if (id.equals("gdgadmin") && pass.equals("gdgpassword")) {
 			model = new ModelAndView("adminpannel");
 			model.addObject("name", id);
 		} else {
@@ -854,4 +850,3 @@ public class AllController {
 	}
 	
 }
-

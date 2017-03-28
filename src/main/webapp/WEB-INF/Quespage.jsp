@@ -39,9 +39,7 @@
 	</nav>
 	<div style="padding-left: 70px;" id="main">
 		<p style="color: #0572d2;">
-			<%-- 			<span style="font-size: 16px; font-weight: 500;">TEAM NAME : </span><span
-				style="font-size: 14px;">${Teamname}</span>
- --%>
+
 		</p>
 		<div id="ques" class="z-depth-1">
 			<div class="row">
